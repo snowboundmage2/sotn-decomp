@@ -31,6 +31,15 @@ BUILD_DIR       := build/$(VERSION)
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
+MISC_DIRS        := $(BUILD_DIR)/$(ASM_DIR)/%/data/ \
+	$(BUILD_DIR)/$(ASSETS_DIR)/%/ \
+	$(BUILD_DIR)/$(SRC_DIR)/%/
+STAGE_DIRS      := $(BUILD_DIR)/$(ASM_DIR)/st/%/data/ \
+	$(BUILD_DIR)/$(ASSETS_DIR)/st/%/ \
+	$(BUILD_DIR)/$(SRC_DIR)/st/%/
+SERVANT_DIRS    := $(BUILD_DIR)/$(ASM_DIR)/servant/%/data/ \
+	$(BUILD_DIR)/$(ASSETS_DIR)/servant/%/ \
+	$(BUILD_DIR)/$(SRC_DIR)/servant/%/
 
 # Files
 MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
@@ -130,81 +139,81 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
 
-dra: dra_dirs $(BUILD_DIR)/DRA.BIN
+dra: %: | $(MISC_DIRS) $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
 	$(call link,dra,$@)
 
-ric: ric_dirs $(BUILD_DIR)/RIC.BIN
+ric: %: | $(MISC_DIRS) $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
 
-cen: stcen_dirs $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
+cen: %: | $(STAGE_DIRS) $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_CEN.BIN:
 	$(GFXSTAGE) e assets/st/cen $@
 
-dre: stdre_dirs $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
+dre: %: | $(STAGE_DIRS) $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_DRE.BIN:
 	$(GFXSTAGE) e assets/st/dre $@
 
-mad: stmad_dirs $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
+mad: %: | $(STAGE_DIRS) $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
 $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_MAD.BIN:
 	$(GFXSTAGE) e assets/st/mad $@
 
-no3: stno3_dirs $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
+no3: %: | $(STAGE_DIRS) $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NO3.BIN:
 	$(GFXSTAGE) e assets/st/no3 $@
 
-np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
+np3: %: | $(STAGE_DIRS) $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NP3.BIN:
 	$(GFXSTAGE) e assets/st/np3 $@
 
-nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
+nz0: %: | $(STAGE_DIRS) $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
 $(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NZ0.BIN:
 	$(GFXSTAGE) e assets/st/nz0 $@
 
-sel: stsel_dirs $(BUILD_DIR)/SEL.BIN
+sel: %: | $(STAGE_DIRS) $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 	$(OBJCOPY) -O binary $< $@
 
-st0: stst0_dirs $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
+st0: %: | $(STAGE_DIRS) $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
 
-wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
+wrp: %: | $(STAGE_DIRS) $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
 	$(GFXSTAGE) e assets/st/wrp $@
 
-rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
+rwrp: %: | $(STAGE_DIRS) $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_RWRP.BIN:
 	$(GFXSTAGE) e assets/st/rwrp $@
 
-tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
+tt_000: %: | $(SERVANT_DIRS) $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
-mad_fix: stmad_dirs $$(call list_o_files,st/mad)
+mad_fix: %: | $(STAGE_DIRS) $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T stmad.ld \
@@ -212,13 +221,6 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
-
-tt_%_dirs:
-	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-st%_dirs:
-	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-%_dirs:
-	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
@@ -643,6 +645,11 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 	touch $@
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
+
+.PRECIOUS: $(BUILD_DIR)/%/
+.SILENT:  $(BUILD_DIR)/%/
+$(BUILD_DIR)/%/:
+	-mkdir -p $@
 
 SHELL = /bin/bash -e -o pipefail
 
