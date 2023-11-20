@@ -233,10 +233,7 @@ $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 $(BUILD_DIR)/F_RWRP.BIN:
 	$(GFXSTAGE) e assets/st/rwrp $@
 
-tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
-$(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
-	$(OBJCOPY) -O binary $< $@
-	printf '\x00' | dd of=$@ bs=1 seek=40959 count=1 conv=notrunc
+tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN $(BUILD_DIR)/FT_000.BIN
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \

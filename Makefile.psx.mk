@@ -57,3 +57,9 @@ $(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
+
+$(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%.elf
+       $(OBJCOPY) -O binary $< $@
+       printf '\x00' | dd of=$@ bs=1 seek=40959 count=1 conv=notrunc
+$(BUILD_DIR)/FT_%.BIN: disks/$(VERSION)/SERVANT/FT_%.BIN
+       cp $< $@
