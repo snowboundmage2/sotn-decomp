@@ -8,7 +8,7 @@ import (
 )
 
 type sprite struct {
-	Flags   uint16 `json:"flags"`
+	Flags   uint16 `json:"Flags"`
 	X       int16  `json:"x"`
 	Y       int16  `json:"y"`
 	Width   uint16 `json:"width"`
@@ -23,7 +23,7 @@ type sprite struct {
 
 type spriteDefs struct {
 	Banks   [][]*[]sprite `json:"banks"`
-	Indices []int         `json:"indices"`
+	Indices []int         `json:"Indices"`
 }
 
 func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
@@ -126,7 +126,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 		spriteRanges = append(spriteRanges, bankRange)
 	}
 
-	// the indices do not guarantee sprites to be stored in a linear order
+	// the Indices do not guarantee sprites to be stored in a linear order
 	// we must sort the offsets to preserve the order sprites are stored
 	sortedOffsets := make([]PsxOffset, 0, len(pool))
 	for offset := range pool {
@@ -134,7 +134,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 	}
 	sort.Slice(sortedOffsets, func(i, j int) bool { return sortedOffsets[i] < sortedOffsets[j] })
 
-	// create a list of indices to replace the original pointers
+	// create a list of Indices to replace the original pointers
 	indices := make([]int, len(offBanks))
 	for i, offset := range offBanks {
 		if offset == RamNull {

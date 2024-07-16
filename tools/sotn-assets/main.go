@@ -15,15 +15,16 @@ type dataContainer[T any] struct {
 }
 
 type ovl struct {
-	ranges            []dataRange
-	rooms             dataContainer[[]room]
-	layers            dataContainer[[]roomLayers]
-	sprites           dataContainer[spriteDefs]
-	graphics          dataContainer[gfx]
-	layouts           dataContainer[layouts]
-	layoutsExtraRange dataRange
-	tileMaps          dataContainer[map[PsxOffset][]byte]
-	tileDefs          dataContainer[map[PsxOffset]tileDef]
+	ranges              []dataRange
+	rooms               dataContainer[[]room]
+	layers              dataContainer[[]roomLayers]
+	sprites             dataContainer[spriteDefs]
+	graphics            dataContainer[gfx]
+	graphicsHeaderRange dataRange
+	layouts             dataContainer[layouts]
+	layoutsHeaderRange  dataRange
+	tileMaps            dataContainer[map[PsxOffset][]byte]
+	tileDefs            dataContainer[map[PsxOffset]tileDef]
 }
 
 func getOvlAssets(fileName string) (ovl, error) {
@@ -37,7 +38,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		Cluts                 PsxOffset // 🫥
 		Layouts               PsxOffset // ✅
 		Layers                PsxOffset // ✅
-		Graphics              PsxOffset // 🫥 WIP
+		Graphics              PsxOffset // ✅
 		FnUpdateStageEntities PsxOffset
 	}
 
@@ -88,7 +89,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
 	}
 
-	graphics, graphicsRange, err := readGraphics(file, header.Graphics)
+	graphics, graphicsRanges, err := readGraphics(file, header.Graphics)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all graphics: %w", err)
 	}
@@ -97,7 +98,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	if layoutOff == RamNull {
 		// some overlays have this field nulled, we have to find the offset ourselves
 		// it should be usually be right after header.Graphics
-		layoutOff = graphicsRange.end // ⚠️ assumption
+		layoutOff = graphicsRanges[0].end // ⚠️ assumption
 	}
 	nLayouts := maxBy(rooms, func(r room) int { // ⚠️ assumption
 		return int(r.EntityLayoutID)
@@ -113,20 +114,22 @@ func getOvlAssets(fileName string) (ovl, error) {
 			roomsRange,
 			layersRange,
 			spritesRange,
-			graphicsRange,
+			graphicsRanges[0],
+			graphicsRanges[1],
 			layoutsRange[0],
 			layoutsRange[1],
 			tileMapsRange,
 			tileDefsRange,
 		}),
-		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
-		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
-		sprites:           dataContainer[spriteDefs]{dataRange: spritesRange, content: sprites},
-		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
-		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
-		layoutsExtraRange: layoutsRange[0],
-		tileMaps:          dataContainer[map[PsxOffset][]byte]{dataRange: tileMapsRange, content: tileMaps},
-		tileDefs:          dataContainer[map[PsxOffset]tileDef]{dataRange: tileDefsRange, content: tileDefs},
+		rooms:               dataContainer[[]room]{dataRange: roomsRange, content: rooms},
+		layers:              dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
+		sprites:             dataContainer[spriteDefs]{dataRange: spritesRange, content: sprites},
+		graphics:            dataContainer[gfx]{dataRange: graphicsRanges[1], content: graphics},
+		graphicsHeaderRange: graphicsRanges[0],
+		layouts:             dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
+		layoutsHeaderRange:  layoutsRange[0],
+		tileMaps:            dataContainer[map[PsxOffset][]byte]{dataRange: tileMapsRange, content: tileMaps},
+		tileDefs:            dataContainer[map[PsxOffset]tileDef]{dataRange: tileDefsRange, content: tileDefs},
 	}, nil
 }
 
@@ -157,6 +160,24 @@ func extractOvlAssets(o ovl, outputDir string) error {
 	}
 	if err := os.WriteFile(path.Join(outputDir, "entity_layouts.json"), content, 0644); err != nil {
 		return fmt.Errorf("unable to create entity layouts file: %w", err)
+	}
+
+	for _, block := range o.graphics.content.Blocks {
+		for _, entry := range block.Entries {
+			if len(entry.data) == 0 {
+				continue
+			}
+			if err := os.WriteFile(path.Join(outputDir, entry.Filename), entry.data, 0644); err != nil {
+				return fmt.Errorf("unable to create graphics file: %w", err)
+			}
+		}
+	}
+	content, err = json.MarshalIndent(o.graphics.content, "", "  ")
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile(path.Join(outputDir, "gfx.json"), content, 0644); err != nil {
+		return fmt.Errorf("unable to create gfx file descriptor: %w", err)
 	}
 
 	for offset, bytes := range o.tileMaps.content {
@@ -233,9 +254,11 @@ func info(fileName string) error {
 		comment   string
 	}{
 		{o.layers.dataRange, "header", "layers"},
-		{o.layoutsExtraRange, "e_laydef", "layout entries header"},
+		{o.graphicsHeaderRange, "header", "entity gfx"},
+		{o.layoutsHeaderRange, "e_laydef", "layout Entries header"},
 		{o.rooms.dataRange, "rooms", ""},
-		{o.layouts.dataRange, "e_layout", "layout entries data"},
+		{o.layouts.dataRange, "e_layout", "layout Entries data"},
+		{o.graphics.dataRange, "gfx", ""},
 		{o.tileMaps.dataRange, "tile_data", "tile data"},
 		{o.tileDefs.dataRange, "tile_data", "tile definitions"},
 		{o.sprites.dataRange, "sprites", ""},
@@ -327,13 +350,13 @@ func main() {
 		var kind string
 		var outputDir string
 		buildCmd.StringVar(&file, "file", "", "File to process")
-		buildCmd.StringVar(&kind, "kind", "", "Kind of the file to process")
+		buildCmd.StringVar(&kind, "Kind", "", "Kind of the file to process")
 		buildCmd.StringVar(&outputDir, "o", "", "Where to store the processed source files")
 
 		buildCmd.Parse(os.Args[2:])
 
 		if file == "" || kind == "" || outputDir == "" {
-			fmt.Println("file, kind, and output_dir are required for build")
+			fmt.Println("file, Kind, and output_dir are required for build")
 			buildCmd.PrintDefaults()
 			os.Exit(1)
 		}
@@ -347,7 +370,7 @@ func main() {
 		case "sprites":
 			err = buildSprites(file, outputDir)
 		default:
-			fmt.Println("unknown kind, valid values are 'room', 'layer', 'sprites'")
+			fmt.Println("unknown Kind, valid values are 'room', 'layer', 'sprites'")
 		}
 		if err != nil {
 			panic(err)

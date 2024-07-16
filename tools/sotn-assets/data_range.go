@@ -30,6 +30,9 @@ func mergeDataRanges(ranges []dataRange) dataRange {
 
 	// performs a sanity check before merging everything
 	for i := 0; i < len(ranges)-1; i++ {
+		if ranges[i] == ranges[i+1] {
+			continue
+		}
 		if ranges[i].end != ranges[i+1].begin {
 			var err error
 			if ranges[i].end < ranges[i+1].begin {

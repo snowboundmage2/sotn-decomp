@@ -377,7 +377,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
 		nWritten := 0
 		for i, entries := range banks {
-			// do a sanity check on the entries as we do not want to build something that will cause the game to crash
+			// do a sanity check on the Entries as we do not want to build something that will cause the game to crash
 			if entries[0].X != -2 || entries[0].Y != -2 {
 				return fmt.Errorf("layout entity bank %d needs to have a X:-2 and Y:-2 entry at the beginning", i)
 			}
@@ -422,7 +422,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 		for i, entries := range banks {
 			sorting[i] = make([]layoutEntry, len(entries)-2)
 			if len(sorting[i]) > 0 { // do not sort if the list is empty
-				copy(sorting[i], entries[1:len(entries)-1]) // do not sort the -2 and -1 entries
+				copy(sorting[i], entries[1:len(entries)-1]) // do not sort the -2 and -1 Entries
 				toSort = sorting[i]
 				sort.SliceStable(toSort, less)
 			}

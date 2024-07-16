@@ -15,7 +15,11 @@ const (
 )
 
 func (off PsxOffset) Format(f fmt.State, c rune) {
-	f.Write([]byte(fmt.Sprintf("0x%08X", uint32(off))))
+	f.Write([]byte(off.String()))
+}
+
+func (off PsxOffset) String() string {
+	return fmt.Sprintf("0x%08X", uint32(off))
 }
 
 func (off PsxOffset) real() int {
