@@ -1,4 +1,4 @@
-#include "weapon_private.h"
+#include "weapon_common.h"
 
 #include "../destroy_entity.h"
 

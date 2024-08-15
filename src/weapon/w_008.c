@@ -1,6 +1,42 @@
 // Weapon ID #8. Used by weapons:
 // Leather shield, Unknown#203
-#include "weapon_private.h"
+
+#include "weapon_common.h"
+
+// exported
+static void EntityWeaponAttack(Entity* self);
+static void LoadWeaponPalette(s32 clutIndex);
+static s32 func_ptr_80170004(Entity* self);
+static void func_ptr_80170008(Entity* self);
+static void func_ptr_8017000C(Entity* self);
+static s32 func_ptr_80170010(Entity* self);
+static s32 func_ptr_80170014(Entity* self);
+static int GetWeaponId(void);
+static s32 EntityWeaponShieldSpell(Entity* self);
+static void func_ptr_80170024(Entity* self);
+static void func_ptr_80170028(Entity* self);
+static void WeaponUnused2C(void);
+static void WeaponUnused30(void);
+static void WeaponUnused34(void);
+static void WeaponUnused38(void);
+static void WeaponUnused3C(void);
+
+void DestroyEntity(Entity* entity);
+static void SetSpriteBank1(SpriteParts* animset);
+static void SetSpriteBank2(SpriteParts* animset);
+static void DecelerateX(s32 amount);
+static void DecelerateY(s32 amount);
+static void SetSpeedX(s32 speed);
+
+Weapon OVL_EXPORT(header) = {
+    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
+    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
+    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
+    func_ptr_80170024,  func_ptr_80170028, WeaponUnused2C,
+    WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
+    WeaponUnused3C,
+};
+
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
 #include "shared.h"
@@ -160,8 +196,11 @@ static s32 func_ptr_80170014(Entity* self) {}
 
 static int GetWeaponId(void) { return 8; }
 
+#if 0
+INCLUDE_ASM("weapon/nonmatchings/w_008", EntityWeaponShieldSpell);
+#else
 // This needs to become s32!
-void EntityWeaponShieldSpell(Entity* self) {
+s32 EntityWeaponShieldSpell(Entity* self) {
     s16 back;
     s16 front;
     s16 top;
@@ -416,6 +455,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim = prim->next;
     }
 }
+#endif
 
 static void func_ptr_80170024(Entity* self) {}
 
