@@ -3,6 +3,14 @@
 #include "servant.h"
 #include "sfx.h"
 
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172A68);
+
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172A9C);
+
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172D50);
+
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DBC);
+
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172ED8);
@@ -78,11 +86,3 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80177690);
 #endif
 
 #include "../servant_unk0.h"
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172A68);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172A9C);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172D50);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172DBC);
