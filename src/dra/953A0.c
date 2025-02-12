@@ -1220,7 +1220,7 @@ void KeyOn12_19(
         g_KeyOffChannels |= (1 << ((channel_group + 6) * 2)) +
                             (1 << (((channel_group + 6) * 2) + 1));
     }
-    func_80132A04(
+    PlaySoundEffect(
         (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
         g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
     g_CurrentSfxId12_19[channel_group] = arg0;
@@ -1424,7 +1424,7 @@ void func_80135D8C(void) {
                     *temp_t3 = temp_t2 + 6;
                     g_SfxScriptTimer[i] = temp_t2[5];
                     distance = g_SfxScriptDistance[i];
-                    func_80132A04(
+                    PlaySoundEffect(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
                     g_SfxScriptTimer[i]--;
@@ -1453,7 +1453,7 @@ void func_80135D8C(void) {
             *temp_t2_2 = temp_v1 + 6;
             g_SfxScriptTimer[3] = temp_v1[5];
             distance = distance2;
-            func_80132A04(33, vab, prog, tone, note, volume >> 7, distance);
+            PlaySoundEffect(33, vab, prog, tone, note, volume >> 7, distance);
 
         } else {
             g_SfxScriptTimer[3]--;
@@ -1534,11 +1534,11 @@ void func_801361F8(void) {
         ExecSfx();
         func_80135D8C();
         ExecSoundCommands();
-        func_80133FCC();
+        UpdateCdSoundCommand();
         ExecCdSoundCommands();
         SpuSetKey(SPU_OFF, g_KeyOffChannels);
         g_KeyOffChannels = 0;
-        func_80131FCC();
+        UpdateSoundStatus();
 
         if (g_MuteCd) {
             SetCdVolume(0, 0, 0);

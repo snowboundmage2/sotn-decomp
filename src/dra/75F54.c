@@ -32,7 +32,7 @@ void PlayerStepKillWater(void) {
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
         PlaySfx(SFX_VO_ALU_DEATH);
-        func_80113EE0();
+        ResetPlayerState();
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.player.anim = 0xC1;
         PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -82,7 +82,7 @@ void PlayerStepBossGrab(void) {
 
     switch (g_CurrentEntity->step_s) {
     case 0:
-        func_80113EE0();
+        ResetPlayerState();
         if (g_Player.unk62 == 0) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.timers[2] = 8;
@@ -140,7 +140,7 @@ void PlayerStepHellfire(void) {
         // Make factory with blueprint #33. Factory makes entities with ID 25.
         // This is EntityHellfireHandler.
         if (CreateEntFactoryFromEntity(g_CurrentEntity, 33, 0) == NULL) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         SetPlayerAnim(1);
         PLAYER.step_s++;
@@ -198,7 +198,7 @@ void PlayerStepHellfire(void) {
     }
     // Not sure why this cast to u16 is needed but it is
     if (((u16)runFinishingBlock) || (g_Player.unk5C == 0xFFFF)) {
-        LandToTheGround(0);
+        ExecuteLanding(0);
         SetPlayerAnim(0x3D);
         CreatePlayerEffectEntities();
     }
@@ -207,7 +207,7 @@ void PlayerStepHellfire(void) {
 void PlayerStepUnk48(void) {
     switch (PLAYER.step_s) {
     case 0:
-        func_80113EE0();
+        ResetPlayerState();
         g_Player.unk40 = 0x8166;
         g_Player.timers[2] = 6;
         PLAYER.velocityX = 0;
@@ -221,7 +221,7 @@ void PlayerStepUnk48(void) {
     case 1:
         if (PLAYER.animFrameDuration < 0) {
             PlaySfx(SFX_VO_ALU_WHAT);
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         break;
 
@@ -234,7 +234,7 @@ void PlayerStepUnk49(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
-        LandToTheGround(0);
+        ExecuteLanding(0);
     }
 }
 
@@ -272,7 +272,7 @@ bool BatFormFinished(void) {
     return false;
 }
 
-void func_8011690C(s16 arg0) {
+void UpdatePlayerRotation(s16 arg0) {
     if (PLAYER.rotZ < arg0) {
         PLAYER.rotZ += 16;
         if (arg0 < PLAYER.rotZ) {
@@ -507,7 +507,7 @@ void ControlBatForm(void) {
             }
             PLAYER.step_s++;
         } else {
-            func_8011690C(0);
+            UpdatePlayerRotation(0);
             DecelerateX(0x1200);
             DecelerateY(0x1200);
             break;
@@ -530,7 +530,7 @@ void ControlBatForm(void) {
             } else {
                 PLAYER.velocityY = FIX(-1.25);
             }
-            func_8011690C(-0x80);
+            UpdatePlayerRotation(-0x80);
             DecelerateX(0x1200);
             break;
         case PAD_DOWN:
@@ -544,13 +544,13 @@ void ControlBatForm(void) {
             } else {
                 PLAYER.velocityY = FIX(1.25);
             }
-            func_8011690C(0);
+            UpdatePlayerRotation(0);
             DecelerateX(0x1200);
             break;
         case PAD_RIGHT:
             PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 0;
-            func_8011690C(0x180);
+            UpdatePlayerRotation(0x180);
             if (PLAYER.velocityX > FIX(1.25)) {
                 DecelerateX(0x1200);
             } else {
@@ -565,7 +565,7 @@ void ControlBatForm(void) {
         case PAD_LEFT:
             PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 1;
-            func_8011690C(0x180);
+            UpdatePlayerRotation(0x180);
             if (PLAYER.velocityX < FIX(-1.25)) {
                 DecelerateX(0x1200);
             } else {
@@ -580,7 +580,7 @@ void ControlBatForm(void) {
         case PAD_RIGHT | PAD_UP:
             PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 0;
-            func_8011690C(0x80);
+            UpdatePlayerRotation(0x80);
             if (PLAYER.velocityX > FIX(0.875)) {
                 DecelerateX(0xC00);
             } else {
@@ -595,7 +595,7 @@ void ControlBatForm(void) {
         case PAD_LEFT | PAD_UP:
             PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 1;
-            func_8011690C(0x80);
+            UpdatePlayerRotation(0x80);
             if (PLAYER.velocityX < FIX(-0.875)) {
                 DecelerateX(0xC00);
             } else {
@@ -614,7 +614,7 @@ void ControlBatForm(void) {
                 PLAYER.ext.player.anim = 0xC5;
             }
             PLAYER.facingLeft = 0;
-            func_8011690C(0);
+            UpdatePlayerRotation(0);
             if (PLAYER.velocityX > FIX(0.875)) {
                 DecelerateX(0xC00);
             } else {
@@ -633,7 +633,7 @@ void ControlBatForm(void) {
                 PLAYER.ext.player.anim = 0xC5;
             }
             PLAYER.facingLeft = 1;
-            func_8011690C(0);
+            UpdatePlayerRotation(0);
             if (PLAYER.velocityX < FIX(-0.875)) {
                 DecelerateX(0xC00);
             } else {
@@ -668,13 +668,13 @@ void ControlBatForm(void) {
         } else {
             if (directionsPressed & PAD_UP) {
                 PLAYER.velocityY -= FIX(0.125);
-                func_8011690C(0x80);
+                UpdatePlayerRotation(0x80);
             }
             if (directionsPressed & PAD_DOWN) {
                 PLAYER.velocityY += FIX(0.125);
             }
             if (!(directionsPressed & PAD_UP)) {
-                func_8011690C(0x180);
+                UpdatePlayerRotation(0x180);
             }
             if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
                 DecelerateY(0x2000);
@@ -722,12 +722,12 @@ void ControlBatForm(void) {
     case 4:
         DecelerateX(FIX(12.0 / 128));
         DecelerateY(FIX(28.0 / 128));
-        func_8011690C(0x180);
+        UpdatePlayerRotation(0x180);
         if (PLAYER.animFrameDuration < 0) {
             // This actually creates the entity factory to produce the fireball
             CreateEntFactoryFromEntity(g_CurrentEntity, 81, 0);
             SetSpeedX(FIX(-1.5));
-            func_8011690C(0);
+            UpdatePlayerRotation(0);
             SetPlayerAnim(0xC3);
             PLAYER.step_s++;
         }
@@ -736,7 +736,7 @@ void ControlBatForm(void) {
     case 5:
         DecelerateX(FIX(12.0 / 128));
         DecelerateY(FIX(28.0 / 128));
-        func_8011690C(0);
+        UpdatePlayerRotation(0);
         if (PLAYER.ext.player.anim == 0xC4 && PLAYER.animFrameIdx == 8) {
             PLAYER.step_s = 1;
         }
@@ -771,7 +771,7 @@ void PlayerUnBat(void) {
         PLAYER.velocityY = 0;
     }
     DecelerateY(0x2000);
-    func_8011690C(0);
+    UpdatePlayerRotation(0);
     else_cycles = 0;
     switch (PLAYER.step_s) {
     case 0:
@@ -1193,7 +1193,7 @@ void PlayerUnMist(void) {
 
 void PlayerStepSpellDM(void) {
     if (PLAYER.animFrameDuration < 0) {
-        LandToTheGround(0);
+        ExecuteLanding(0);
     }
 }
 
@@ -1210,7 +1210,7 @@ void PlayerStepSoulSteal(void) {
         CreateEntFactoryFromEntity(g_CurrentEntity, 112, 0);
     }
     if (PLAYER.animFrameDuration < 0) {
-        LandToTheGround(0);
+        ExecuteLanding(0);
     }
 }
 
@@ -1223,6 +1223,6 @@ void PlayerStepSwordWarp(void) {
         }
     } else if (--D_80138008 == 0) {
         PLAYER.palette = 0x8100;
-        LandToTheGround(0);
+        ExecuteLanding(0);
     }
 }

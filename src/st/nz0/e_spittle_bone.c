@@ -239,7 +239,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         break;
 
     case 3:
-        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 9);
+        primIndex = g_api.AllocPrimRecursively(PRIM_TILE, 9);
         if (primIndex == -1) {
             DestroyEntity(self);
             break;

@@ -47,7 +47,7 @@ u8 D_800ACF54[] = {
 };
 
 // Corresponding RIC function is RicLandToTheGround (much simpler)
-void LandToTheGround(s32 arg0) {
+void ExecuteLanding(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
 
@@ -176,7 +176,6 @@ void ExecuteJump(bool clearUnk44bit) {
     }
 }
 
-// jump kick? needs leap stone + fast -Y velocity
 void ExecuteJumpKick(void) {
     g_Player.unk44 |= (0x20 | 0x01);
     SetPlayerAnim(32);
@@ -368,7 +367,7 @@ void ExecuteSwordWarp(u8 anim) {
     g_Player.unk48 = 0;
 }
 
-bool HandlePlayerAttack(void) {
+bool ExecutePlayerAttack(void) {
     Entity* ent6C;
     bool var_s7; // Triggers on some kind of special move spell
     Equipment sp10;
@@ -837,7 +836,6 @@ block_45:
     return true;
 }
 
-// dropping subweapon?
 void DestroyEquippedWeapon(void) {
     Entity* ent = &g_Entities[E_WEAPON];
     DestroyEntity(ent);
@@ -910,7 +908,7 @@ void PerformSwordBrothers(void) {
     g_Player.timers[ALU_T_12] = 4;
 }
 
-void func_8010FD88(void) {
+void PerformBackDash(void) {
     PLAYER.step = Player_Stand;
     PLAYER.step_s = 3;
     SetSpeedX(FIX(-3.5));
@@ -921,4 +919,4 @@ void func_8010FD88(void) {
     PlaySfx(SFX_SCRAPE_C);
 }
 
-// Next func in PSP is SetPlayerStep; next in US is func_8010FDF8. File split.
+// Next func in PSP is SetPlayerStep; next in US is HandlePlayerMovement. File split.

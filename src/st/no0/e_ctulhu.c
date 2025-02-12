@@ -384,7 +384,7 @@ void EntityCtulhu(Entity* self) {
             if (self->animCurFrame > 8 && self->animCurFrame < 19) {
                 self->animCurFrame = 0x14;
             }
-            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
+            primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 8);
             if (primIndex == -1) {
                 self->step_s = 0;
                 return;
@@ -624,7 +624,7 @@ void EntityCtulhuFireball(Entity* self) {
         self->velocityX = rcos(rotZ) * 48;
         self->velocityY = rsin(rotZ) * 48;
 
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -690,7 +690,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTY;
         self->rotY = 256;
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 128);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 128);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

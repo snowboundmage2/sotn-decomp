@@ -27,7 +27,7 @@ void func_us_801B6324(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -348,7 +348,7 @@ void func_us_801B6F30(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -601,14 +601,14 @@ void func_us_801B6F30(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (g_api.func_80131F68()) {
+            if (g_api.IsSoundPlaying()) {
                 g_api.PlaySfx(SET_STOP_MUSIC);
             }
             self->step_s++;
             break;
 
         case 1:
-            if (!g_api.func_80131F68()) {
+            if (!g_api.IsSoundPlaying()) {
                 if ((g_CutsceneFlags & 0x200) == 0) {
                     prim = &g_PrimBuf[self->primIndex];
                     for (i = 0; i < 10; i++) {
@@ -903,7 +903,7 @@ void func_us_801B8A00(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -1153,7 +1153,7 @@ void func_us_801B8A00(Entity* self) {
             break;
 
         case 2:
-            if (!g_api.func_80131F68() && (g_CutsceneFlags & 0x200) == 0) {
+            if (!g_api.IsSoundPlaying() && (g_CutsceneFlags & 0x200) == 0) {
                 sfxIndex =
                     self->ext.et_801B6F30.unk80 + self->ext.et_801B6F30.unk82;
                 g_api.PlaySfx(D_us_80181978[sfxIndex]);
@@ -1167,7 +1167,7 @@ void func_us_801B8A00(Entity* self) {
 #ifdef VERSION_PSP
         g_api.PlaySfx(SET_STOP_MUSIC);
 #else
-        if (g_api.func_80131F68()) {
+        if (g_api.IsSoundPlaying()) {
             g_api.PlaySfx(SET_STOP_MUSIC);
         }
 #endif

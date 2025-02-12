@@ -646,9 +646,9 @@ s32 LoadVabData(void) {
     LOAD_VAB(1, aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
     LOAD_VAB(2, aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
     LOAD_VAB(3, aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
-    func_80131EBC(aPqes, 0x618);
-    func_80131EBC(aPqes_0, 0x201);
-    func_80131EBC(aPqes_1, 0x205);
+    SetStringById(aPqes, 0x618);
+    SetStringById(aPqes_0, 0x201);
+    SetStringById(aPqes_1, 0x205);
     return 0;
 }
 
@@ -955,7 +955,7 @@ loop_5:
         DrawOTag(g_CurrentOT);
         UpdateClutAnimations();
         func_801361F8();
-        if (func_80131F28() > 900) {
+        if (GetSoundStatus() > 900) {
             CdInit();
             MuteSound();
         }
@@ -1070,7 +1070,7 @@ void func_800E414C(void) {
         D_8003C708.unk2++;
         return;
     case 1:
-        if (!func_80131F68()) {
+        if (!IsSoundPlaying()) {
             if (g_UseDisk != 0) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr | 0x8000;

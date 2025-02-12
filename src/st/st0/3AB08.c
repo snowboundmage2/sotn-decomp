@@ -128,7 +128,7 @@ void EntityClockTower3D(Entity* self) {
         xBase = 0x480;
         self->posX.i.hi = xBase - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x28);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x28);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -276,7 +276,7 @@ void EntityCutscenePhotograph(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInit3DObject);
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 8);
         if (primIndex == -1) {
             self->step = 0;
             return;

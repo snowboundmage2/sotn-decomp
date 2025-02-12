@@ -471,7 +471,7 @@ u_long* D_800A3BB8[] = {
 // Note: Including this as part of the previous file (62D70.c) caused
 // four 00 bytes to be added to the rodata at 0x3CDC0; this indicates
 // that this function should be the start of this new file.
-void func_80103ED4(void) {
+void HandleSaveMenuState(void) {
     char saveFile[32];
     s32 memCardClose;
     s32 i;
@@ -597,13 +597,13 @@ void func_80103ED4(void) {
     }
 }
 
-void func_8010427C(void) {
+void FreeSaveMenuPrimitives(void) {
     FreePrimitives(D_80137E40);
     FreePrimitives(D_80137E44);
     FreePrimitives(D_80137E48);
 }
 
-void func_801042C4(s32 arg0) {
+void InitializeSaveMenu(s32 arg0) {
     VECTOR sp10;
     Primitive* prim;
     s32 i;
@@ -620,14 +620,14 @@ void func_801042C4(s32 arg0) {
     D_80137E54 = 0;
     PlaySfx(SET_STOP_MUSIC);
     D_80097928 = 1;
-    func_80103EAC();
+    ResetSaveMenuState();
     D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
     D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
     D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
 
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
-    D_80137E48 = AllocPrimBuffers(PRIM_TILE, PrimCount);
+    D_80137E48 = AllocPrimRecursively(PRIM_TILE, PrimCount);
     prim = &g_PrimBuf[D_80137E48];
     i = 0;
 
@@ -672,7 +672,7 @@ void func_801042C4(s32 arg0) {
     }
 
     SetGeomScreen(0x100);
-    D_80137E40 = AllocPrimBuffers(5U, 0x18);
+    D_80137E40 = AllocPrimRecursively(5U, 0x18);
     prim = &g_PrimBuf[D_80137E40];
     if (prim != NULL) {
         do {
@@ -688,7 +688,7 @@ void func_801042C4(s32 arg0) {
             prim = prim->next;
         } while (prim != NULL);
     }
-    D_80137E44 = AllocPrimBuffers(2U, 0x12);
+    D_80137E44 = AllocPrimRecursively(2U, 0x12);
     prim = &g_PrimBuf[D_80137E44];
     if (prim != NULL) {
         do {
@@ -704,7 +704,7 @@ void func_801042C4(s32 arg0) {
     }
 }
 
-void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
+void UpdateSaveMenuGraphics(s32 arg0, s32 arg1, s32 arg2) {
 #if defined(VERSION_US)
     const s32 PRIORITY_SHIFT = 16;
 #elif defined(VERSION_HD)
@@ -905,7 +905,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void func_80105078(s32 arg0, s32 arg1) {
+void UpdateSaveMenuPrimitives(s32 arg0, s32 arg1) {
     VECTOR sp28;
     SVECTOR pad;
     SVECTOR sp40[3];
@@ -979,12 +979,12 @@ void func_80105078(s32 arg0, s32 arg1) {
     }
 }
 
-void func_80105408(void) {
+void SimulatePadUp(void) {
     g_Player.padSim = PAD_UP;
     g_Player.D_80072EFC = 1;
 }
 
-void func_80105428(void) {
+void UpdateSaveMenuState(void) {
 #if defined(VERSION_US)
     const s32 PAD_MASK = PAD_CROSS | PAD_TRIANGLE;
 #elif defined(VERSION_HD)
@@ -1006,7 +1006,7 @@ void func_80105428(void) {
         D_8003C730 = 0;
     }
     if (D_80137E54 != 0) {
-        func_80103ED4();
+        HandleSaveMenuState();
     }
     temp_s3 = D_801379C8.vy;
 #if defined(VERSION_US)
@@ -1029,7 +1029,7 @@ void func_80105428(void) {
         } else {
             timer_temp = (timer_temp * 4) + 0xA0;
         }
-        func_80104790(0, timer_temp, 0);
+        UpdateSaveMenuGraphics(0, timer_temp, 0);
         D_80137EE4 = timer_temp;
 
         if (IsPlayerInRange(0x60, 0xA0) != 0) {
@@ -1052,7 +1052,7 @@ void func_80105428(void) {
         if (D_80137EE4 < 0xC0) {
             D_80137EE4 += 4;
         }
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
         if ((D_801379B8 <
              (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) &&
             (g_GameTimer != 0)) {
@@ -1066,11 +1066,11 @@ void func_80105428(void) {
             g_Player.D_80072EFC = 1;
         } else if (D_801379B8 ==
                    (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) {
-            func_80105408();
+            SimulatePadUp();
             D_80137EE8 = 8;
             if (D_80137EE0 == 0) {
                 if (D_80097924 >= 0) {
-                    func_80102EB8();
+                    InitializeSaveMenuPrimitives();
                     D_801379BC = 0x80;
                     if (D_8006C378 < 0) {
                         D_80137E54 = 1;
@@ -1078,40 +1078,40 @@ void func_80105428(void) {
                     }
                 } else {
                     D_80097924 = 0;
-                    func_80102EB8();
+                    InitializeSaveMenuPrimitives();
                     D_801379BC = 0x100;
                 }
             } else {
                 D_801379BC++;
             }
         } else {
-            func_80105408();
+            SimulatePadUp();
         }
         break;
     case 0x80:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
         if (HandleSaveMenu(3) != 0) {
             if (D_80137E6C == 0) {
                 D_80137E54 = 2;
                 D_801379BC = 2;
 
             } else {
-                func_80102EB8();
+                InitializeSaveMenuPrimitives();
                 D_801379BC++;
             }
         }
         break;
     case 0x81:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
 
         if (HandleSaveMenu(4) != 0) {
             if (D_80137E6C == 0) {
                 D_80097924 = 0;
-                func_80102EB8();
+                InitializeSaveMenuPrimitives();
                 D_801379BC = 0x100;
             } else {
                 D_801379BC = 0x101;
@@ -1121,9 +1121,9 @@ void func_80105428(void) {
         }
         break;
     case 0x100:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
         temp_result = HandleSaveMenu(1);
         if (temp_result == 0) {
             break;
@@ -1138,7 +1138,7 @@ void func_80105428(void) {
         break;
     case 0x101:
         D_801379C8.vy = temp_s3 + D_80137EE8;
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
         if (g_pads[0].pressed & PAD_MASK) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 1;
@@ -1152,13 +1152,13 @@ void func_80105428(void) {
         }
         break;
     case 0x2:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
         D_80137EE4 += 4;
         if (D_80137EE4 >= 0x101) {
             D_80137EE4 = 0x100;
         }
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
 
         if (D_80137EE4 == 0x100) {
             if ((D_80137E4C < 4) && (D_80137EE0 == 0)) {
@@ -1171,12 +1171,12 @@ void func_80105428(void) {
         }
         break;
     case 0x3:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
         if (++D_80137EE8 >= 0x81) {
             D_80137EE8 = 0x80;
         }
-        func_80104790(0, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(0, D_80137EE4, 0);
 
         if (D_80137EE8 == 0x80) {
             D_80137EEC = 0;
@@ -1184,19 +1184,19 @@ void func_80105428(void) {
         }
         break;
     case 0x4:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
         D_80137EEC += 2;
         if (D_80137EEC >= 0x80) {
             D_80137EEC = 0x7F;
         }
-        func_80104790(0, D_80137EE4, D_80137EEC);
+        UpdateSaveMenuGraphics(0, D_80137EE4, D_80137EEC);
         if (D_80137EEC >= 0x10) {
             temp_s0 = (D_80137EEC - 0x10) * 0x10;
             if (temp_s0 >= 0x101) {
                 temp_s0 = 0x100;
             }
-            func_80105078(temp_s0, 0);
+            UpdateSaveMenuPrimitives(temp_s0, 0);
         }
 
         if (D_80137EEC != 0x7F) {
@@ -1209,7 +1209,7 @@ void func_80105428(void) {
         }
         break;
     case 0x5:
-        func_80105408();
+        SimulatePadUp();
         if (D_80137EE8 < 0x41) {
             if ((D_801379C8.vy & 0x7FF) >= 0x400) {
                 D_80137EE8 = (0x800 - (D_801379C8.vy & 0x7FF)) / 16;
@@ -1225,34 +1225,34 @@ void func_80105428(void) {
         if (D_80137EEC < 0) {
             D_80137EEC = 0;
         }
-        func_80104790(1, D_80137EE4, D_80137EEC);
+        UpdateSaveMenuGraphics(1, D_80137EE4, D_80137EEC);
         if (D_80137EEC != 0) {
-            func_80105078(D_80137EE4, 0);
+            UpdateSaveMenuPrimitives(D_80137EE4, 0);
         } else {
-            func_80105078(0, 0);
+            UpdateSaveMenuPrimitives(0, 0);
         }
 
         if (D_80137EE8 == 0x10) {
             if ((D_801379C8.vy & 0x7FF) >= 0x7F0) {
                 D_801379C8.vy = 0;
-                func_80104790(1, D_80137EE4, 0);
+                UpdateSaveMenuGraphics(1, D_80137EE4, 0);
                 InitClutAnimation(0x4020U);
                 if (D_80137EE0 == 0) {
-                    func_80102EB8();
+                    InitializeSaveMenuPrimitives();
                 }
                 D_801379BC++;
             }
         }
         break;
     case 0x6:
-        func_80105408();
+        SimulatePadUp();
         if (D_80137EE0 != 0) {
             func_801027C4(5);
             D_801379BC = 0x300;
 
         } else if (D_80137E4C >= 6 && HandleSaveMenu(0) != 0) {
             if (D_80137E4C == 9) {
-                func_80102EB8();
+                InitializeSaveMenuPrimitives();
                 D_801379BC = 0x200;
 
             } else {
@@ -1267,7 +1267,7 @@ void func_80105428(void) {
         }
         break;
     case 0x200:
-        func_80105408();
+        SimulatePadUp();
         if (HandleSaveMenu(2) != 0) {
             if (D_80137E6C == 0) {
                 D_8006C378 = -1;
@@ -1282,7 +1282,7 @@ void func_80105428(void) {
         }
         break;
     case 0x201:
-        func_80105408();
+        SimulatePadUp();
         temp_result = MemCardInitAndFormat();
         if (temp_result == 1) {
             D_801379BC = 0x30;
@@ -1291,12 +1291,12 @@ void func_80105428(void) {
         }
         if (temp_result == -1) {
             D_80137E4C = 0xB;
-            func_80102EB8();
+            InitializeSaveMenuPrimitives();
             D_801379BC++;
         }
         break;
     case 0x202:
-        func_80105408();
+        SimulatePadUp();
         if (HandleSaveMenu(0) != 0) {
             D_80097924 = -1;
             D_801379BC = 0x20;
@@ -1304,18 +1304,18 @@ void func_80105428(void) {
         }
         break;
     case 0x7:
-        func_80105408();
-        func_80104790(1, D_80137EE4, 0);
+        SimulatePadUp();
+        UpdateSaveMenuGraphics(1, D_80137EE4, 0);
         D_801379BC++;
         break;
     case 0x8:
-        func_80105408();
+        SimulatePadUp();
         D_801379C8.vy += D_80137EE8;
         D_80137EE8 += 2;
         if (D_80137EE8 >= 0x41) {
             D_80137EE8 = 0x40;
         }
-        func_80104790(1, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(1, D_80137EE4, 0);
 
         if (D_80137EE8 == 0x40) {
             D_80137EEC = 0;
@@ -1323,9 +1323,9 @@ void func_80105428(void) {
         }
         break;
     case 0x300:
-        func_80105408();
+        SimulatePadUp();
         if (D_80137EE0 != 0) {
-            if (func_801025F4() != 0) {
+            if (GetPrimitiveClut() != 0) {
                 D_801379BC++;
             }
         }
@@ -1335,26 +1335,26 @@ void func_80105428(void) {
             D_801379BC++;
         } else {
         case 0x302:
-            func_80105408();
+            SimulatePadUp();
             D_80097C98 = 1;
         }
         break;
     case 0x303:
-        func_80105408();
+        SimulatePadUp();
         break;
     case 0x9:
         D_801379C8.vy = temp_s3 + D_80137EE8;
         if (++D_80137EEC >= 0x80) {
             D_80137EEC = 0x7F;
         }
-        func_80104790(2, D_80137EE4, D_80137EEC);
+        UpdateSaveMenuGraphics(2, D_80137EE4, D_80137EEC);
         if (D_80137EEC >= 0x40) {
-            func_80105078(D_80137EE4, 0);
+            UpdateSaveMenuPrimitives(D_80137EE4, 0);
             g_PauseAllowed = true;
             D_800978C4 = 1;
         } else {
-            func_80105078(D_80137EE4, (D_80137EEC * 2) + 0x80);
-            func_80105408();
+            UpdateSaveMenuPrimitives(D_80137EE4, (D_80137EEC * 2) + 0x80);
+            SimulatePadUp();
         }
 
         if (D_80137EEC == 0x7F) {
@@ -1367,7 +1367,7 @@ void func_80105428(void) {
         if (++D_80137EEC >= 0x23) {
             D_80137EEC = 0x22;
         }
-        func_80105078(D_80137EE4, D_80137EEC);
+        UpdateSaveMenuPrimitives(D_80137EE4, D_80137EEC);
         if (D_80137EE8 == 0) {
             D_801379BC++;
         }
@@ -1375,13 +1375,13 @@ void func_80105428(void) {
     case 0xC:
         D_801379C8.vy = 0;
         D_80137EE4 = 0x180;
-        func_80104790(1, 0x180, 0);
+        UpdateSaveMenuGraphics(1, 0x180, 0);
         D_80137EEC = 0;
         D_801379BC++;
         break;
     case 0xD:
         D_801379C8.vy = temp_s3 + 9;
-        func_80104790(3, D_80137EE4, D_80137EEC);
+        UpdateSaveMenuGraphics(3, D_80137EE4, D_80137EEC);
 
         if (++D_80137EEC == 0x60) {
             D_801379BC++;
@@ -1389,7 +1389,7 @@ void func_80105428(void) {
         break;
     case 0xE:
         D_801379C8.vy = temp_s3 + 9;
-        func_80104790(3, D_80137EE4, D_80137EEC);
+        UpdateSaveMenuGraphics(3, D_80137EE4, D_80137EEC);
 
         if (--D_80137EEC == 0) {
             D_801379BC -= 1;
@@ -1398,16 +1398,16 @@ void func_80105428(void) {
     case 0x30:
     case 0x20:
         if (D_801379BC == 0x30) {
-            func_80105408();
+            SimulatePadUp();
         }
         if (D_80137EEC >= 0x31) {
-            func_80105408();
+            SimulatePadUp();
         }
         D_801379C8.vy += 6;
         if (D_80137EE4 >= 0xC1) {
             D_80137EE4 -= 2;
         }
-        func_80104790(3, D_80137EE4, D_80137EEC);
+        UpdateSaveMenuGraphics(3, D_80137EE4, D_80137EEC);
         D_80137EEC -= 2;
         if ((g_Player.D_80072EFC == 0) && (g_pads[0].pressed & PAD_MASK)) {
             g_Player.padSim = 0;
@@ -1418,13 +1418,13 @@ void func_80105428(void) {
         } else if (D_80137EEC <= 0) {
             if (D_801379BC == 0x30) {
                 D_80137E54 = 0;
-                func_80103EAC();
+                ResetSaveMenuState();
                 D_801379BC = 1;
             } else {
                 D_80137E54 = 0;
                 D_80097924 = D_80137EF0;
                 D_8006C378 = D_80137EF4;
-                func_80103EAC();
+                ResetSaveMenuState();
                 D_801379BC = 0;
                 g_PauseAllowed = true;
                 D_800978C4 = 1;
@@ -1432,7 +1432,7 @@ void func_80105428(void) {
         }
         break;
     default:
-        func_80104790(1, D_80137EE4, 0);
+        UpdateSaveMenuGraphics(1, D_80137EE4, 0);
     }
     if (((((s16)temp_s3 + 0x400) ^ ((s16)D_801379C8.vy + 0x400)) & 0x800) &&
         ((u32)(D_801379BC - 3) < 7U)) {
@@ -1615,7 +1615,7 @@ void SetPrimitiveAllVerticesColorIntensity(
     SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 3);
 }
 
-void func_801072BC(POLY_GT4* poly) {
+void ResetPolyColorIntensity(POLY_GT4* poly) {
     SetPrimitiveAllVerticesColorIntensity(poly, 0);
 }
 
@@ -1623,7 +1623,7 @@ void SetPrimitiveDefaultColorIntensity(Primitive* prim) {
     SetPrimitiveAllVerticesColorIntensity(prim, 0x80);
 }
 
-void func_801072FC(POLY_G4* poly) {
+void ResetPolyG4Color(POLY_G4* poly) {
     setRGB0(poly, 0, 0, 0);
     setRGB1(poly, 0, 0, 0);
     setRGB2(poly, 0, 0, 0);

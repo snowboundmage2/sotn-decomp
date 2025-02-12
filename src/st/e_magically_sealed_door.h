@@ -80,7 +80,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             self->ext.magicallySealedDoor.unk86 = 4;
         }
         self->posX.i.hi += self->ext.magicallySealedDoor.unk86;
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

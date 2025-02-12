@@ -34,17 +34,17 @@ s32 MemCardInitAndFormat(void) {
     return 0;
 }
 
-void func_80102EB8(void) {
+void InitializeSaveMenuPrimitives(void) {
     Primitive *poly1, *poly2, *poly3;
     s32 i;
 
-    D_80137E58 = AllocPrimBuffers(PRIM_GT4, 3);
+    D_80137E58 = AllocPrimRecursively(PRIM_GT4, 3);
     poly1 = &g_PrimBuf[D_80137E58];
 
-    D_80137E5C = AllocPrimBuffers(PRIM_G4, 3);
+    D_80137E5C = AllocPrimRecursively(PRIM_G4, 3);
     poly2 = &g_PrimBuf[D_80137E5C];
 
-    D_80137E60 = AllocPrimBuffers(PRIM_LINE_G2, 12);
+    D_80137E60 = AllocPrimRecursively(PRIM_LINE_G2, 12);
     poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
@@ -76,7 +76,7 @@ void func_80102EB8(void) {
     }
 }
 
-void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
+void UpdateSaveMenuPoly(s32 arg0, POLY_GT4* poly, s32 arg2) {
     s32 var_v1;
 
     if (arg2 == arg0) {
@@ -100,7 +100,7 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
     }
 }
 
-POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
+POLY_GT4* UpdateSaveMenuBorder(POLY_GT4* poly1, POLY_GT4* arg1) {
     poly1->x0 = arg1->x0 - 1;
     poly1->y0 = arg1->y0 - 1;
     poly1->x1 = arg1->x1;
@@ -240,14 +240,14 @@ s32 HandleSaveMenu(s32 arg0) {
                 SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
                 prim2->p1 += 2;
                 SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
-                func_80103148(prim3, prim1);
+                UpdateSaveMenuBorder(prim3, prim1);
             } else if (
                 (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
                 SetTexturedPrimRect(
                     prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
                 prim2->p1 += 2;
                 SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
-                func_80103148(prim3, prim1);
+                UpdateSaveMenuBorder(prim3, prim1);
             } else if (D_80137E4C == 10 && temp_t0 < 33) {
 #if defined(VERSION_US)
                 // silly logic here. if 2 or 3, it's 0, otherwise it's -10
@@ -267,14 +267,14 @@ s32 HandleSaveMenu(s32 arg0) {
                 prim2->p1 += 2;
                 SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
 #endif
-                func_80103148(prim3, prim1);
+                UpdateSaveMenuBorder(prim3, prim1);
             } else if (temp_t0 < 17) {
                 SetTexturedPrimRect(prim2, 86, 80 - temp_t0, 96, temp_t0, 0, 0);
                 prim2->p1 += 2;
                 SetPrimRect(prim1, 80, 80 - temp_t0, 96, temp_t0);
-                func_80103148(prim3, prim1);
+                UpdateSaveMenuBorder(prim3, prim1);
             } else {
-                func_80103148(prim3, prim1);
+                UpdateSaveMenuBorder(prim3, prim1);
                 if (D_80137E4C == 6) {
                     prim2->p1 += 2;
                 }
@@ -308,28 +308,28 @@ s32 HandleSaveMenu(s32 arg0) {
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;
-            func_801030B4(0, prim1, D_80097924);
+            UpdateSaveMenuPoly(0, prim1, D_80097924);
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;
-            func_801030B4(1, prim1, D_80097924);
+            UpdateSaveMenuPoly(1, prim1, D_80097924);
         } else if (temp_t0 < 17) {
             prim2->p1 += 2;
             SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
             SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
-            prim3 = func_80103148(prim3, prim1);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
             SetTexturedPrimRect(prim2, 54, 104 - temp_t0, 64, temp_t0, 0, 16);
             SetPrimRect(prim1, 52, 104 - temp_t0, 64, temp_t0);
-            func_801030B4(0, prim1, D_80097924);
-            prim3 = func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(0, prim1, D_80097924);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
             SetTexturedPrimRect(prim2, 142, 104 - temp_t0, 64, temp_t0, 0, 32);
             SetPrimRect(prim1, 140, 104 - temp_t0, 64, temp_t0);
-            func_801030B4(1, prim1, D_80097924);
-            func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(1, prim1, D_80097924);
+            UpdateSaveMenuBorder(prim3, prim1);
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80097924 != 0) {
@@ -343,13 +343,13 @@ s32 HandleSaveMenu(s32 arg0) {
                 }
                 D_80097924 = 1;
             }
-            prim3 = func_80103148(prim3, prim1);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim1 = prim1->next;
-            func_801030B4(0, prim1, D_80097924);
-            prim3 = func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(0, prim1, D_80097924);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim1 = prim1->next;
-            func_801030B4(1, prim1, D_80097924);
-            func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(1, prim1, D_80097924);
+            UpdateSaveMenuBorder(prim3, prim1);
             if (g_pads[0].tapped & EXIT) {
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
@@ -409,28 +409,28 @@ s32 HandleSaveMenu(s32 arg0) {
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;
-            func_801030B4(0, prim1, D_80137E6C);
+            UpdateSaveMenuPoly(0, prim1, D_80137E6C);
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;
-            func_801030B4(1, prim1, D_80137E6C);
+            UpdateSaveMenuPoly(1, prim1, D_80137E6C);
         } else if (temp_t0 < 17) {
             prim2->p1 += 2;
             SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
             SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
-            prim3 = func_80103148(prim3, prim1);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
             SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 24, temp_t0, 0, 16);
             SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
-            func_801030B4(0, prim1, D_80137E6C);
-            prim3 = func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(0, prim1, D_80137E6C);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
             SetTexturedPrimRect(prim2, 154, 104 - temp_t0, 36, temp_t0, 0, 32);
             SetPrimRect(prim1, 148, 104 - temp_t0, 48, temp_t0);
-            func_801030B4(1, prim1, D_80137E6C);
-            func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(1, prim1, D_80137E6C);
+            UpdateSaveMenuBorder(prim3, prim1);
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80137E6C != 0) {
@@ -444,14 +444,14 @@ s32 HandleSaveMenu(s32 arg0) {
                 }
                 D_80137E6C = 1;
             }
-            prim3 = func_80103148(prim3, prim1);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim1 = prim1->next;
-            func_801030B4(0, prim1, D_80137E6C);
-            prim3 = func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(0, prim1, D_80137E6C);
+            prim3 = UpdateSaveMenuBorder(prim3, prim1);
             prim1 = prim1->next;
 
-            func_801030B4(1, prim1, D_80137E6C);
-            func_80103148(prim3, prim1);
+            UpdateSaveMenuPoly(1, prim1, D_80137E6C);
+            UpdateSaveMenuBorder(prim3, prim1);
             if (g_pads[0].tapped & EXIT) {
                 D_80137E6C = 1;
                 FreePrimitives(D_80137E58);
@@ -470,7 +470,7 @@ s32 HandleSaveMenu(s32 arg0) {
     return 0;
 }
 
-void func_80103EAC(void) {
+void ResetSaveMenuState(void) {
     D_80137E4C = 0;
     MemcardInfoInit();
 }

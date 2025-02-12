@@ -230,7 +230,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     switch (self->step) {
     case 0:
         temp_s0 = self->ext.hpNumMove.number;
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, PrimCountA + PrimCountB);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -258,7 +258,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             }
         }
 
-        // iterate through all 0x14 prims created by AllocPrimBuffers in two
+        // iterate through all 0x14 prims created by AllocPrimRecursively in two
         // batches
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
@@ -448,7 +448,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.unk84);
     a0 = self->posY.i.hi - 0x10;
 
-    // iterate through all 0x14 prims created by AllocPrimBuffers in two batches
+    // iterate through all 0x14 prims created by AllocPrimRecursively in two batches
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCountA; i++) {
         prim->x0 = s5 - offset_x;
@@ -549,7 +549,7 @@ void EntityGuardText(Entity* self) {
             self->ext.guardText.str_x += FIX(32);
             self->ext.guardText.unk98 = FIX(0xB0);
         }
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 18);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 18);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -840,7 +840,7 @@ void func_80119F70(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->primIndex = AllocPrimBuffers(PRIM_GT4, LEN(D_8013804C));
+        entity->primIndex = AllocPrimRecursively(PRIM_GT4, LEN(D_8013804C));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -969,7 +969,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     func_8011B5A4,
     EntityGravityBootBeam,
     EntitySubwpnThrownDagger,
-    func_8011E4BC,
+    EntityExplosionEffect,
     EntityDiveKickAttack,
     EntityGiantSpinningCross,
     EntitySubwpnCrashCross,
@@ -980,12 +980,12 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     func_8011E0E4,
     func_8011EDA0,
     EntityUnarmedAttack,
-    func_8011EDA8,
+    EntityPlayerHitByExplosion,
     EntitySubwpnAgunea,
     EntityAguneaHitEnemy,
     EntityNumberMovesToHpMeter,
     EntitySubwpnReboundStone,
-    EntityLevelUpAnimation,
+    EntityPlayerLevelUpAnimation,
     EntityHolyWater,
     EntityHolyWaterFlame,
     EntityUnkId24,
@@ -993,12 +993,12 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityHellfireNormalFireball,
     EntityHellfireBigFireball,
     EntityExpandingCircle,
-    func_80127CC8,
-    EntityHitByLightning,
+    EntityHellfireBeam,
+    EntityPlayerHitByLightning,
     EntityPlayerOutline,
     EntityPlayerDissolves,
-    EntityHitByIce,
-    EntityMist,
+    EntityPlayerHitByIce,
+    EntityPlayerMist,
     EntityWingSmashTrail,
     func_8011B480,
     EntityGuardText,
@@ -1010,25 +1010,25 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntitySubwpnBible,
     EntitySubwpnBibleTrail,
     EntityBatFireball,
-    func_80123B40,
+    EntityPlayerFalling,
     func_80119F70,
-    UnknownEntId48,
-    UnknownEntId49,
-    func_80123A60,
+    UpdateEntityPlayerMistHitbox,
+    InitializeEntityPlayerMistHitbox,
+    UpdateEntityAxeArmorHitbox,
     EntitySmallRisingHeart,
     EntityBatEcho,
     func_8011B530,
-    func_8011F074,
-    func_80130264,
-    func_8012F894,
-    func_80130618,
-    func_801309B4,
-    func_80130E94,
-    func_8013136C,
-    func_80129864,
+    EntityPlayerHitByDark,
+    UpdateEntityWolfRotation,
+    UpdateWolfEntity,
+    UpdateEntityWolfRotationPart2,
+    UpdateEntityWolfHitbox,
+    UpdateWolfRotationHelper,
+    EntityWolfForm,
+    EntitySummonedSpirit,
     func_8011A4C8,
     EntitySummonSpirit,
-    func_80123F78,
+    EntityPlayerColorBlend,
     EntityTeleport,
     EntityPlayerSleepZ,
     func_8011A4C8};
@@ -1858,7 +1858,7 @@ block_748:
         if (func_8011BD48(self) != 0) {
             goto block_231;
         }
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 8);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 8);
         if (self->primIndex == -1) {
 #ifdef VERSION_HD
             DestroyEntity(self);
@@ -2394,7 +2394,7 @@ void EntityPlayerOutline(Entity* self) {
     primData = D_800AD9B8[upperparams];
     switch (self->step) {
     case 0: // Initialization
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

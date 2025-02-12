@@ -316,7 +316,7 @@ void VSyncHandler(void) {
     D_800A04F0 = 0;
 }
 
-void func_800E7D08(void) {
+void ResetVSyncCounters(void) {
     s32 i;
 
     for (i = 0; i < VSYNC_UNK_LEN; i++) {
@@ -427,10 +427,10 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_SEQ:
         if (g_StageId == STAGE_LIB) {
-            func_80131EBC(aPqes_1, 0x202);
+            SetStringById(aPqes_1, 0x202);
         }
         if (g_StageId == STAGE_DAI) {
-            func_80131EBC(aPqes_1, 0x204);
+            SetStringById(aPqes_1, 0x204);
         }
         break;
     case SIM_6:
@@ -461,7 +461,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     char buf[33];
     s32 fid;
 
-    func_800E7D08();
+    ResetVSyncCounters();
     D_800A04EC = 1;
     g_SimFile = &D_800A024C[fileId];
     if (type == SimFileType_StagePrg) {

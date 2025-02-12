@@ -332,7 +332,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 if (g_SkipCutscene) {
                     continue;
                 }
-                if (g_api.func_80131F68() != false) {
+                if (g_api.IsSoundPlaying() != false) {
                     continue;
                 }
                 *g_Dialogue.scriptCur--;
@@ -341,7 +341,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 if (g_SkipCutscene) {
                     continue;
                 }
-                if (g_api.func_80131F68() != true) {
+                if (g_api.IsSoundPlaying() != true) {
                     continue;
                 }
                 *g_Dialogue.scriptCur--;
@@ -503,7 +503,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_IsCutsceneDone = 1;
-            primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 0x48);
+            primIndex = g_api.AllocPrimRecursively(PRIM_LINE_G2, 0x48);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;

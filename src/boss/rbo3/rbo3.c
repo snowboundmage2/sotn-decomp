@@ -393,7 +393,7 @@ void func_us_80192020(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180498);
         self->hitboxHeight = 1;
-        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 1);
+        primIndex = g_api.AllocPrimRecursively(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -529,7 +529,7 @@ void func_us_801923DC(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801804A4);
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PrimCount);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -769,7 +769,7 @@ void func_us_80192B38(Entity* self) {
         }
         break;
     case 2:
-        if (g_api.func_80131F68() == false) {
+        if (g_api.IsSoundPlaying() == false) {
             D_80097928 = 0;
             g_api.PlaySfx(D_80097910);
             self->step++;
@@ -815,7 +815,7 @@ void func_us_80192B38(Entity* self) {
         break;
 
     case 6:
-        if (g_api.func_80131F68() == false) {
+        if (g_api.IsSoundPlaying() == false) {
             D_80097928 = 0;
             g_api.PlaySfx(D_80097910);
             self->step++;

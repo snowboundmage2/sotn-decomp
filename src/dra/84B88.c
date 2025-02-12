@@ -28,7 +28,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
 
     switch (self->step) {
     case DAGGER_INIT:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 2);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 2);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -237,7 +237,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
 
     switch (self->step) {
     case AXE_INIT:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 5);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -464,6 +464,7 @@ s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
     return 0;
 }
 
+//HandleEntityCollision, but what entity?
 s32 func_80125B6C(s16 arg0, s16 arg1) {
     Collider collider;
     s16 xShift;
@@ -577,7 +578,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 16);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -685,7 +686,7 @@ void EntityHolyWaterFlame(Entity* self) {
         randR = (rand() & 0x1F) + 0x40;
         randG = (rand() & 0x1F) + 0x80;
         randB = (rand() & 0x1F) + 0x60;
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 4);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -789,7 +790,7 @@ void EntitySubwpnCrashCross(Entity* self) {
     ResetAfterImage(1, 1);
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -896,7 +897,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
 
     if (self->step == 0) {
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 64);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 64);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -993,7 +994,7 @@ void EntityHellfireHandler(Entity* self) {
     switch (self->step) {
     case HFH_INIT:
         g_Player.unk5C = 0;
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk5C = -1;
@@ -1052,7 +1053,7 @@ void EntityHellfireHandler(Entity* self) {
     case HFH_PLAYER_DISAPPEAR:
         PLAYER.palette = 0x810D;
         if (self->ext.hellfireHandler.timer == 0x10) {
-            // Red flickering beam. Blueprint 38 has child 29 or func_80127CC8
+            // Red flickering beam. Blueprint 38 has child 29 or EntityHellfireBeam
             CreateEntFactoryFromEntity(self, FACTORY(38, 0), 0);
         }
         if (--self->ext.hellfireHandler.timer == 0) {
@@ -1291,7 +1292,7 @@ void EntityExpandingCircle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1349,7 +1350,7 @@ void EntityExpandingCircle(Entity* self) {
     }
 }
 
-void func_80127CC8(Entity* self) {
+void EntityHellfireBeam(Entity* self) {
     Primitive* prim;
 
     if (PLAYER.step != Player_SpellHellfire) {
@@ -1362,7 +1363,7 @@ void func_80127CC8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_G4, 1);
+        self->primIndex = AllocPrimRecursively(PRIM_G4, 1);
 
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -1447,7 +1448,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_LINE_G2, 16);
+        self->primIndex = AllocPrimRecursively(PRIM_LINE_G2, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1892,7 +1893,7 @@ void EntitySubwpnAgunea(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2055,7 +2056,7 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 0x28);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 0x28);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             break;
@@ -2229,7 +2230,7 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
 }
 
-void func_80129864(Entity* self) {
+void EntitySummonedSpirit(Entity* self) {
     Primitive* prim;
     s32 angle_diff;
     s32 angle_offset;
@@ -2250,7 +2251,7 @@ void func_80129864(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 0x10);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 0x10);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2500,7 +2501,7 @@ void EntitySummonSpirit(Entity* self) {
         if (--self->ext.summonspirit.spawnTimer) {
             return;
         }
-        self->primIndex = AllocPrimBuffers(4, 9);
+        self->primIndex = AllocPrimRecursively(4, 9);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2565,7 +2566,7 @@ void EntitySummonSpirit(Entity* self) {
         self->ext.summonspirit.timer++;
         if (self->ext.summonspirit.timer > 10) {
             // Both blueprints have child 61, but 118 has a couple 4s in the
-            // other args. 61 is func_80129864. Not yet decompiled.
+            // other args. 61 is EntitySummonedSpirit. Not yet decompiled.
             if (self->params) {
                 CreateEntFactoryFromEntity(self, 118, 0);
             } else {

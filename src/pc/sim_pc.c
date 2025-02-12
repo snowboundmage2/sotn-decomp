@@ -162,7 +162,7 @@ void VSyncHandler(void) {
     D_800A04F0 = 0;
 }
 
-void func_800E7D08(void) {
+void ResetVSyncCounters(void) {
     s32 i;
 
     for (i = 0; i < VSYNC_UNK_LEN; i++) {
@@ -214,7 +214,7 @@ void InitStageWRP(Overlay* o);
 void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
-void func_80131EBC(const char* str, s16 arg1);
+void SetStringById(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
     u16* clutAddr;
 
@@ -280,10 +280,10 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_SEQ:
         if (g_StageId == STAGE_LIB) {
-            func_80131EBC(aPqes_1, 0x202);
+            SetStringById(aPqes_1, 0x202);
         }
         if (g_StageId == STAGE_DAI) {
-            func_80131EBC(aPqes_1, 0x204);
+            SetStringById(aPqes_1, 0x204);
         }
         break;
     case SIM_6:

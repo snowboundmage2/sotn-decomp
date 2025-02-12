@@ -109,7 +109,7 @@ void func_us_801BDA0C(Entity* self) {
         } else {
             self->animCurFrame = 0x62;
         }
-        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 1);
+        primIndex = g_api.AllocPrimRecursively(PRIM_TILE, 1);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

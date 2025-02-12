@@ -912,7 +912,7 @@ void RicHandleDead(
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x4C), 0);
-            // RIC blueprint 48 has child 41, EntityHitByLightning
+            // RIC blueprint 48 has child 41, EntityPlayerHitByLightning
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_HIT_BY_THUNDER, 1), 0);
             RicCreateEntFactoryFromEntity(
@@ -923,7 +923,7 @@ void RicHandleDead(
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x4D), 0);
-            // RIC blueprint 47 has child 40, EntityHitByIce
+            // RIC blueprint 47 has child 40, EntityPlayerHitByIce
             RicCreateEntFactoryFromEntity(g_CurrentEntity, 47, 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_HIT_BY_ICE, 1), 0);
@@ -1313,7 +1313,7 @@ void RicHandleSlide(void) {
     }
 }
 
-// same as DRA/func_80115C50
+// same as DRA/UpdatePlayerPositionInTopStage
 void func_8015BB80(void) {
     if (g_StageId == STAGE_TOP) {
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {

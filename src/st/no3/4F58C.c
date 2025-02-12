@@ -367,7 +367,7 @@ void EntityWarg(Entity* self) {
 
             self->palette = 0x15F;
             self->unk6C = 0x80;
-            primIndex = g_api.AllocPrimBuffers(4, 3);
+            primIndex = g_api.AllocPrimRecursively(4, 3);
             // That's weird, it should do == -1, right?
             if (!primIndex) {
                 DestroyEntity(self);

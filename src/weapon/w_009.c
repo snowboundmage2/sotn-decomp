@@ -180,7 +180,7 @@ void EntityWeaponShieldSpell(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 12);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 12);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

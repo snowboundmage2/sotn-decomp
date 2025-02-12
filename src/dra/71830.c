@@ -233,12 +233,12 @@ void PlayerStepStand(void) {
 
     if (((PLAYER.step_s == 0x57) || (PLAYER.step_s == 0x5B)) &&
         PLAYER.animFrameIdx < 5) {
-        if (func_8010FDF8(0x43018) != 0) {
+        if (HandlePlayerMovement(0x43018) != 0) {
             return;
         }
         DecelerateX(0x1000);
     } else {
-        if (func_8010FDF8(0x4301C) != 0) {
+        if (HandlePlayerMovement(0x4301C) != 0) {
             return;
         }
         DecelerateX(0x2000);
@@ -489,7 +489,7 @@ void PlayerStepStand(void) {
     }
 
     if (local_flags & 4) {
-        LandToTheGround(0);
+        ExecuteLanding(0);
         local_flags |= 0x8000;
     }
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
@@ -532,10 +532,10 @@ void PlayerStepStand(void) {
 }
 
 void PlayerStepWalk(void) {
-    if (func_8010FDF8(0x4301C) == 0) {
+    if (HandlePlayerMovement(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
     }
 }

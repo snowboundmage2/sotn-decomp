@@ -303,7 +303,7 @@ typedef enum {
     FLAG_UNK_100000 = 0x100000,
     FLAG_UNK_00200000 = 0x00200000,
     FLAG_UNK_400000 = 0x400000,
-    // When an entity used AllocPrimBuffers and their primIndex set.
+    // When an entity used AllocPrimRecursively and their primIndex set.
     // At their destruction they need to free the prims with FreePrimitives.
     FLAG_HAS_PRIMS = 0x800000,
     FLAG_NOT_AN_ENEMY = 0x01000000,
@@ -1515,7 +1515,7 @@ typedef struct {
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
-    /* 8003C7B8 */ s16 (*AllocPrimBuffers)(PrimitiveType type, s32 count);
+    /* 8003C7B8 */ s16 (*AllocPrimRecursively)(PrimitiveType type, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(
@@ -1535,7 +1535,7 @@ typedef struct {
         s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
         Entity* self, u32 flags, s32 arg2);
-    /* 8003C7F8 */ bool (*func_80131F68)(void);
+    /* 8003C7F8 */ bool (*IsSoundPlaying)(void);
     /* 8003C7FC */ DR_ENV* (*AllocateDrawEnvironment)(POLY_GT4* poly);
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
     /* 8003C804 */ void (*func_80118894)(Entity*);
@@ -1771,8 +1771,8 @@ typedef struct {
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
-    /* 80072EF8 */ s32 D_80072EF8;
-    /* 80072EFC */ s32 D_80072EFC; // stun timer
+    /* 80072EF8 */ s32 D_80072EF8; //playerAttackButton?
+    /* 80072EFC */ s32 D_80072EFC; // stun timer? could also be freeze player input for time
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 
     // 0x01: touching the ground
@@ -1805,9 +1805,9 @@ typedef struct {
     /* 80072F60 */ u16 unk40;
     /* 80072F62 */ u16 pl_high_jump_timer;
     /* 80072F64 */ u16 unk44;
-    /* 80072F66 */ u16 unk46;
-    /* 80072F68 */ u16 unk48;
-    /* 80072F6A */ s16 unk4A;
+    /* 80072F66 */ u16 unk46; // playerAttackState?
+    /* 80072F68 */ u16 unk48; // playerWeaponState?
+    /* 80072F6A */ s16 unk4A; // playerSpecialState?
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
     /* 80072F70 */ u16 prev_step;

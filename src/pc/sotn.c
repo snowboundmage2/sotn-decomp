@@ -61,7 +61,7 @@ u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 
 // list of exposed API
 void FreePrimitives(s32 index);
-s32 AllocPrimBuffers(u8 primType, s32 count);
+s32 AllocPrimRecursively(u8 primType, s32 count);
 void func_80102CD8(s32 start);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
@@ -74,7 +74,7 @@ void SetBackgroundColor(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 void func_801027C4(u32 arg0);
 void TransformPolygon(
     s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
-bool func_80131F68(void);
+bool IsSoundPlaying(void);
 DR_ENV* AllocateDrawEnvironment(Primitive* prim);
 u16* func_80106A28(u32 arg0, u16 kind);
 void func_80118894(Entity* self);
@@ -156,7 +156,7 @@ bool InitGame(struct InitGameParams* params) {
     // These two are necessary to make HandleTitle working
     GameApi api;
     api.FreePrimitives = FreePrimitives;
-    api.AllocPrimBuffers = AllocPrimBuffers;
+    api.AllocPrimRecursively = AllocPrimRecursively;
     api.CheckCollision = CheckCollision;
     api.func_80102CD8 = func_80102CD8;
     api.UpdateAnim = UpdateAnim;
@@ -172,7 +172,7 @@ bool InitGame(struct InitGameParams* params) {
     api.func_801027C4 = func_801027C4;
     api.TransformPolygon = TransformPolygon;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
-    api.func_80131F68 = func_80131F68;
+    api.IsSoundPlaying = IsSoundPlaying;
     api.AllocateDrawEnvironment = AllocateDrawEnvironment;
     api.func_80106A28 = func_80106A28;
     api.func_80118894 = func_80118894;

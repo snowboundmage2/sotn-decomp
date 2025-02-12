@@ -99,7 +99,7 @@ void EntityRWarpRoom(Entity* self) {
         self->animCurFrame = 0x66;
         self->posX.i.hi = 0x80 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0xC0 - g_Tilemap.scrollY.i.hi;
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 24);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 24);
         if (primIndex == -1) {
             self->step = 0;
             return;

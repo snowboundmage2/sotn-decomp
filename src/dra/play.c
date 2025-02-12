@@ -177,7 +177,7 @@ void HandlePlay(void) {
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
         ResetDrawEnvironments();
-        func_801024DC();
+        InitPrimitives();
         if (g_CastleFlags[NO1_WEATHER] & 0x80) {
             g_CastleFlags[NO1_WEATHER] =
                 g_NO1WeatherOptions[rand() & 0xF] + 0x80;
@@ -239,7 +239,7 @@ void HandlePlay(void) {
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
         g_GpuBuffers[1].draw.isbg = 1;
         g_GpuBuffers[0].draw.isbg = 1;
-        D_8013640C = AllocPrimBuffers(PRIM_GT4, 16);
+        D_8013640C = AllocPrimRecursively(PRIM_GT4, 16);
         D_80136410 = 0;
         prim = &g_PrimBuf[D_8013640C];
         for (i = 0; prim != NULL; i++) {
@@ -380,7 +380,7 @@ void func_800E5498(void) {
     setShadeTex(poly, false);
     SetPrimRect(poly, 0, 0, 256, 256);
     setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
-    func_801072BC(poly);
+    ResetPolyColorIntensity(poly);
     poly->tpage = 0x5A;
     poly->clut = g_ClutIds[0x15F];
     AddPrim(&buffer->ot[0x1FF], poly);
@@ -427,11 +427,11 @@ void HandleGameOver(void) {
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
-            D_8013640C = AllocPrimBuffers(PRIM_GT4, 259);
+            D_8013640C = AllocPrimRecursively(PRIM_GT4, 259);
             prim = &g_PrimBuf[D_8013640C];
 
             SetTexturedPrimRect(prim, 0, 96, 0xFF, 0x20, 0, 0);
-            func_801072BC(prim);
+            ResetPolyColorIntensity(prim);
             prim->tpage = 8;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
@@ -468,7 +468,7 @@ void HandleGameOver(void) {
         if (!func_80133950()) {
             break;
         }
-        if (func_80131F68()) {
+        if (IsSoundPlaying()) {
             break;
         }
         PlaySfx(SET_UNK_12);
@@ -632,7 +632,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_9:
         func_800E5358();
-        if (func_80131F68()) {
+        if (IsSoundPlaying()) {
             break;
         }
         prim = &g_PrimBuf[D_8013640C];

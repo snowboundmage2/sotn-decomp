@@ -87,7 +87,7 @@ void EntityWarpRoom(Entity* self) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 24);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 24);
         if (primIndex == -1) {
             self->step = 0;
             return;

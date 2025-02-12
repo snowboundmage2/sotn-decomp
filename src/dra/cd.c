@@ -918,7 +918,7 @@ void UpdateCd(void) {
             break;
         case CdCallback_Seq:
             temp_v1_9 = g_StagesLba[g_StageId].seqIdx;
-            func_80131EBC(aPqes_1, D_800ACCF8[temp_v1_9].unk8);
+            SetStringById(aPqes_1, D_800ACCF8[temp_v1_9].unk8);
             break;
         }
 

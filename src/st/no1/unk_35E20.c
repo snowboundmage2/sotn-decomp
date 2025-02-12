@@ -138,7 +138,7 @@ void func_us_801B6198(Entity* self) {
             return;
         }
         InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -271,7 +271,7 @@ void func_us_801B6490(Entity* self) {
         for (i = 0; i < 0xE; i++) {
             D_us_801D6340[i] = (i << 0xC) / 7;
         }
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, animParams->count);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, animParams->count);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -688,7 +688,7 @@ void func_us_801B7188(Entity* self) {
                 }
             }
             if (D_us_80180EEC == 2) {
-                self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x24);
+                self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x24);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
                     return;

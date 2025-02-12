@@ -1276,7 +1276,7 @@ void RicEntityHitByHoly(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->primIndex =
-            (s16)g_api.AllocPrimBuffers(PRIM_GT4, LEN(D_80174FBC));
+            (s16)g_api.AllocPrimRecursively(PRIM_GT4, LEN(D_80174FBC));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -1343,7 +1343,7 @@ void RicEntityHitByHoly(Entity* entity) {
     }
 }
 
-// same as DRA/func_8011F074
+// same as DRA/EntityPlayerHitByDark
 static AnimationFrame anim_smoke_dark[] = {
     {2, FRAME(1, 0)},  {2, FRAME(2, 0)},
     {2, FRAME(3, 0)},  {2, FRAME(4, 0)},

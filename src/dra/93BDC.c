@@ -93,7 +93,7 @@ void CdSoundCommand14(void) {
 
 const u32 padding_CdSoundCommand14 = 0;
 
-void func_80133FCC(void) {
+void UpdateCdSoundCommand(void) {
     if (D_8013901C == 0)
         return;
 
@@ -433,7 +433,7 @@ void UnpauseSfxScripts(void) {
 
 void KeyOnChannels20_21(void) {
     u16 temp = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId20_21].volume) >> 7;
-    func_80132A04(
+    PlaySoundEffect(
         20, g_SfxData[g_CurSfxId20_21].vabid, g_SfxData[g_CurSfxId20_21].prog,
         g_SfxData[g_CurSfxId20_21].tone, g_SfxData[g_CurSfxId20_21].note,
         (temp * (u16)g_CurSfxVol20_21) >> 7, g_CurSfxDistance20_21);
@@ -444,7 +444,7 @@ void KeyOnChannels22_23(void) {
 
     volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
     volume = volume * g_CurSfxVol22_23 >> 7;
-    func_80132A04(
+    PlaySoundEffect(
         22, g_SfxData[g_CurSfxId22_23].vabid, g_SfxData[g_CurSfxId22_23].prog,
         g_SfxData[g_CurSfxId22_23].tone, g_SfxData[g_CurSfxId22_23].note,
         volume, g_CurSfxDistance22_23);

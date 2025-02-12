@@ -7,7 +7,7 @@ u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
     s16 firstPrimIndex;
 
-    firstPrimIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 7);
+    firstPrimIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 7);
     g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
         g_Dialogue.primIndex[2] = 0;
@@ -302,13 +302,13 @@ void SEL_EntityCutscene(Entity* entity) {
                 g_api.PlaySfx(g_Dialogue.scriptCur++[0] | (nextChar << 4));
                 continue;
             case 10:
-                if (g_SkipCutscene != 0 || g_api.func_80131F68() != false) {
+                if (g_SkipCutscene != 0 || g_api.IsSoundPlaying() != false) {
                     continue;
                 }
                 --g_Dialogue.scriptCur;
                 return;
             case 11:
-                if (g_SkipCutscene != 0 || g_api.func_80131F68() != true) {
+                if (g_SkipCutscene != 0 || g_api.IsSoundPlaying() != true) {
                     continue;
                 }
                 --g_Dialogue.scriptCur;
@@ -509,7 +509,7 @@ u8 func_801B76F0(const char* msg) {
     Primitive* prim;
     s16 i;
 
-    g_Dialogue.primIndex[PRIM] = g_api.AllocPrimBuffers(PRIM_SPRT, 0x20);
+    g_Dialogue.primIndex[PRIM] = g_api.AllocPrimRecursively(PRIM_SPRT, 0x20);
     if (g_Dialogue.primIndex[PRIM] != -1) {
         g_Dialogue.nextCharX = 0x200;
         g_Dialogue.scriptCur = msg;

@@ -19,7 +19,7 @@ void PlayerStepJump(void) {
                 g_Player.unk44 |= 0x20;
             }
         }
-        if (func_8010FDF8(0x11029)) {
+        if (HandlePlayerMovement(0x11029)) {
             return;
         }
     }
@@ -182,7 +182,7 @@ void PlayerStepJump(void) {
 void PlayerStepFall(void) {
     if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
         ExecuteJump(1);
-    } else if (func_8010FDF8(0x9029) == 0) {
+    } else if (HandlePlayerMovement(0x9029) == 0) {
         DecelerateX(0x1000);
         if (CheckMoveDirection() != 0) {
             SetSpeedX(0xC000);
@@ -217,7 +217,7 @@ void PlayerStepCrouch(void) {
             return;
         }
     }
-    if (func_8010FDF8(0x100C) != 0) {
+    if (HandlePlayerMovement(0x100C) != 0) {
         return;
     }
     DecelerateX(0x2000);
@@ -320,7 +320,7 @@ void PlayerStepCrouch(void) {
             }
         }
         if (PLAYER.animFrameDuration < 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
 
         break;
@@ -452,7 +452,7 @@ void PlayerStepCrouch(void) {
     }
 }
 
-void func_801139CC(s32 arg0) {
+void HandlePlayerWallCollision(s32 arg0) {
     s32 move = PLAYER.facingLeft != 0 ? -3 : 3;
 
     PLAYER.posY.i.hi -= 22;
@@ -475,14 +475,14 @@ void PlayerStepHighJump(void) {
     s32 temp;
 
     g_Player.unk4A++;
-    if (func_8010FDF8(2) != 0) {
+    if (HandlePlayerMovement(2) != 0) {
         return;
     }
 
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.pl_vram_flag & 2) {
-            func_801139CC(3);
+            HandlePlayerWallCollision(3);
             if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
                 PLAYER.rotZ = 0x800;
@@ -504,7 +504,7 @@ void PlayerStepHighJump(void) {
     case 1:
         if (g_Player.pl_vram_flag & 2) {
             PLAYER.step_s = 2;
-            func_801139CC(3);
+            HandlePlayerWallCollision(3);
         } else {
             PLAYER.velocityY += 0x6000;
             if (PLAYER.velocityY > 0x8000) {
@@ -553,7 +553,7 @@ void PlayerStepHighJump(void) {
     }
 }
 
-s32 func_80113D7C(s16 damageAmount) {
+s32 PlayerHandleDamageAbsorb(s16 damageAmount) {
     DamageParam damage;
     s32 sfx;
     s32 temp_s0;
@@ -581,13 +581,13 @@ s32 func_80113D7C(s16 damageAmount) {
     return -1;
 }
 
-s32 func_80113E68(void) {
+s32 SetRandomPlayerAnim(void) {
     s16 rnd = rand();
     PLAYER.ext.player.anim = 0x2E + (rnd % 3);
     return rnd % 16;
 }
 
-void func_80113EE0(void) {
+void ResetPlayerState(void) {
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
                          FLAG_BLINK | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
@@ -604,7 +604,7 @@ void func_80113EE0(void) {
     }
 }
 
-void func_80113F7C(void) {
+void UpdatePlayerEntityRoomIndex(void) {
     Entity* entity = PLAYER.unkB8;
     s16 posX;
     s32 var_a0;
@@ -655,12 +655,12 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     switch (PLAYER.step_s) {
     case 0:
         step_sIsZero = true;
-        func_80113EE0();
+        ResetPlayerState();
         if (damage->damageKind < DAMAGEKIND_16) {
-            func_80113F7C();
+            UpdatePlayerEntityRoomIndex();
         } else {
             if (damage->damageKind == DAMAGEKIND_16) {
-                func_80113F7C();
+                UpdatePlayerEntityRoomIndex();
             }
             if (damage->damageKind == DAMAGEKIND_17) {
                 PLAYER.entityRoomIndex = 1;
@@ -720,7 +720,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PLAYER.velocityY = i + FIX(-4);
             UpdatePlayerVelocityX(FIX(-1.66666));
             PLAYER.step_s = 1;
-            if (func_80113E68() == 0) {
+            if (SetRandomPlayerAnim() == 0) {
                 PLAYER.ext.player.anim = 0x40;
             }
             break;
@@ -736,7 +736,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PLAYER.velocityY = i + FIX(-4);
                 UpdatePlayerVelocityX(FIX(-1.66666));
                 PLAYER.step_s = 1;
-                if (func_80113E68() == 0) {
+                if (SetRandomPlayerAnim() == 0) {
                     PLAYER.ext.player.anim = 0x40;
                 }
                 break;
@@ -781,7 +781,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PLAYER.velocityY = FIX(-2);
                 UpdatePlayerVelocityX(FIX(-1.25));
                 PLAYER.step_s = 1;
-                func_80113E68();
+                SetRandomPlayerAnim();
                 break;
             }
             break;
@@ -868,7 +868,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
 
         break;
     case 1:
-        if (func_8010FDF8(0x20280) != 0) {
+        if (HandlePlayerMovement(0x20280) != 0) {
             return;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -888,13 +888,13 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             break;
         }
         if (g_Player.pl_vram_flag & 2) {
-            func_801139CC(1);
+            HandlePlayerWallCollision(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
             g_Player.timers[8] = 24;
             PLAYER.step_s = 5;
             if (g_Player.prev_step_s == 0xF &&
-                (func_80113D7C(g_Player.damageTaken) != 0)) {
+                (PlayerHandleDamageAbsorb(g_Player.damageTaken) != 0)) {
                 return;
             }
             break;
@@ -934,7 +934,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 func_80102CD8(2);
                 PLAYER.step_s = 1;
                 if (g_Player.prev_step_s == 0xF &&
-                    (func_80113D7C(g_Player.damageTaken) != 0)) {
+                    (PlayerHandleDamageAbsorb(g_Player.damageTaken) != 0)) {
                     return;
                 }
                 break;
@@ -949,7 +949,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             func_80102CD8(2);
             PLAYER.step_s = 3;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 8), 0);
-            if (func_80113D7C(g_Player.damageTaken) != 0) {
+            if (PlayerHandleDamageAbsorb(g_Player.damageTaken) != 0) {
                 return;
             }
             break;
@@ -969,7 +969,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 3:
         if (!g_Player.timers[8]) {
             SetSpeedX(FIX(0.75));
-            if (func_8010FDF8(0x20280) != 0) {
+            if (HandlePlayerMovement(0x20280) != 0) {
                 return;
             }
         }
@@ -978,7 +978,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         DecelerateX(FIX(1.0 / 8));
         if (g_Player.timers[8]) {
             if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
-                func_801139CC(0);
+                HandlePlayerWallCollision(0);
             }
             break;
         } else if (g_Player.pl_vram_flag & 0xC) {
@@ -995,7 +995,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             }
         }
         PLAYER.step_s = 1;
-        func_80113E68();
+        SetRandomPlayerAnim();
         PLAYER.animFrameIdx = 0;
         PLAYER.animFrameDuration = 0;
         break;
@@ -1020,7 +1020,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
         if (PLAYER.animFrameDuration < 0) {
             if (PLAYER.step_s == 6) {
-                LandToTheGround(0);
+                ExecuteLanding(0);
             } else {
                 ExecuteCrouch(0, PLAYER.velocityX);
             }
@@ -1041,14 +1041,14 @@ void PlayerStepPetrified(s32 arg0) {
     switch (PLAYER.step_s) {
     case 0:
         newlyPetrified = 1;
-        func_80113EE0();
-        func_80113F7C();
+        ResetPlayerState();
+        UpdatePlayerEntityRoomIndex();
         PLAYER.velocityY = FIX(-4);
         if (!(g_Player.pl_vram_flag & 1)) {
             PLAYER.velocityY = FIX(-2);
         }
         UpdatePlayerVelocityX(FIX(-1.25));
-        func_80113E68();
+        SetRandomPlayerAnim();
         PLAYER.palette = 0x8161;
         PlaySfx(SFX_VO_ALU_SILENCE);
         g_Player.timers[2] = 0;
@@ -1062,7 +1062,7 @@ void PlayerStepPetrified(s32 arg0) {
     case 1:
         SetPlayerBlinkTimer(1, 4);
         PLAYER.palette = 0x8161;
-        if (func_8010FDF8(0x20280) != 0) {
+        if (HandlePlayerMovement(0x20280) != 0) {
             PLAYER.step = Player_StatusStone;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
@@ -1220,8 +1220,8 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             }
         }
         PlaySfx(SFX_VO_ALU_DEATH);
-        func_80113EE0();
-        func_80113F7C();
+        ResetPlayerState();
+        UpdatePlayerEntityRoomIndex();
         PLAYER.velocityY = FIX(-3.25);
         UpdatePlayerVelocityX(FIX(-1.25));
         PLAYER.ext.player.anim = 0xC0;
@@ -1233,21 +1233,21 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(44, 0x4F),
-                0); // Blueprint 51 has child 16, func_8011EDA8
+                0); // Blueprint 51 has child 16, EntityPlayerHitByExplosion
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(51, 2), 0);
             D_80137FEC = 1;
         } else if (damage->effects & ELEMENT_THUNDER) {
             func_80118C28(9);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x59), 0);
-            // Blueprint 45 has child 30, EntityHitByLightning
+            // Blueprint 45 has child 30, EntityPlayerHitByLightning
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(45, 1), 0);
             D_80137FEC = 2;
         } else if (damage->effects & ELEMENT_ICE) {
             func_80118C28(10);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5A), 0);
-            // Blueprint 46 has child 33, EntityHitByIce
+            // Blueprint 46 has child 33, EntityPlayerHitByIce
             CreateEntFactoryFromEntity(g_CurrentEntity, 46, 0);
             D_80137FEC = 3;
             PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -1255,7 +1255,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             func_80118C28(1);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x53), 0);
-            // Blueprint 49 has child 5, func_8011E4BC
+            // Blueprint 49 has child 5, EntityExplosionEffect
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(49, 5), 0);
             D_80137FEC = 0;
         }
@@ -1381,7 +1381,7 @@ void PlayerStepUnk17(void) {
 
     if (g_unkGraphicsStruct.unk20 == 0) {
         if (g_Player.pl_vram_flag & 1) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         } else {
             ExecuteFall();
         }
@@ -1391,7 +1391,7 @@ void PlayerStepUnk17(void) {
 }
 
 // same as RIC/func_8015BB80
-void func_80115C50(void) {
+void UpdatePlayerPositionInTopStage(void) {
     if (g_StageId == STAGE_TOP) {
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
@@ -1428,31 +1428,31 @@ void PlayerStepTeleport(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         break;
 
     case 2:
-        func_80115C50();
+        UpdatePlayerPositionInTopStage();
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 2), 0) ==
                 NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         break;
 
     case 4:
-        func_80115C50();
+        UpdatePlayerPositionInTopStage();
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 4), 0) ==
                 NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         break;
 
@@ -1460,10 +1460,10 @@ void PlayerStepTeleport(void) {
     case 3:
     case 5:
         if (PLAYER.animFrameDuration < 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         if (g_Player.unk1C != 0) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         }
         break;
     }

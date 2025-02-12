@@ -176,7 +176,7 @@ void PrologueScroll(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Prologue;
         }
-        D_801BEE08 = g_api.AllocPrimBuffers(PRIM_SPRT, 0x10);
+        D_801BEE08 = g_api.AllocPrimRecursively(PRIM_SPRT, 0x10);
         prim = &g_PrimBuf[D_801BEE08];
         for (i = 0; i < 2; i++, prim = prim->next) {
             prim->x0 = (i * 0xb0) + 0x50;
@@ -234,7 +234,7 @@ void PrologueScroll(void) {
             prim->priority = 2;
             prim->drawMode = DRAW_HIDE;
         }
-        D_801BEE0C = g_api.AllocPrimBuffers(PRIM_TILE, 3);
+        D_801BEE0C = g_api.AllocPrimRecursively(PRIM_TILE, 3);
         prim = &g_PrimBuf[D_801BEE0C];
         for (i = 0; prim; prim = prim->next, i++) {
             prim->x0 = i * 0xC0;
@@ -290,7 +290,7 @@ void PrologueScroll(void) {
         }
         break;
     case 4: // 0x801B091C
-        if (!g_api.func_80131F68()) {
+        if (!g_api.IsSoundPlaying()) {
             g_api.PlaySfx(MU_MOONLIGHT_NOCTURNE);
             g_GameStep++;
         }
@@ -300,7 +300,7 @@ void PrologueScroll(void) {
 #if defined(VERSION_PSP)
             1
 #else
-            g_api.func_80131F68()
+            g_api.IsSoundPlaying()
 #endif
         ) {
             g_GameStep++;
@@ -411,7 +411,7 @@ void PrologueScroll(void) {
         break;
     case 16:
         g_api.PlaySfx(SET_UNK_82);
-        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 3);
+        primIndex = g_api.AllocPrimRecursively(PRIM_TILE, 3);
         prim = &g_PrimBuf[D_801BEE08];
         i = 0;
         while (prim) {
@@ -472,7 +472,7 @@ void PrologueScroll(void) {
         g_GameStep++;
         break;
     case 19:
-        if (!g_api.func_80131F68()) {
+        if (!g_api.IsSoundPlaying()) {
             SetStageDisplayBuffer();
             ClearScreen();
             if (g_StageId == STAGE_ST0) {

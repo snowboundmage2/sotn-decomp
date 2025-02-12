@@ -206,7 +206,7 @@ void func_us_801BEE00(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -279,7 +279,7 @@ void func_us_801BF074(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

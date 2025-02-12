@@ -7,11 +7,11 @@ extern u32 D_8013799C;
 extern s32 D_801379A0;
 extern s32 D_801379A4[2];
 
-void func_801024DC(void) {
+void InitPrimitives(void) {
     Primitive* prim;
     s32 x;
 
-    D_8013799C = AllocPrimBuffers(PRIM_TILE, 4);
+    D_8013799C = AllocPrimRecursively(PRIM_TILE, 4);
     prim = &g_PrimBuf[D_8013799C];
     for (x = 0; prim != NULL; x++) {
         prim->x0 = (x & 1) * 128;
@@ -25,7 +25,7 @@ void func_801024DC(void) {
     D_801379A4[1] = 0;
     D_801379A4[0] = 0;
 
-    D_801379A0 = AllocPrimBuffers(PRIM_GT4, 1);
+    D_801379A0 = AllocPrimRecursively(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801379A0];
     prim->u0 = 0;
     prim->v0 = 0;
@@ -42,7 +42,7 @@ void func_801024DC(void) {
     prim->drawMode = DRAW_HIDE;
 }
 
-s32 func_801025F4(void) {
+s32 GetPrimitiveClut(void) {
     Primitive* prim = &g_PrimBuf[D_8013799C];
     return prim->clut;
 }

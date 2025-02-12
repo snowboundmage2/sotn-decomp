@@ -1736,8 +1736,8 @@ s32 AllocatePrimitives(u8 primType, s32 count) {
     return (s16)primStartIdx;
 }
 
-// AllocatePrimitiveBuffers
-s32 AllocPrimBuffers(u8 primType, s32 count) {
+// AllocatePrimitiveRecursively
+s32 AllocPrimRecursively(u8 primType, s32 count) {
     s32 primIndex = 0;
     Primitive* prim = g_PrimBuf;
     u8* dstPrimType = &g_PrimBuf->type;
@@ -1754,7 +1754,7 @@ s32 AllocPrimBuffers(u8 primType, s32 count) {
                 }
             } else {
                 *dstPrimType = primType;
-                index = AllocPrimBuffers(primType, count - 1);
+                index = AllocPrimRecursively(primType, count - 1);
                 if (index == -1) {
                     *dstPrimType = 0;
                     return -1;

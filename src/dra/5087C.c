@@ -1021,9 +1021,9 @@ void func_800F24F4(void) {
             }
             var_a0 = 1;
         }
-        func_801042C4(var_a0);
+        InitializeSaveMenu(var_a0);
         D_80137598 = true;
-        func_80105428();
+        UpdateSaveMenuState();
     } else {
         D_80137598 = false;
     }
@@ -1106,7 +1106,7 @@ void func_800F2860(void) {
     default:
         return;
     case 2:
-        if (func_80131F68() == false) {
+        if (IsSoundPlaying() == false) {
             D_801375C8++;
             break;
         }
@@ -1120,13 +1120,13 @@ void func_800F2860(void) {
         D_801375C8++;
         break;
     case 4:
-        if (func_80131F68() != false) {
+        if (IsSoundPlaying() != false) {
             D_801375C8++;
             break;
         }
         break;
     case 5:
-        if (func_80131F68() == false) {
+        if (IsSoundPlaying() == false) {
             D_801375C8++;
             break;
         }
@@ -1136,7 +1136,7 @@ void func_800F2860(void) {
         D_801375C8 = 0;
         return;
     case 7:
-        if (func_80131F68() != 0) {
+        if (IsSoundPlaying() != 0) {
             return;
         }
         D_801375C8--;
@@ -1271,7 +1271,7 @@ void RunMainEngine(void) {
         g_api.o.Update();
         g_api.o.Update();
         func_800F0940();
-        func_801024DC();
+        InitPrimitives();
         if ((D_80097C98 != 4) && (D_80097C98 != 5) && (D_80097C98 != 6)) {
             func_801027C4(4);
             func_801027C4(2);
@@ -1286,7 +1286,7 @@ void RunMainEngine(void) {
             D_8003C730 = 0;
         }
         func_800F24F4();
-        g_unkGraphicsStruct.D_800973F8 = AllocPrimBuffers(PRIM_GT4, 16);
+        g_unkGraphicsStruct.D_800973F8 = AllocPrimRecursively(PRIM_GT4, 16);
         if (g_unkGraphicsStruct.D_800973F8 != 0) {
             prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
             while (prim != NULL) {
@@ -1432,7 +1432,7 @@ void RunMainEngine(void) {
                     }
                 }
             }
-            func_80121F14(D_801375B4 << 0x10, D_801375B8 << 0x10);
+            UpdateMistPosition(D_801375B4 << 0x10, D_801375B8 << 0x10);
             D_801375A4 = D_801375A4 >> 16;
             D_801375A8 = D_801375A8 >> 16;
             // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
@@ -1484,7 +1484,7 @@ void RunMainEngine(void) {
             DrawHudSubweapon();
             func_800E414C();
             if (D_80137598) {
-                func_80105428();
+                UpdateSaveMenuState();
             }
             if (g_Player.status & PLAYER_STATUS_UNK80000) {
                 g_GameEngineStep = Engine_10;
@@ -1597,7 +1597,7 @@ void RunMainEngine(void) {
                 }
                 break;
             case 1:
-                if (func_801025F4() != 0) {
+                if (GetPrimitiveClut() != 0) {
                     g_MenuStep++;
                 }
                 break;
@@ -1611,7 +1611,7 @@ void RunMainEngine(void) {
                     D_80097910 = g_StagesLba[g_StageId].unk18;
                     if (g_unkGraphicsStruct.D_800973FC != 1) {
                         PlaySfx(SET_STOP_MUSIC);
-                        if (func_80131F68() == false) {
+                        if (IsSoundPlaying() == false) {
                             PlaySfx(D_80097910);
                             D_80097928 = 0;
                         } else {
@@ -1620,7 +1620,7 @@ void RunMainEngine(void) {
                     }
                 }
                 if (D_80137598) {
-                    func_8010427C();
+                    FreeSaveMenuPrimitives();
                     D_80137598 = false;
                 }
                 layer = g_api.o.tileLayers[D_801375BC.def->tileLayoutId].fg;
@@ -1716,7 +1716,7 @@ void RunMainEngine(void) {
                     }
                 }
                 i = 0;
-                func_80121F14(-D_801375A4, -D_801375A8);
+                UpdateMistPosition(-D_801375A4, -D_801375A8);
                 D_801375A4 = D_801375A4 >> 16;
                 D_801375A8 = D_801375A8 >> 16;
                 // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
@@ -1789,7 +1789,7 @@ void RunMainEngine(void) {
                 }
                 break;
             case 5:
-                if (func_801025F4() != 0) {
+                if (GetPrimitiveClut() != 0) {
                     g_GameEngineStep = Engine_Normal;
                 }
                 break;
@@ -1860,7 +1860,7 @@ void RunMainEngine(void) {
                 func_800E5498();
                 return;
             case 1:
-                if (func_801025F4() != 0) {
+                if (GetPrimitiveClut() != 0) {
                     g_MenuStep++;
                 }
                 break;

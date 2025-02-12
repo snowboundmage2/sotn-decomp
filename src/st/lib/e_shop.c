@@ -345,7 +345,7 @@ void func_us_801B2BE4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 0xD);
+        primIndex = g_api.AllocPrimRecursively(PRIM_G4, 0xD);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -671,7 +671,7 @@ void func_us_801B2BE4(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (g_api.func_80131F68()) {
+            if (g_api.IsSoundPlaying()) {
                 g_api.PlaySfx(SET_STOP_MUSIC);
                 self->step_s++;
             } else {
@@ -680,7 +680,7 @@ void func_us_801B2BE4(Entity* self) {
             break;
 
         case 1:
-            if (!g_api.func_80131F68()) {
+            if (!g_api.IsSoundPlaying()) {
                 g_CutsceneFlags |= 0x800;
                 g_api.PlaySfx(NA_VO_ML_THANKS);
                 SetStep(3);
@@ -774,7 +774,7 @@ void func_us_801B2BE4(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (g_api.func_80131F68()) {
+            if (g_api.IsSoundPlaying()) {
                 g_api.PlaySfx(SET_STOP_MUSIC);
                 self->step_s++;
             } else {
@@ -783,7 +783,7 @@ void func_us_801B2BE4(Entity* self) {
             break;
 
         case 1:
-            if (!g_api.func_80131F68()) {
+            if (!g_api.IsSoundPlaying()) {
                 g_CutsceneFlags |= 0x800;
                 g_api.PlaySfx(NA_VO_ML_THANKS);
                 SetStep(5);

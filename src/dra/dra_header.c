@@ -10,7 +10,7 @@ extern RelicDesc g_RelicDefs[];
 
 void MainGame(void);
 void FreePrimitives(s32 primitiveIndex);
-s32 AllocPrimBuffers(u8 primType, s32 count);
+s32 AllocPrimRecursively(u8 primType, s32 count);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void func_80102CD8(s32 start);
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
@@ -27,7 +27,7 @@ void func_801027C4(u32 arg0);
 void TransformPolygon(
     s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
 Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s16 arg2);
-bool func_80131F68(void);
+bool IsSoundPlaying(void);
 DR_ENV* AllocateDrawEnvironment(POLY_GT4* poly);
 u16* func_80106A28(u32 arg0, u16 kind);
 void func_80118894(Entity* self);
@@ -70,7 +70,7 @@ Entrypoint g_MainGame = MainGame;
 GameApi g_ApiInit = {
     {},
     FreePrimitives,
-    AllocPrimBuffers,
+    AllocPrimRecursively,
     CheckCollision,
     func_80102CD8,
     UpdateAnim,
@@ -86,7 +86,7 @@ GameApi g_ApiInit = {
     func_801027C4,
     TransformPolygon,
     CreateEntFactoryFromEntity,
-    func_80131F68,
+    IsSoundPlaying,
     AllocateDrawEnvironment,
     func_80106A28,
     func_80118894,

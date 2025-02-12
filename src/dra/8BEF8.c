@@ -30,7 +30,7 @@ void EntityBatEcho(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_G4, 0x31);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_G4, 0x31);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -176,7 +176,7 @@ void EntityBatEcho(Entity* self) {
     }
 }
 
-void func_8012C600(void) {
+void UpdateWolfHitbox(void) {
     s32 x, y;
     s32 i;
     s32 t0 = PLAYER.posX.i.hi;
@@ -276,7 +276,7 @@ bool WolfFormFinished(void) {
     return false;
 }
 
-void func_8012C97C(void) {
+void HandleWolfSwim(void) {
     if (g_Entities[PLAYER_CHARACTER].step_s == 0) {
         return;
     }
@@ -308,8 +308,8 @@ void func_8012C97C(void) {
     SetPlayerAnim(0xEC);
     PLAYER.velocityY = 0;
 }
-
-void func_8012CA64(void) {
+//most likely falling
+void HandleWolfJumpState1(void) {
     u8 anim;
 
     PLAYER.step_s = 1;
@@ -331,7 +331,7 @@ void func_8012CA64(void) {
     }
 }
 
-void func_8012CB0C(void) {
+void HandleWolfLanding(void) {
     PLAYER.ext.player.anim = 0xDE;
     PLAYER.velocityY = 0;
     D_800B0914 = 0;
@@ -340,7 +340,7 @@ void func_8012CB0C(void) {
     PLAYER.step_s = 7;
 }
 
-void func_8012CB4C(void) {
+void HandleWolfRun(void) {
     PLAYER.step_s = 2;
     if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
         (PLAYER.facingLeft == 0 && g_Player.padPressed & PAD_LEFT)) {
@@ -360,7 +360,7 @@ void func_8012CB4C(void) {
     }
 }
 
-void func_8012CC30(s32 arg0) {
+void HandleWolfCharge(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
         if (g_ButtonCombo[COMBO_QCF].buttonsCorrect == COMBO_COMPLETE &&
@@ -379,7 +379,7 @@ void func_8012CC30(s32 arg0) {
     }
 }
 
-void func_8012CCE4(void) {
+void HandleWolfJumpAttack(void) {
     PLAYER.velocityY = FIX(-3.5);
     if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
         SetPlayerAnim(0xE7);
@@ -420,7 +420,7 @@ void func_8012CCE4(void) {
     D_80138430 += 0x80;
 }
 
-void func_8012CED4(void) {
+void HandleWolfSlide(void) {
     if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
         SetPlayerAnim(0xE7);
         D_800B0914 = 1;
@@ -440,7 +440,7 @@ void func_8012CED4(void) {
     D_80138430 -= 0x100;
 }
 
-void func_8012CFA8(void) {
+void HandleWolfStop(void) {
     SetPlayerAnim(0xEA);
     PLAYER.step_s = 6;
     D_800B0914 = 0;
@@ -448,32 +448,32 @@ void func_8012CFA8(void) {
     g_Player.timers[5] = 8;
 }
 
-void func_8012CFF0(void) {
+void HandleWolfCrouch(void) {
     PLAYER.step_s = 3;
     SetPlayerAnim(0xE3);
     D_800B0914 = 0;
 }
 
-void func_8012D024(void) {
+void HandleWolfMovementState(void) {
     DecelerateX(0x2000);
     if (g_Player.padTapped & PAD_CROSS) {
-        func_8012CCE4();
+        HandleWolfJumpAttack();
         return;
     }
     if (!(g_Player.pl_vram_flag & 1)) {
-        func_8012CED4();
+        HandleWolfSlide();
         return;
     }
     if (g_Player.padTapped & PAD_SQUARE) {
-        func_8012CC30(0);
+        HandleWolfCharge(0);
         return;
     }
     if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) {
-        func_8012CB4C();
+        HandleWolfRun();
         return;
     }
     if (g_Player.padPressed & PAD_DOWN) {
-        func_8012CFF0();
+        HandleWolfCrouch();
         return;
     }
     if (D_800B0914 != 0) {
@@ -491,13 +491,13 @@ void func_8012D024(void) {
     }
 }
 
-void func_8012D178(void) {
+void HandleWolfIdleState(void) {
     s32 var_v0;
 
     if (g_Player.padTapped & PAD_CROSS) {
-        func_8012CCE4();
+        HandleWolfJumpAttack();
     } else if (!(g_Player.pl_vram_flag & 1)) {
-        func_8012CFA8();
+        HandleWolfStop();
     } else {
 #if defined(VERSION_US)
         if (PLAYER.facingLeft != 0) {
@@ -509,16 +509,16 @@ void func_8012D178(void) {
         var_v0 = g_Player.padPressed & (PAD_LEFT | PAD_RIGHT);
 #endif
         if (var_v0 != 0) {
-            func_8012CB4C();
+            HandleWolfRun();
         } else if (g_Player.unk04 & 0x40) {
-            func_8012CA64();
+            HandleWolfJumpState1();
         } else if (g_GameTimer % 6 == 0) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
     }
 }
 
-void func_8012D28C(bool exitEarly) {
+void HandleWolfHitWall(bool exitEarly) {
     bool bitNotFound;
     s32 i;
 
@@ -559,10 +559,10 @@ void func_8012D28C(bool exitEarly) {
     D_800B0914 = 0;
     // Finally make use of that bit to control if X is positive or negative.
     if (bitNotFound) {
-        func_8012CED4();
+        HandleWolfSlide();
         SetSpeedX(FIX(1));
     } else {
-        func_8012CFA8();
+        HandleWolfStop();
         SetSpeedX(FIX(-1));
     }
     PLAYER.velocityY = FIX(-3.5);

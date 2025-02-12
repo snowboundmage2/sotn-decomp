@@ -7,7 +7,7 @@
 // BSS
 extern s32 D_80138454;
 
-void func_80131EBC(const char* str, s16 id) { D_80138784[id + 1] = str; }
+void SetStringById(const char* str, s16 id) { D_80138784[id + 1] = str; }
 
 // gets used later with MakeCdLoc
 void SetCdPos(s32 value) { g_CurCdPos = value; }
@@ -22,16 +22,16 @@ void UnMuteCd(void) {
     D_8013B694++;
 }
 
-s32 func_80131F28(void) { return D_80138F7C; }
+s32 GetSoundStatus(void) { return D_80138F7C; }
 
-u16 func_80131F38(void) {
+u16 GetSeqPlayingId(void) {
     if (g_SeqPlayingId == 0) {
         return 0;
     }
     return g_SeqPlayingId | 0x200;
 }
 
-bool func_80131F68(void) {
+bool IsSoundPlaying(void) {
     bool ret;
     if (D_8013B61C) {
         ret = 1;
@@ -45,7 +45,7 @@ s16 GetCdVolume(void) { return g_CdVolume; }
 
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
-void func_80131FCC(void) {
+void UpdateSoundStatus(void) {
     switch (D_8013B680) {
     case 0:
         D_80138F7C = 0;
@@ -243,7 +243,7 @@ void SoundInit(void) {
     SpuMallocWithStartAddr(0x1010, 0x10000);
 }
 
-s32 func_801326D8(void) {
+s32 GetCdStatus(void) {
     if (D_8013901C)
         return 1;
     if (g_SeqPlayingId)
@@ -254,7 +254,7 @@ s32 func_801326D8(void) {
 }
 
 void SoundWait(void) {
-    while (!(func_801326D8() & 0xFF) == 0) {
+    while (!(GetCdStatus() & 0xFF) == 0) {
         VSync(0);
         func_801361F8();
     }
@@ -354,7 +354,7 @@ struct SeqData g_SeqInfo[] = {
 };
 // clang-format on
 
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
+void PlaySoundEffect(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance) {
     if (distance == 0) {
         g_VolL = volume;

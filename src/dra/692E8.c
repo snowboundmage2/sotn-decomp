@@ -211,7 +211,7 @@ void func_80109594() {
 
     g_Player.unk04 = 1;
     g_Player.pl_vram_flag = 1;
-    LandToTheGround(0);
+    ExecuteLanding(0);
 
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
@@ -221,7 +221,7 @@ void func_80109594() {
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
-    primIndex = AllocPrimBuffers(PRIM_TILE, 8);
+    primIndex = AllocPrimRecursively(PRIM_TILE, 8);
     prim = &g_PrimBuf[primIndex];
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= FLAG_HAS_PRIMS;
@@ -499,7 +499,7 @@ void func_8010A234(s32 arg0) {
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
         if (g_Player.pl_vram_flag & 1) {
-            LandToTheGround(0);
+            ExecuteLanding(0);
         } else {
             ExecuteFall();
         }

@@ -424,7 +424,7 @@ void RicEntitySmokePuff(Entity* self) {
     }
 }
 
-// Corresponding DRA function is func_8011E4BC
+// Corresponding DRA function is EntityExplosionEffect
 static unkStr_8011E4BC D_80154D00 = {
     0x08, 0xC0, 0x60, 0x00, 0x01, 0x01, 0x0004, 0x0033, 0x0003, 0x08800000};
 static unkStr_8011E4BC D_80154D10 = {
@@ -688,7 +688,7 @@ void RicEntityHitByCutBlood(Entity* self) {
     }
 }
 
-// DRA function is func_8011EDA8
+// DRA function is EntityPlayerHitByExplosion
 static AnimationFrame anim_80154DC8[] = {
     {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
     {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(4, 0)},
@@ -838,7 +838,7 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -915,7 +915,7 @@ void func_801623E0(Entity* self) {
     self->posY.val = PLAYER.posY.val;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -964,7 +964,7 @@ void func_80162604(Entity* self) {
     self->posY.val = PLAYER.posY.val;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1027,7 +1027,7 @@ void RicEntityMariaPowers(Entity* self) {
     params = self->params;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

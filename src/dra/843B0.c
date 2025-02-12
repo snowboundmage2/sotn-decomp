@@ -23,7 +23,7 @@ void EntityTeleport(Entity* self) {
     upperParams = self->params & 0xFE00;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, LEN(D_8013839C) + 4);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, LEN(D_8013839C) + 4);
         if (self->primIndex == -1) {
             return;
         }
@@ -193,11 +193,11 @@ void EntityTeleport(Entity* self) {
     }
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar - selfUnk7C;
-    func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
+    UpdatePolyColor(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar + selfUnk7C;
-    func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
+    UpdatePolyColor(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     if (wasCase3) {
         for (i = 0; i < LEN(D_8013839C); i++) {

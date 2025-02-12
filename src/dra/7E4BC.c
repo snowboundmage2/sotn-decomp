@@ -204,7 +204,7 @@ extern Primitive D_801381F4[8];
 extern s32 D_80138394;
 extern s32 D_80138398;
 
-void func_8011E4BC(Entity* self) {
+void EntityExplosionEffect(Entity* self) {
     byte stackpad[0x28];
     FakePrim* tilePrim;
     s16 randVar;
@@ -496,11 +496,11 @@ void func_8011E4BC(Entity* self) {
         break;
     }
 }
-
+//dummy function?
 void func_8011EDA0(Entity* entity) {}
 
 // RIC function is func_80161C2C
-void func_8011EDA8(Entity* self) {
+void EntityPlayerHitByExplosion(Entity* self) {
     u16 params = self->params;
     s16 paramsHi = self->params >> 8;
     s32 step = self->step;
@@ -574,7 +574,7 @@ void func_8011EDA8(Entity* self) {
 }
 
 // same as RIC/RicEntityHitByDark
-void func_8011F074(Entity* entity) {
+void EntityPlayerHitByDark(Entity* entity) {
     s16 posX;
     s16 posY;
 
@@ -623,7 +623,7 @@ void func_8011F074(Entity* entity) {
 
 // effect when player takes lightning damage
 
-void EntityHitByLightning(Entity* self) {
+void EntityPlayerHitByLightning(Entity* self) {
     Primitive* prevPrim;
     Primitive* prim;
     s16 temp_s0;
@@ -645,7 +645,7 @@ void EntityHitByLightning(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 6);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -764,7 +764,7 @@ void EntityHitByLightning(Entity* self) {
 }
 
 // player gets frozen
-void EntityHitByIce(Entity* self) {
+void EntityPlayerHitByIce(Entity* self) {
     s32 i;
     Primitive* prim;
     s16 angle;
@@ -786,7 +786,7 @@ void EntityHitByIce(Entity* self) {
     sp18 = (g_Player.status & PLAYER_STATUS_UNK10000) == sp18;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT3, 24);
+        self->primIndex = AllocPrimRecursively(PRIM_GT3, 24);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -968,7 +968,7 @@ void EntityTransparentWhiteCircle(Entity* self) {
     ResetAfterImage(1, 1);
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 32);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 32);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1310,7 +1310,7 @@ void EntityPlayerDissolves(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, PrimCount);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             return;
         }
@@ -1485,7 +1485,7 @@ void EntityPlayerDissolves(Entity* self) {
     ResetAfterImage(1, 1);
 }
 
-void EntityLevelUpAnimation(Entity* self) {
+void EntityPlayerLevelUpAnimation(Entity* self) {
     Primitive* prim;
     Unkstruct_800AE180* unkstruct;
     s16 posX_hi, posY_hi;
@@ -1500,7 +1500,7 @@ void EntityLevelUpAnimation(Entity* self) {
     unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(4U, 0xE);
+        self->primIndex = AllocPrimRecursively(4U, 0xE);
         if (self->primIndex == -1) {
             return;
         }
@@ -1622,7 +1622,7 @@ void EntityLevelUpAnimation(Entity* self) {
     }
 }
 
-void func_80121F14(s32 arg0, s32 arg1) {
+void UpdateMistPosition(s32 arg0, s32 arg1) {
     mistStruct* ptr = D_80138094;
     s32 i;
 
@@ -1632,7 +1632,7 @@ void func_80121F14(s32 arg0, s32 arg1) {
     }
 }
 
-Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
+Primitive* UpdatePrimitiveCoordinates(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     Primitive* prim;
     s16 temp_s4;
     s16 temp_s5;
@@ -1733,7 +1733,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
 }
 
 // spawns mist (player transform)
-void EntityMist(Entity* self) {
+void EntityPlayerMist(Entity* self) {
     Primitive* prim;
     Primitive* mistPrim;
     mistStruct* mistStruct;
@@ -1799,7 +1799,7 @@ void EntityMist(Entity* self) {
         }
         FreePrimitives(self->primIndex);
         self->step = 0;
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 80);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             goto block_147;
         }
@@ -1859,10 +1859,10 @@ void EntityMist(Entity* self) {
         self->posY.i.hi = yVar4;
         prim = &g_PrimBuf[self->primIndex];
         for (j = 0; j < 16; j++) {
-            prim = func_80121F58(0, j, prim, self->facingLeft);
+            prim = UpdatePrimitiveCoordinates(0, j, prim, self->facingLeft);
         }
         for (j = 0; j < 16; j++) {
-            prim = func_80121F58(1, j, prim, self->facingLeft);
+            prim = UpdatePrimitiveCoordinates(1, j, prim, self->facingLeft);
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
@@ -1983,7 +1983,7 @@ void EntityMist(Entity* self) {
         self->ext.mist.yCurrent = yVar;
         self->ext.mist.timer = 0;
         self->step = 4;
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, 80);
+        self->primIndex = AllocPrimRecursively(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             DestroyEntity(self);
         } else {
@@ -2016,10 +2016,10 @@ void EntityMist(Entity* self) {
             self->ext.mist.yTarget = yVar2 - PLAYER.posY.i.hi;
             prim = &g_PrimBuf[self->primIndex];
             for (j = 0; j < 16; j++) {
-                prim = func_80121F58(0, j, prim, self->facingLeft);
+                prim = UpdatePrimitiveCoordinates(0, j, prim, self->facingLeft);
             }
             for (j = 0; j < 16; j++) {
-                prim = func_80121F58(1, j, prim, self->facingLeft);
+                prim = UpdatePrimitiveCoordinates(1, j, prim, self->facingLeft);
             }
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
@@ -2164,7 +2164,7 @@ block_147:
 }
 
 // Appears as D_800AD0C4[48].
-void UnknownEntId48(Entity* self) {
+void UpdateEntityPlayerMistHitbox(Entity* self) {
     s32 params;
 
     params = (u8)self->params;
@@ -2196,7 +2196,7 @@ void UnknownEntId48(Entity* self) {
 }
 
 // Appears as D_800AD0C4[49].
-void UnknownEntId49(Entity* self) {
+void InitializeEntityPlayerMistHitbox(Entity* self) {
     s32 x_offset;
 
     if (!(g_Player.status & PLAYER_STATUS_AXEARMOR) || (PLAYER.step != 0x2B)) {
@@ -2228,7 +2228,7 @@ void UnknownEntId49(Entity* self) {
     }
 }
 
-void func_80123A60(Entity* entity) {
+void UpdateEntityAxeArmorHitbox(Entity* entity) {
     Entity* player = &PLAYER;
 
     if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
@@ -2264,7 +2264,7 @@ void func_80123A60(Entity* entity) {
     DestroyEntity(entity);
 }
 
-void func_80123B40(Entity* self) {
+void EntityPlayerFalling(Entity* self) {
     Entity copy;
     Primitive* prim;
     s16 params;
@@ -2358,7 +2358,7 @@ void func_80123B40(Entity* self) {
     }
 }
 
-void func_80123F78(Entity* entity) {
+void EntityPlayerColorBlend(Entity* entity) {
     PlayerDraw* plDraw = &g_PlayerDraw[13];
 
     if (g_unkGraphicsStruct.D_800973FC == 0) {
@@ -2406,7 +2406,7 @@ void func_80123F78(Entity* entity) {
 }
 
 // Corresponding RIC function is func_80165DD8
-void func_80124164(
+void UpdatePolyColor(
     POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
     s16 top = y - radius;
     s16 bottom = y + radius;

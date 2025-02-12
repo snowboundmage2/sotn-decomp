@@ -677,7 +677,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 2:
-            if (g_api.func_80131F68() == true) {
+            if (g_api.IsSoundPlaying() == true) {
                 if (--D_80181148 == 0) {
                     D_80181148 = 0x800;
                     g_api.PlaySfx(0x80);
@@ -689,7 +689,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 3:
-            if (g_api.func_80131F68() == false) {
+            if (g_api.IsSoundPlaying() == false) {
                 // Fake reuse of the i variable
                 i = g_Timer - D_8018114C;
                 if (i >= 0x301) {
@@ -720,7 +720,7 @@ void EntityDraculaFinalForm(Entity* self) {
         case 5:
             CreateEntityFromCurrentEntity(E_DRACULA_UNK2C, self + 1);
             self->step_s++;
-            primIndex = g_api.AllocPrimBuffers(PRIM_G4, 1);
+            primIndex = g_api.AllocPrimRecursively(PRIM_G4, 1);
             if (primIndex == -1) {
                 g_GameEngineStep = 0xA;
                 g_MenuStep = 0;
@@ -1001,7 +1001,7 @@ void func_801AF774(Entity* self) {
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         D_801C2578 = 1;
         self->ext.et_801AF774.unk90 = 1;
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x5C);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x5C);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;

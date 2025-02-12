@@ -21,7 +21,7 @@ void func_801B6DE4(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxState = 1;
 
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -111,7 +111,7 @@ void EntityElevator(Entity* self) {
             elevator_target = self->params;
         }
 
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 32);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

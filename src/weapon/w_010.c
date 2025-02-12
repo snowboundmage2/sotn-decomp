@@ -236,7 +236,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     hide = false;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x21);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x21);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -522,7 +522,7 @@ void func_ptr_80170024(Entity* self) {
         self->ext.shield.childPalette =
             self->ext.shield.parent->ext.shield.childPalette + 1 + upperParams;
         self->ext.shield.unk7D = self->ext.shield.parent->ext.shield.unk7D;
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x12);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x12);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

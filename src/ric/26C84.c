@@ -107,7 +107,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 8);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -378,7 +378,7 @@ void func_801641A0(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi - 8;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -472,7 +472,7 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 32);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 32);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -694,7 +694,7 @@ void RicEntityHitByIce(Entity* self) {
     sp18 = ((g_Player.status & PLAYER_STATUS_UNK10000) == sp18);
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT3, PrimCount);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT3, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -905,7 +905,7 @@ void RicEntityHitByLightning(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 6);
+        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1021,7 +1021,7 @@ void RicEntityHitByLightning(Entity* self) {
     prim->v2 = prim->v3 = 0xCF;
 }
 
-// Corresponding DRA function is func_80124164
+// Corresponding DRA function is UpdatePolyColor
 static s32 D_80155368[] = {255, 255, 255, 127, 127, 63, 127, 63, 127};
 void func_80165DD8(
     POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {

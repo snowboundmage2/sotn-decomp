@@ -2,7 +2,7 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-bool func_80131F68(void) {
+bool IsSoundPlaying(void) {
     bool ret;
     if (D_8013B61C) {
         ret = 1;
@@ -17,7 +17,7 @@ bool func_80131F68(void) {
 
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
-void func_80131FCC(void) {
+void UpdateSoundStatus(void) {
     switch (D_8013B680) {
     case 0:
         D_80138F7C = 0;

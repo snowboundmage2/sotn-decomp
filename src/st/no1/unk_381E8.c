@@ -381,7 +381,7 @@ void func_us_801B9304(Entity* self) {
 #ifdef VERSION_PSP
         func_psp_0925F440();
 #endif
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xE);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0xE);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -858,7 +858,7 @@ void func_us_801BA290(Entity* self) {
         break;
 
     case 2:
-        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x19);
+        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x19);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

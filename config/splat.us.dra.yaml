@@ -183,13 +183,13 @@ segments:
       - [0x3CC2C, .rodata, 628AC] # func_801028AC
       # - [0x3CC54, .rodata, 628AC] # func_80102D70
       - [0x3CC70, .rodata, 62DEC] # HandleSaveMenu
-      - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
+      - [0x3CDC0, .rodata, 63ED4] # HandleSaveMenuState
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
       - [0x40D38, .rodata, cd] # func_801080DC
       # - [0x40D54, .rodata, cd] # func_80108448
       - [0x40E28, .rodata, 692E8] # EntityAlucard
-      - [0x4108C, .rodata, 6E42C] # HandlePlayerAttack
+      - [0x4108C, .rodata, 6E42C] # ExecutePlayerAttack
       - [0x41308, .rodata, 704D0] # func_80110968
       # - [0x41320, .rodata, 704D0] # func_80110BC8
       # - [0x41334, .rodata, 704D0] # func_80110DF8
@@ -214,23 +214,23 @@ segments:
       # - [0x41AB4, .rodata, 7879C] # EntityEntFactory
       # - [0x41AF4, .rodata, 7879C] # EntityPlayerBlinkWhite
       # - [0x41B94, .rodata, 7879C] # EntityMpReplenished
-      - [0x41CB4, .rodata, 7E4BC] # func_8011E4BC
+      - [0x41CB4, .rodata, 7E4BC] # EntityExplosionEffect
       # - [0x41D84, .rodata, 7E4BC] # EntityPlayerPinkEffect
       # - [0x41DA4, .rodata, 7E4BC] # EntityPlayerDissolves
-      # - [0x41DBC, .rodata, 7E4BC] # EntityMist
+      # - [0x41DBC, .rodata, 7E4BC] # EntityPlayerMist
       - [0x41DD4, .rodata, 843B0] # EntityTeleport
       - [0x41E34, .rodata, 84B88] # EntitySubwpnCrashCross
       # - [0x41E48, .rodata, 84B88] # EntityHellfireHandler
       # - [0x41E7C, .rodata, 84B88] # func_80128C2C
       - [0x41E90, .rodata, 8A0A4] # EntityStopWatch
-      - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
+      - [0x41EB0, .rodata, 8D3E8] # HandleWolfRunState
       # - [0x41EC8, .rodata, 8D3E8] # ControlWolfForm
-      # - [0x41EF0, .rodata, 8D3E8] # func_8012F894
-      - [0x41F30, .rodata, 8D3E8] # func_80130264
-      # - [0x41F70, .rodata, 90264] # func_80130618
-      # - [0x41FB0, .rodata, 90264] # func_801309B4
-      # - [0x41FD8, .rodata, 90264] # func_80130E94
-      # - [0x42000, .rodata, 90264] # func_8013136C
+      # - [0x41EF0, .rodata, 8D3E8] # UpdateWolfEntity
+      - [0x41F30, .rodata, 8D3E8] # UpdateEntityWolfRotation
+      # - [0x41F70, .rodata, 90264] # UpdateEntityWolfRotationPart2
+      # - [0x41FB0, .rodata, 90264] # UpdateEntityWolfHitbox
+      # - [0x41FD8, .rodata, 90264] # UpdateWolfRotationHelper
+      # - [0x42000, .rodata, 90264] # EntityWolfForm
       # - [0x42024, .rodata, 90264] # func_801315F8
       - [0x42034, .rodata, 92F60] # CdSoundCommand4
       - [0x4205C, .rodata, 93290] # CdSoundCommand6

@@ -38,9 +38,9 @@ void func_800F24F4(void) {
             }
             var_a0 = 1;
         }
-        func_801042C4(var_a0);
+        InitializeSaveMenu(var_a0);
         D_80137598 = true;
-        func_80105428();
+        UpdateSaveMenuState();
     } else {
         D_80137598 = false;
     }

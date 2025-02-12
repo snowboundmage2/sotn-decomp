@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-bool func_8010FDF8(s32 branchFlags) {
+bool HandlePlayerMovement(s32 branchFlags) {
     u8 stackpad[0x28];
     s32 SFX_arg;
     s32 YAccel;
@@ -52,7 +52,7 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 1 && g_Player.pl_vram_flag & 1) {
             if (g_Player.unk46) {
                 if ((g_Player.unk46 & 0x7FFF) == 0xFF) {
-                    LandToTheGround(0);
+                    ExecuteLanding(0);
                     DestroyEquippedWeapon();
                     PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
                     return 1;
@@ -66,7 +66,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     if (g_Player.unk44 & 0x10) {
                         ExecuteWalk(1);
                     } else {
-                        LandToTheGround(0);
+                        ExecuteLanding(0);
                     }
                     PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
                 }
@@ -89,10 +89,10 @@ bool func_8010FDF8(s32 branchFlags) {
             } else if (abs(PLAYER.velocityX) > FIX(2)) {
                 PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
-                LandToTheGround(PLAYER.velocityX);
+                ExecuteLanding(PLAYER.velocityX);
             } else {
                 PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
-                LandToTheGround(0);
+                ExecuteLanding(0);
             }
             return 1;
         }
@@ -110,7 +110,7 @@ bool func_8010FDF8(s32 branchFlags) {
 
     if (branchFlags & 0x1000 &&
         g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) &&
-        HandlePlayerAttack() != 0) {
+        ExecutePlayerAttack() != 0) {
         return 1;
     }
 
@@ -134,12 +134,12 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 0x40000 && PLAYER.ext.player.anim != 0xDB) {
             if (g_Player.unk46 & 0x7FFF) {
                 if (g_Player.padPressed & PAD_TRIANGLE) {
-                    func_8010FD88();
+                    PerformBackDash();
                     return 1;
                 }
             } else {
                 if (g_Player.padTapped & PAD_TRIANGLE) {
-                    func_8010FD88();
+                    PerformBackDash();
                     return 1;
                 }
             }

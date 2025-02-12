@@ -3413,7 +3413,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_FADE_FROM_GAME:
-        if (func_801025F4() == 0) {
+        if (GetPrimitiveClut() == 0) {
             break;
         }
         SetGPUBuffRGBZero();
@@ -3449,7 +3449,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_4:
-        if (func_801025F4()) {
+        if (GetPrimitiveClut()) {
             func_80102628(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
@@ -3576,7 +3576,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_RETURN_TO_GAMEPLAY:
-        if (func_801025F4() == 0) {
+        if (GetPrimitiveClut() == 0) {
             break;
         }
         PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
@@ -3910,7 +3910,7 @@ block_4:
         }
         break;
     case MENU_STEP_UNK_32:
-        if (func_801025F4()) {
+        if (GetPrimitiveClut()) {
             func_80102628(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
@@ -3951,7 +3951,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_UNK_37:
-        if (func_801025F4() == 0) {
+        if (GetPrimitiveClut() == 0) {
             break;
         }
         g_MenuStep = MENU_STEP_SPELL;
