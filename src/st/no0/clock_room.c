@@ -89,7 +89,7 @@ void EntityClockRoomController(Entity* self) {
 
     // Controls the statues
     entity = &PLAYER;
-    if (g_unkGraphicsStruct.g_TimeFreezeFlag == 0) {
+    if (g_unkGraphicsStruct.D_800973FC == 0) {
         if (entity->posY.i.hi > 128) {
             g_Statues[RIGHT_STATUE] = false;
         }
@@ -97,7 +97,7 @@ void EntityClockRoomController(Entity* self) {
         g_Statues[RIGHT_STATUE] = true;
     }
 
-    self->ext.clockRoom.unk8A = g_unkGraphicsStruct.g_TimeFreezeFlag;
+    self->ext.clockRoom.unk8A = g_unkGraphicsStruct.D_800973FC;
 
     // Every other minute the top left statue opens
     if (status->timerMinutes & 1) {

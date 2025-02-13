@@ -90,7 +90,7 @@ void EntityStopWatch(Entity* self) {
     Primitive* prim;
 
     if (g_unkGraphicsStruct.pauseEnemies) {
-        g_unkGraphicsStruct.g_TimeFreezeFlag = 0;
+        g_unkGraphicsStruct.D_800973FC = 0;
         if (self->step && (self->step < 4)) {
             self->step = 4;
         }
@@ -138,7 +138,7 @@ void EntityStopWatch(Entity* self) {
 
         CreateEntFactoryFromEntity(self, FACTORY(75, 0), 0);
         PlaySfx(SFX_UI_ALERT_TINK);
-        g_unkGraphicsStruct.g_TimeFreezeFlag = 1;
+        g_unkGraphicsStruct.D_800973FC = 1;
         self->step++;
         break;
     case 1:
@@ -233,7 +233,7 @@ void EntityStopWatch(Entity* self) {
         }
         break;
     case 7:
-        g_unkGraphicsStruct.g_TimeFreezeFlag = 0;
+        g_unkGraphicsStruct.D_800973FC = 0;
         DestroyEntity(self);
         return;
     }

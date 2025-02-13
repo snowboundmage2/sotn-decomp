@@ -579,7 +579,7 @@ void EntityAlucard(void) {
     if (g_PlayerHitCooldown != 0) {
         g_PlayerHitCooldown--;
     }
-    if (g_unkGraphicsStruct.g_TimeFreezeFlag != 0 && g_PauseState == 0) {
+    if (g_unkGraphicsStruct.D_800973FC != 0 && g_PauseState == 0) {
         // EntityPlayerColorBlend?
         CreateEntFactoryFromEntity(g_Entities, 0x78, 0);
     }
@@ -587,7 +587,7 @@ void EntityAlucard(void) {
     var_s6 = 0;
     g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C =
         FLAG_DRAW_DEFAULT;
-    g_PauseState = g_unkGraphicsStruct.g_TimeFreezeFlag;
+    g_PauseState = g_unkGraphicsStruct.D_800973FC;
     var_s7 = 0;
     g_Player.unk72 = CheckPlayerCollision();
     if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
@@ -1225,7 +1225,7 @@ block_160:
         newStatus |= 0x02000000;
     }
     g_Player.status = newStatus;
-    if ((newStatus & 0x08000000) || (g_unkGraphicsStruct.g_TimeFreezeFlag != 0)) {
+    if ((newStatus & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
         ResetAfterImage(1, 1);
     }
     if (newStatus & 0x10000000) {
