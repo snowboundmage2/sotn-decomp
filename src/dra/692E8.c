@@ -1054,6 +1054,7 @@ block_160:
         HandlePlayerKillWater();
         break;
     case Player_Stuck:
+        //func_80117AC0
         HandlePlayerStuck();
         break;
     case Player_AxearmorStand:

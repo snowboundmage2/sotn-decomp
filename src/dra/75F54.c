@@ -840,7 +840,8 @@ void HandlePlayerStopBat(void) {
         break;
     case 2:
         if (g_Player.unk66 == 3) {
-            HandlePlayerStuck();
+            //func_8010E4D0
+            PerformPlayerStuck();
         }
         break;
     }
@@ -849,6 +850,7 @@ void HandlePlayerStopBat(void) {
     }
 }
 
+//func_80117AC0
 void HandlePlayerStuck(void) {
     Collider collider;
     s32 collisionCount;
@@ -1169,7 +1171,8 @@ void HandlePlayerStopMist(void) {
             DestroyEquippedWeapon();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5b), 0);
             if (PLAYER.step_s != 0) {
-                HandlePlayerStuck();
+                //func_8010E4D0
+                PerformPlayerStuck();
                 return;
             }
             ExecuteJump(0);

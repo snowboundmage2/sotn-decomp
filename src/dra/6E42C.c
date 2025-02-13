@@ -22,8 +22,8 @@ void ExecuteCrouch(s32 arg0, s32 arg1) {
     PLAYER.step_s = (s16)D_800ACF4C[arg0 * 2 + 0];
     SetPlayerAnim(D_800ACF4C[arg0 * 2 + 1]);
 }
-
-void HandlePlayerStuck(void) {
+//func_8010E4D0
+void PerformPlayerStuck(void) {
     CreatePlayerEffectEntities();
 
     PLAYER.palette = PAL_OVL(0x100);
