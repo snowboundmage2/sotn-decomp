@@ -687,7 +687,7 @@ void func_us_801B9BE4(Entity* self) {
                     CreateEntityFromEntity(E_ID_5E, self, tempEntity);
 #endif
                 }
-                g_api.func_80102CD8(1);
+                g_api.InitializeBackbufferCoords(1);
                 g_api.InitClutAnimation(0x8003);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
@@ -757,7 +757,7 @@ void func_us_801BA034(Entity* self) {
             self->posY.i.hi++;
         }
         if (self->posY.i.hi > 0xC2) {
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             g_CastleFlags[NO1_UNKNOWN_FLAG] = 1;
             self->step++;
         }
@@ -817,7 +817,7 @@ void func_us_801BA290(Entity* self) {
 
     if (self->step > 1 && self->step < 7) {
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 2;
+        g_Player.InputLockTimer = 2;
         g_api.ResetAfterImage(0, 1);
         g_api.SetPlayerBlinkTimer(1, 0x20);
     }
@@ -850,7 +850,7 @@ void func_us_801BA290(Entity* self) {
             (g_Player.status == PLAYER_STATUS_UNK10000000)) {
 #endif
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 2;
+            g_Player.InputLockTimer = 2;
             g_PauseAllowed = false;
             g_api.PlaySfx(SFX_TINK_JINGLE);
             self->step++;

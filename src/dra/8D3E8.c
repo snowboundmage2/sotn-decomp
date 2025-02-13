@@ -270,7 +270,7 @@ void HandleWolfJumpState2(void) {
             PLAYER.animFrameDuration = 6;
         }
     }
-    if (D_80097448[0] >= 13) {
+    if (g_SwimmingType[0] >= 13) {
         vel_boost = FIX(5.0 / 128);
     } else {
         vel_boost = FIX(20.0 / 128);
@@ -289,7 +289,7 @@ void HandleWolfJumpState3(void) {
         return;
     }
 
-    if (D_80097448[0] >= 13) {
+    if (g_SwimmingType[0] >= 13) {
         velocityBoost = FIX(5.0 / 128);
     } else {
         velocityBoost = FIX(20.0 / 128);
@@ -360,7 +360,7 @@ void HandleWolfJumpState4(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
             PLAYER.posY.i.hi = PLAYER.posY.i.hi;
             PLAYER.posX.i.hi -= xOffset;
-            func_80102CD8(3);
+            InitializeBackbufferCoords(3);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
@@ -427,7 +427,7 @@ void HandleWolfJumpState4(void) {
         break;
     }
 
-    if (D_80097448[0] >= 13) {
+    if (g_SwimmingType[0] >= 13) {
         vel_boost = FIX(5.0 / 128);
     } else {
         vel_boost = FIX(20.0 / 128);
@@ -582,7 +582,7 @@ void HandleWolfTransform(void) {
     PLAYER.animFrameDuration = 4;
     PLAYER.velocityY = 0;
     if (g_Entities[16].entityId == 0x22) {
-        if (func_8011203C() == 0) {
+        if (HandleWeaponCollision() == 0) {
             return;
         }
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x1b), 0);
@@ -594,7 +594,7 @@ void HandleWolfTransform(void) {
     PLAYER.velocityY = FIX(-1.5);
 }
 
-void PlayerUnWolf(void) {
+void HandlePlayerStopWolf(void) {
     s32 i;
     s32 else_cycles;
 
@@ -674,12 +674,12 @@ void HandleWolfSpecialMove(void) {
         return;
     }
     if (!IsRelicActive(RELIC_SKILL_OF_WOLF) ||
-        !(g_Player.padPressed & PAD_TRIANGLE) || (D_80097448[1] == 0)) {
+        !(g_Player.padPressed & PAD_TRIANGLE) || (g_SwimmingType[1] == 0)) {
         HandleWolfSlide();
         return;
     }
     SetSpeedX(FIX(0.5));
-    if (D_80097448[1] >= 13) {
+    if (g_SwimmingType[1] >= 13) {
         PLAYER.velocityY = FIX(-0.5);
     } else {
         PLAYER.velocityY = 0;
@@ -1384,7 +1384,7 @@ void UpdateEntityWolfRotation(Entity* self) {
     self->hitboxState = 0;
     if (abs(PLAYER.velocityX) > FIX(3) &&
         (PLAYER.step_s != 2 || D_800B0914 != 4)) {
-        func_8011A328(self, 13);
+        SetEntitySpellProperties(self, 13);
         self->enemyId = 3;
         if (self->hitFlags && !CastSpell(13)) {
             D_800B0914 = 3;
@@ -1638,11 +1638,11 @@ void UpdateEntityWolfHitbox(Entity* self) {
     }
     self->posX.i.hi += var_s2;
     if (PLAYER.step_s == 2 && D_800B0914 == 4) {
-        func_8011A328(self, 4);
+        SetEntitySpellProperties(self, 4);
         self->enemyId = 3;
     } else if (self->animCurFrame != 72 && self->animCurFrame != 73 &&
                self->animCurFrame != 74) {
-        func_8011A328(self, 14);
+        SetEntitySpellProperties(self, 14);
         self->enemyId = 3;
     } else {
         self->hitboxState = 0;
@@ -1650,7 +1650,7 @@ void UpdateEntityWolfHitbox(Entity* self) {
     if (self->animFrameDuration < 0) {
         if (D_80138448 != 0) {
             D_80138448 -= 1;
-        } else if (*D_80097448 >= 0x19) {
+        } else if (*g_SwimmingType >= 0x19) {
             var_s0_2 = PLAYER.facingLeft ? -4 : 4;
             self->posX.i.hi = var_s0_2 + self->posX.i.hi;
             self->posY.i.hi += 2;
@@ -2054,7 +2054,7 @@ void EntityGiantSpinningCross(Entity* self) {
             prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             prim = prim->next;
         }
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxHeight = 0x50;
         self->hitboxWidth = 0xC;
         self->facingLeft = 0;

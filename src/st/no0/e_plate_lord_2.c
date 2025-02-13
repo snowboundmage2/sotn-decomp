@@ -109,7 +109,7 @@ void func_us_801D542C(Entity* self) {
             }
             self->ext.plateLordUnknown.unk9C = 0;
             PlaySfxPositional(0x761);
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             self->step = 0xD;
         } else {
             if (self->facingLeft) {

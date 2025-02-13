@@ -389,7 +389,7 @@ static void func_ptr_80170024(Entity* self) {
         self->ext.medshieldlaser.unk9C = 0x400;
         self->ext.medshieldlaser.unk9E = -0x58;
         self->ext.medshieldlaser.unk98 = 0;
-        self->ext.medshieldlaser.target = g_api.func_80118970();
+        self->ext.medshieldlaser.target = g_api.FindActiveEntity();
         self->ext.medshieldlaser.unk94 = 1;
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next) {
@@ -420,7 +420,7 @@ static void func_ptr_80170024(Entity* self) {
             g_api.PlaySfx(SFX_BIBLE_SCRAPE);
         }
         self->ext.medshieldlaser.unkA4 = self->ext.medshieldlaser.unk9C;
-        temp_v0_8 = g_api.func_80118B18(
+        temp_v0_8 = g_api.CalculateEntityAngle(
             self, self->ext.medshieldlaser.target, self->facingLeft);
         if (temp_v0_8 >= 0) {
             temp_a2_2 = self->ext.medshieldlaser.unk86 & 0xFFF;

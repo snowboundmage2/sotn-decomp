@@ -4,7 +4,7 @@
 
 s16 D_800ACF6C[] = {0, -8, -16, -22};
 
-s16 func_80110394(void) {
+s16 CheckPlayerCollision(void) {
     // Variables that change during execution
     Collider collider;
     s32 yvar;

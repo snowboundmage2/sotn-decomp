@@ -210,7 +210,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.unk94--;
         if (self->ext.weapon.unk94 < 0) {
             self->ext.weapon.unk94 = 0;
-            g_api.func_80118C28(2);
+            g_api.SetBackgroundColorTimer(2);
 
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < (PrimCount - 1); i++) {

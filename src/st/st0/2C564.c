@@ -697,7 +697,7 @@ void EntityDracula(Entity* self) {
                 self->step_s++;
             }
             if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
-                g_api.func_80102CD8(2);
+                g_api.InitializeBackbufferCoords(2);
             }
             break;
 

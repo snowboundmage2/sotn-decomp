@@ -19,7 +19,7 @@ void func_80158B04(s32 arg0) {
     PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
 
     if (arg0 & 1) {
-        g_api.func_80102CD8(3);
+        g_api.InitializeBackbufferCoords(3);
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
 
@@ -35,7 +35,7 @@ void RicHandleStand(void) {
     if (PLAYER.step < 64) {
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if (D_80097448[0] >= 49) {
+        } else if (g_SwimmingType[0] >= 49) {
             if (PLAYER.facingLeft) {
                 var_s0 = -4;
             } else {
@@ -341,7 +341,7 @@ void RicHandleCrouch(void) {
     case 0x0:
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if ((*D_80097448 >= 0x19) && (g_Player.unk48 == 0)) {
+        } else if ((*g_SwimmingType >= 0x19) && (g_Player.unk48 == 0)) {
             if (PLAYER.facingLeft) {
                 xShift = -9;
             } else {
@@ -727,7 +727,7 @@ void RicHandleHit(
                     PLAYER.posY.i.hi -= 20;
                     PLAYER.posX.i.hi -= xShift;
                     g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-                    g_api.func_80102CD8(2);
+                    g_api.InitializeBackbufferCoords(2);
                     PLAYER.step_s = 1;
                     damage.effects = EFFECT_NONE;
                     damage.damageKind = DAMAGEKIND_1;
@@ -743,7 +743,7 @@ void RicHandleHit(
             ric_hit_stun_timer = 8;
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
-            g_api.func_80102CD8(2);
+            g_api.InitializeBackbufferCoords(2);
             PLAYER.step_s = 3;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SKID_SMOKE_2, 8), 0);
@@ -868,7 +868,7 @@ void RicHandleBossGrab(void) {
     }
 }
 
-// Compare to DRA PlayerStepKill
+// Compare to DRA HandlePlayerKill
 enum DeathKind {
     DEATH_GENERIC,
     DEATH_BY_FIRE,
@@ -900,7 +900,7 @@ void RicHandleDead(
         g_api.PlaySfx(SFX_VO_RIC_DEATH);
         if (damageEffects & ELEMENT_FIRE) {
             func_8015FA5C(0);
-            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkColor
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x48), 0);
             // RIC blueprint 53 has child 9, func_80161C2C
@@ -909,7 +909,7 @@ void RicHandleDead(
             death_kind = DEATH_BY_FIRE;
         } else if (damageEffects & ELEMENT_THUNDER) {
             func_8015FA5C(2);
-            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkColor
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x4C), 0);
             // RIC blueprint 48 has child 41, EntityPlayerHitByLightning
@@ -920,7 +920,7 @@ void RicHandleDead(
             death_kind = DEATH_BY_THUNDER;
         } else if (damageEffects & ELEMENT_ICE) {
             func_8015FA5C(3);
-            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkColor
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x4D), 0);
             // RIC blueprint 47 has child 40, EntityPlayerHitByIce
@@ -931,7 +931,7 @@ void RicHandleDead(
             PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
             func_8015FA5C(1);
-            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkColor
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x4A), 0);
             // RIC blueprint 11 has child 5, RicEntityHitByCutBlood

@@ -47,7 +47,7 @@ s32 GetPrimitiveClut(void) {
     return prim->clut;
 }
 
-void func_80102628(s32 arg0) {
+void UpdatePrimitivePositions(s32 arg0) {
     Primitive* prim;
     s32 i;
 
@@ -66,7 +66,7 @@ void func_80102628(s32 arg0) {
     }
 }
 
-void func_801026BC(s32 arg0) {
+void UpdatePrimColorIntensity(s32 arg0) {
     Primitive* prim = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
@@ -90,9 +90,9 @@ void func_801026BC(s32 arg0) {
     }
 }
 
-void func_801027A4(void) { func_801026BC(0); }
+void HidePrimColorIntensity(void) { UpdatePrimColorIntensity(0); }
 
-void func_801027C4(u32 arg0) {
+void UpdatePrimState(u32 arg0) {
     Primitive* prim1;
     Primitive* prim2;
 

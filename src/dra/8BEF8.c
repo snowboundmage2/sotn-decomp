@@ -61,7 +61,7 @@ void EntityBatEcho(Entity* self) {
             self->hitboxOffY = -4;
             self->hitboxWidth = 0x28;
             self->hitboxHeight = 0xC;
-            func_8011A328(self, 0xA);
+            SetEntitySpellProperties(self, 0xA);
         }
         self->step += 1;
         break;
@@ -259,7 +259,7 @@ bool WolfFormFinished(void) {
     if (PLAYER.step_s == 8) {
         return false;
     }
-    if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
+    if (g_SwimmingType[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
         g_Player.padTapped & PAD_R2 ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
@@ -268,7 +268,7 @@ bool WolfFormFinished(void) {
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
-        // Create factory for EntityPlayerBlinkWhite
+        // Create factory for EntityPlayerBlinkColor
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x24), 0);
         PLAYER.velocityY >>= 1;
         return true;
@@ -284,7 +284,7 @@ void HandleWolfSwim(void) {
         g_Entities[PLAYER_CHARACTER].step_s < 10) {
         return;
     }
-    if (D_80097448[1] < 13) {
+    if (g_SwimmingType[1] < 13) {
         return;
     }
     if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {
@@ -522,10 +522,10 @@ void HandleWolfHitWall(bool exitEarly) {
     bool bitNotFound;
     s32 i;
 
-    func_80102CD8(2);
+    InitializeBackbufferCoords(2);
     PlaySfx(SFX_WALL_DEBRIS_B);
     PLAYER.velocityX = 0;
-    g_Player.D_80072EFC = 0x20;
+    g_Player.InputLockTimer = 0x20;
     g_Player.padSim = 0;
     // Odd logic, if we exit early, we force an R2-tap. Strange!
     if (exitEarly) {

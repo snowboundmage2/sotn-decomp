@@ -3,7 +3,7 @@
 #include "../dra/dra_bss.h"
 
 extern RoomBossTeleport D_800A297C[];
-s32 func_800F087C(u32 chunkX, u32 chunkY) {
+s32 CheckBossTeleport(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
 
     for (phi_s1 = &D_800A297C[0]; true; phi_s1++) {
@@ -25,7 +25,7 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
-void func_800F0940(void) {
+void UpdateBackgroundParallax(void) {
     switch (g_BgLayers[0].scrollKind) {
     case 1:
         g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
@@ -76,7 +76,7 @@ void func_800F0940(void) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", SetNextRoomToLoad);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F0CD8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/A710", HandleRoomTransition);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7BC0);
 

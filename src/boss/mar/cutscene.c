@@ -579,7 +579,7 @@ void func_us_8018C90C(Entity* self) {
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_RIGHT;
-        g_Player.D_80072EFC = 1;
+        g_Player.InputLockTimer = 1;
         break;
     case 1:
         if ((player->posX.i.hi >= 0x21) && !(g_CutsceneFlags & 1)) {
@@ -591,7 +591,7 @@ void func_us_8018C90C(Entity* self) {
         } else {
             g_Player.padSim = PAD_RIGHT;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.InputLockTimer = 1;
         break;
     case 2:
         if (g_CutsceneFlags & 2) {
@@ -607,7 +607,7 @@ void func_us_8018C90C(Entity* self) {
         }
 
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.InputLockTimer = 1;
         break;
     }
 }

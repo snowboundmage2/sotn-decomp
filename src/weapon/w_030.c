@@ -522,7 +522,7 @@ void func_ptr_80170008(Entity* self) {
         if (a0 == 1) {
             self->ext.weapon_030.unkA4 = 3;
         }
-        g_api.func_80102CD8(4);
+        g_api.InitializeBackbufferCoords(4);
         g_api.PlaySfx(SFX_EXPLODE_A);
         self->step++;
         break;
@@ -552,7 +552,7 @@ void func_ptr_80170008(Entity* self) {
             self->stunFrames = 4;
             self->hitEffect = 1;
             self->entityRoomIndex = 0;
-            g_api.func_80118894(self);
+            g_api.AssignEntityEnemyId(self);
             self->posY.i.hi++;
             a0 = temp_s4;
             if (a0 == 5) {
@@ -835,14 +835,14 @@ void func_ptr_8017000C(Entity* self) {
         self->stunFrames = 4;
         self->hitEffect = 1;
         self->entityRoomIndex = 0;
-        g_api.func_80118894(self);
+        g_api.AssignEntityEnemyId(self);
         self->hitboxWidth = 8;
         self->hitboxHeight = 4;
         self->step++;
         break;
     case 1:
         if (maskedParams == 2) {
-            result = g_api.func_80118B18(
+            result = g_api.CalculateEntityAngle(
                 self, self->ext.weapon_030.other, self->ext.weapon.unk82);
             if (result >= 0) {
                 temp_a2 = self->ext.weapon.unk80 & 0xFFF;
@@ -891,7 +891,7 @@ void func_ptr_8017000C(Entity* self) {
         self->ext.weapon.unk80 += 0x100;
         self->rotZ = -self->ext.weapon.unk80 + 0x800;
         if (--self->ext.weapon.lifetime == 0) {
-            self->ext.weapon_030.other = g_api.func_80118970();
+            self->ext.weapon_030.other = g_api.FindActiveEntity();
             self->ext.weapon.unk98 = 0x20;
             self->ext.weapon.unk9A = 0x600;
             g_api.PlaySfx(SFX_ARROW_SHOT_C);
@@ -930,7 +930,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->hitEffect = 1;
         self->entityRoomIndex = 0;
         self->posY.i.hi -= 0x27;
-        g_api.func_80118894(self);
+        g_api.AssignEntityEnemyId(self);
         self->ext.weapon.vol = 0x30;
         self->step++;
         break;

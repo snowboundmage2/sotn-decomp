@@ -21,6 +21,7 @@ void EntityWeaponShieldSpellDummy(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170024Dummy(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170028Dummy(Entity* self) { NOT_IMPLEMENTED; }
 
+//g_WeaponAxeAmour?
 Weapon D_8017A000 = {
     EntityWeaponAttackDummy,
     func_ptr_80170004Dummy,

@@ -22,9 +22,9 @@ typedef struct {
 } MenuContextInit; // size = 0x1C
 
 #if defined(VERSION_US)
-#define ShowText(str, id) func_800F99B8(str, id, 0);
+#define ShowText(str, id) DrawUSMenuText(str, id, 0);
 #elif defined(VERSION_HD)
-#define ShowText(str, id) func_800F98AC(str, id);
+#define ShowText(str, id) DrawJapaneseMenuText(str, id);
 #endif
 
 const char* D_800A2D48[] = {
@@ -2276,7 +2276,7 @@ void func_800F9808(u32 arg0) {
     LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
 }
 
-void func_800F98AC(const char* str, u32 arg1) {
+void DrawJapaneseMenuText(const char* str, u32 arg1) {
     u32 temp_s2;
     s32 i;
     u8* data_ptr;
@@ -2310,7 +2310,7 @@ void func_800F98AC(const char* str, u32 arg1) {
 }
 
 #if defined(VERSION_US)
-void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
+void DrawUSMenuText(const char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
     const u16 MINSCODE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
@@ -2441,24 +2441,24 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
 }
 #endif
 
-void func_800F9D40(const char* str, s32 arg1, s32 arg2) {
+void JP_DrawMenuText(const char* str, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
         D_8013794C = g_Pix[2];
     }
 
     D_80137950 = 0;
     D_80137954 = 0x100;
-    func_800F98AC(str, arg1);
+    DrawJapaneseMenuText(str, arg1);
 }
 
 #if defined(VERSION_US)
-void func_800F9D88(const char* str, s32 arg1, s32 arg2) {
+void US_DrawMenuText(const char* str, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
         D_8013794C = g_Pix[2];
     }
     D_80137950 = 0;
     D_80137954 = 0x100;
-    func_800F99B8(str, arg1, 0);
+    DrawUSMenuText(str, arg1, 0);
 }
 #endif
 
@@ -2493,16 +2493,16 @@ void func_800F9E18(s32 arg0) {
     for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
+            DrawUSMenuText(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
         } else {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
+            DrawUSMenuText(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
         }
 
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
+            DrawUSMenuText(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
         } else {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 771, 1);
+            DrawUSMenuText(buffer, (nHalfScreenSize / ItemsPerRow) + 771, 1);
         }
     }
 }
@@ -2518,9 +2518,9 @@ void func_800F9E18(s32 arg0) {
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 0].name, buffer[0]);
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 1].name, buffer[1]);
         if ((i % ItemsPerRow) == 0) {
-            func_800F98AC(buffer, i / ItemsPerRow + 0x80);
+            DrawJapaneseMenuText(buffer, i / ItemsPerRow + 0x80);
         } else {
-            func_800F98AC(buffer, i / ItemsPerRow + 0x103);
+            DrawJapaneseMenuText(buffer, i / ItemsPerRow + 0x103);
         }
     }
 }
@@ -3417,7 +3417,7 @@ block_4:
             break;
         }
         SetGPUBuffRGBZero();
-        func_80102628(0x180);
+        UpdatePrimitivePositions(0x180);
         SetMenuDisplayBuffer();
         func_800FAC48();
         D_800973EC = 1;
@@ -3429,13 +3429,13 @@ block_4:
             D_80097910 = 0;
             func_800F6A48();
             func_800F84CC();
-            func_801027C4(2);
+            UpdatePrimState(2);
 #if defined(VERSION_US)
-            func_800F98AC(*D_800A2D64, 0);
+            DrawJapaneseMenuText(*D_800A2D64, 0);
 #elif defined(VERSION_HD)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
+            DrawJapaneseMenuText(*D_800A2D10, 0);
+            DrawJapaneseMenuText(*D_800A2D14, 0x100);
+            DrawJapaneseMenuText(*D_800A2D18, 1);
 #endif
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);
@@ -3445,12 +3445,12 @@ block_4:
         }
         break;
     case MENU_STEP_EXIT_BEGIN:
-        func_801027C4(1);
+        UpdatePrimState(1);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_4:
         if (GetPrimitiveClut()) {
-            func_80102628(0x100);
+            UpdatePrimitivePositions(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
             LoadAllEquipIcons();
@@ -3565,14 +3565,14 @@ block_4:
         D_800973EC = 0;
         func_800FAC30();
         func_800F86E4();
-        func_8010A234(1);
+        HandleAxeLordArmor(1);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_13:
         if (func_80133950() == false) {
             break;
         }
-        func_801027C4(2);
+        UpdatePrimState(2);
         g_MenuStep++;
         break;
     case MENU_STEP_RETURN_TO_GAMEPLAY:
@@ -3911,7 +3911,7 @@ block_4:
         break;
     case MENU_STEP_UNK_32:
         if (GetPrimitiveClut()) {
-            func_80102628(0x100);
+            UpdatePrimitivePositions(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
@@ -3935,18 +3935,18 @@ block_4:
             func_801073C0();
             g_CdStep = CdStep_None;
             SetGPUBuffRGBZero();
-            func_80102628(0x180);
+            UpdatePrimitivePositions(0x180);
             SetMenuDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
         }
         break;
     case MENU_STEP_UNK_36:
-        func_801027C4(2);
+        UpdatePrimState(2);
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
-        func_800F98AC(g_SpellDefs[id].description, 2);
+        DrawJapaneseMenuText(g_SpellDefs[id].description, 2);
         func_800F9F40();
         g_MenuStep++;
         break;

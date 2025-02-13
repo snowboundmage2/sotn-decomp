@@ -8,7 +8,7 @@
 #define IFSTATEMENT --prim1->y1 == -1
 #endif
 
-void func_801028AC(bool exitEarly) {
+void UpdatePrimitiveDrawModes(bool exitEarly) {
     Primitive* prim1;
     Primitive* prim2;
     s32 prim1clut;
@@ -37,7 +37,7 @@ void func_801028AC(bool exitEarly) {
                     prim1->clut++;
                     prim1->x1 = 0x40;
                 }
-                func_801026BC(prim1->x1);
+                UpdatePrimColorIntensity(prim1->x1);
             } else {
                 if (prim1->x1 >= 0x100) {
                     prim1->clut++;
@@ -56,9 +56,9 @@ void func_801028AC(bool exitEarly) {
                 prim1->clut++;
                 prim1->x1 = 0x40;
             }
-            func_801026BC(0x40 - prim1->x1);
+            UpdatePrimColorIntensity(0x40 - prim1->x1);
         } else {
-            func_801026BC(0);
+            UpdatePrimColorIntensity(0);
             D_801379A4[0] = 0;
         }
         prim1->drawMode = prim2->drawMode =
@@ -159,13 +159,13 @@ s16* D_800A3194[] = {
     D_800A3144, D_800A3144, D_800A3160,
 };
 
-void func_80102CD8(s32 start) {
+void InitializeBackbufferCoords(s32 start) {
     D_801379AC.start = start;
     D_801379AC.current = 0;
     D_801379AC.coords = D_800A3194[start];
 }
 
-void func_80102D08(void) {
+void UpdateBackbufferCoords(void) {
     D_801379AC.unk8 = D_801379AC.coords[D_801379AC.current];
     D_801379AC.current++;
     if (D_801379AC.coords[D_801379AC.current] == COORD_TERMINATOR) {
@@ -174,30 +174,30 @@ void func_80102D08(void) {
     }
 }
 
-void func_80102D70(void) {
+void UpdateBackbuffer(void) {
     switch (D_801379AC.start) {
     case 0:
         break;
     case 1:
-        func_80102D08();
+        UpdateBackbufferCoords();
         g_backbufferY = D_801379AC.unk8;
         break;
     case 2:
-        func_80102D08();
+        UpdateBackbufferCoords();
         g_backbufferX = D_801379AC.unk8;
         break;
     case 3:
-        func_80102D08();
+        UpdateBackbufferCoords();
         g_backbufferY = D_801379AC.unk8;
         break;
     case 4:
-        func_80102D08();
+        UpdateBackbufferCoords();
         g_backbufferY = D_801379AC.unk8;
         break;
     case 5:
         break;
     case 6:
-        func_80102D08();
+        UpdateBackbufferCoords();
         g_backbufferY = D_801379AC.unk8;
         break;
     }

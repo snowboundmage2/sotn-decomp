@@ -425,7 +425,7 @@ void EntityDiplocephalusTail(Entity* self) {
                 tempEntity->params = 3;
                 tempEntity->zPriority = self->zPriority + 9;
             }
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             EntityExplosionSpawn(0, 0);
             return;
         }

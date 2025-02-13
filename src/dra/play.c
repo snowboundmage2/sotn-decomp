@@ -168,7 +168,7 @@ void HandlePlay(void) {
             func_800E4970();
             return;
         }
-        g_StageId = func_800F16D0();
+        g_StageId = GetCurrentStageId();
         g_GpuBuffers[1].draw.isbg = 0;
         g_GpuBuffers[0].draw.isbg = 0;
         HideAllBackgroundLayers();

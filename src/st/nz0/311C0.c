@@ -666,7 +666,7 @@ void EntityCannon(Entity* self) {
 
     case 1:
         if (D_80180ED0[0] != 0) {
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             g_api.PlaySfx(SFX_CANNON_EXPLODE);
             self->velocityX = FIX(8);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -723,7 +723,7 @@ void EntityCannonShot(Entity* self) {
     case 1:
         MoveEntity();
         if ((self->posX.i.hi + g_Tilemap.scrollX.i.hi) < 112) {
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);

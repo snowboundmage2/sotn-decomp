@@ -35,7 +35,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 2;
         self->hitboxOffX = 4;
@@ -278,7 +278,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
                 prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             }
         }
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         PlaySfx(SFX_WEAPON_SWISH_C);
@@ -465,7 +465,7 @@ s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
 }
 
 //HandleEntityCollision, but what entity?
-s32 func_80125B6C(s16 arg0, s16 arg1) {
+s32 HandleEntityCollision(s16 arg0, s16 arg1) {
     Collider collider;
     s16 xShift;
 
@@ -511,7 +511,7 @@ void EntityHolyWater(Entity* self) {
         self->posY.i.hi += 8;
         SetSpeedX(FIX(1.25));
         self->velocityY = FIX(-3.125);
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxWidth = self->hitboxHeight = 4;
         g_Player.timers[ALU_T_10] = 4;
         self->step++;
@@ -528,7 +528,7 @@ void EntityHolyWater(Entity* self) {
         if (self->velocityX < 0) {
             xOffset = -xOffset;
         }
-        collisionFlags |= func_80125B6C(-7, xOffset);
+        collisionFlags |= HandleEntityCollision(-7, xOffset);
 
         if (collisionFlags & 2) {
             collisionFlags = 1;
@@ -704,7 +704,7 @@ void EntityHolyWaterFlame(Entity* self) {
                              DRAW_UNK02 | DRAW_COLORS | DRAW_HIDE;
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxWidth = 4;
         self->posY.i.hi -= 10;
         CreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
@@ -799,7 +799,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->posY.i.hi = 0x78;
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         LoadImage(&D_800B0788, (u_long*)D_800B06C8);
         prim = &g_PrimBuf[self->primIndex];
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
@@ -957,7 +957,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
                 var_g1 = 0;
                 var_g0 |= prim->g0;
                 var_g1 |= prim->g1;
-                func_80119E78(prim, var_g0, var_g1);
+                UpdatePrimitiveUVCoordinates(prim, var_g0, var_g1);
             }
         }
     }
@@ -1145,7 +1145,7 @@ void EntityHellfireNormalFireball(Entity* self) {
         SetSpeedX(D_800B0830[self->params]);
         self->velocityY = D_800B083C[self->params];
         self->ext.timer.t = 20;
-        func_8011A328(self, 2);
+        SetEntitySpellProperties(self, 2);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         self->step++;
@@ -1205,7 +1205,7 @@ void EntityBatFireball(Entity* self) {
         self->posY.i.hi -= 4;
         self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         self->rotX = self->rotY = 0x40;
-        func_8011A328(self, 9);
+        SetEntitySpellProperties(self, 9);
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
         g_Player.timers[10] = 4;
@@ -1253,7 +1253,7 @@ void EntityHellfireBigFireball(Entity* entity) {
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(-0x10);
-        func_8011A328(entity, 2);
+        SetEntitySpellProperties(entity, 2);
         entity->hitboxWidth = 8;
         entity->hitboxHeight = 8;
         entity->step++;
@@ -1480,7 +1480,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
 
         self->ext.reboundStone.lifeTimer = 0x40;
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         g_Player.timers[10] = 4;
@@ -1737,7 +1737,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             return;
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-        func_8011A290(self);
+        SetEntitySubweaponProperties(self);
         self->hitboxWidth = self->hitboxHeight = 4;
         self->ext.subweapon.timer = 0x80;
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
@@ -1901,7 +1901,7 @@ void EntitySubwpnAgunea(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
-            func_8011A290(self);
+            SetEntitySubweaponProperties(self);
             self->hitboxWidth = self->hitboxHeight = 4;
             self->hitboxOffX = 4;
             self->hitboxOffY = 0;
@@ -2284,9 +2284,9 @@ void EntitySummonedSpirit(Entity* self) {
             FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->drawFlags = FLAG_DRAW_ROTZ;
         if (self->params & 0x7F00) {
-            func_8011A328(self, 3);
+            SetEntitySpellProperties(self, 3);
         } else {
-            func_8011A328(self, 1);
+            SetEntitySpellProperties(self, 1);
         }
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -2298,7 +2298,7 @@ void EntitySummonedSpirit(Entity* self) {
         self->ext.et_80129864.unk80 += s1;
 
         if (self->posY.i.hi < -0x20) {
-            self->ext.et_80129864.ent = func_80118970();
+            self->ext.et_80129864.ent = FindActiveEntity();
             self->ext.et_80129864.unk84 = 0;
             self->ext.et_80129864.unk80 = 0xC00;
             if ((self->params & 0xFF) >= 2) {
@@ -2490,7 +2490,7 @@ void EntitySummonSpirit(Entity* self) {
                       FLAG_UNK_20000 | FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 3;
         self->ext.summonspirit.spawnTimer = 10;
-        func_80118C28(13);
+        SetBackgroundColorTimer(13);
         self->step++;
 #ifdef VERSION_PSP
         func_891B0DC(0, 0);
@@ -2572,7 +2572,7 @@ void EntitySummonSpirit(Entity* self) {
             } else {
                 CreateEntFactoryFromEntity(self, 116, 0);
             }
-            // Blueprint 44 is child 11. EntityPlayerBlinkWhite
+            // Blueprint 44 is child 11. EntityPlayerBlinkColor
             CreateEntFactoryFromEntity(self, FACTORY(44, 0x67), 0);
             PlaySfx(SFX_UI_MP_FULL);
             self->step++;

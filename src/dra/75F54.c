@@ -12,7 +12,7 @@ extern s32 g_BatScreechDone;
 extern s32 g_MistTimer; // remaining time in mist transformation
 extern s32 D_80138008;
 
-void PlayerStepKillWater(void) {
+void HandlePlayerKillWater(void) {
     PlayerDraw* plDraw;
     bool var_s2;
 
@@ -37,7 +37,7 @@ void PlayerStepKillWater(void) {
         PLAYER.ext.player.anim = 0xC1;
         PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         PLAYER.rotZ = 0x200;
-        func_80118C28(1);
+        SetBackgroundColorTimer(1);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x59), 0);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(49, 6), 0);
         plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
@@ -76,7 +76,7 @@ void PlayerStepKillWater(void) {
     }
 }
 
-void PlayerStepBossGrab(void) {
+void HandlePlayerBossGrab(void) {
     DamageParam damage;
     s32 temp_s0;
 
@@ -100,7 +100,7 @@ void PlayerStepBossGrab(void) {
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
-                PlayerStepKill(&damage, Player_BossGrab, 1);
+                HandlePlayerKill(&damage, Player_BossGrab, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
@@ -132,7 +132,7 @@ void PlayerStepBossGrab(void) {
     }
 }
 // Called in EntityAlucard when PLAYER.step is Player_SpellHellfire
-void PlayerStepHellfire(void) {
+void HandlePlayerHellFire(void) {
     // Whether we should run the last 3 function calls at the end
     bool runFinishingBlock = 0;
     switch (PLAYER.step_s) {
@@ -204,7 +204,7 @@ void PlayerStepHellfire(void) {
     }
 }
 
-void PlayerStepUnk48(void) {
+void HandlePlayerUnk48(void) {
     switch (PLAYER.step_s) {
     case 0:
         ResetPlayerState();
@@ -230,7 +230,7 @@ void PlayerStepUnk48(void) {
     }
 }
 
-void PlayerStepUnk49(void) {
+void HandlePlayerUnk49(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
@@ -238,7 +238,7 @@ void PlayerStepUnk49(void) {
     }
 }
 
-void PlayerStepUnk50(void) {
+void HandlePlayerUnk50(void) {
     s32* velocityX = &PLAYER.velocityX;
     PLAYER.velocityY = 0;
     *velocityX = 0;
@@ -257,7 +257,7 @@ bool BatFormFinished(void) {
     if (g_Entities->step_s == 0) {
         return false;
     }
-    if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
+    if (g_SwimmingType[1] || g_Player.padTapped & PAD_R1 ||
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
@@ -456,7 +456,7 @@ void ControlBatForm(void) {
             PLAYER.animSet = 13;
             D_800AFDA4[1] = 6;
             PLAYER.ext.player.anim = 0xCA;
-            if (!func_8011203C()) {
+            if (!HandleWeaponCollision()) {
                 return;
             }
         } else {
@@ -652,10 +652,10 @@ void ControlBatForm(void) {
             PLAYER.facingLeft && (g_Player.pl_vram_flag & 8)) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
-            func_80102CD8(2);
+            InitializeBackbufferCoords(2);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
-            g_Player.D_80072EFC = 0x20;
+            g_Player.InputLockTimer = 0x20;
             g_Player.padSim = 0;
             break;
         }
@@ -663,7 +663,7 @@ void ControlBatForm(void) {
         if (--g_WingSmashTimer == 0) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
-            g_Player.D_80072EFC = 0x20;
+            g_Player.InputLockTimer = 0x20;
             g_Player.padSim = 0;
         } else {
             if (directionsPressed & PAD_UP) {
@@ -743,24 +743,24 @@ void ControlBatForm(void) {
         break;
     }
 
-    if (D_8013AECC != 0) {
+    if (g_AnimationOffset != 0) {
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = 0;
         }
     }
-    if (D_8013AECC != 0) {
-        if (D_8013AECC > 0) {
-            D_8013AECC--;
+    if (g_AnimationOffset != 0) {
+        if (g_AnimationOffset > 0) {
+            g_AnimationOffset--;
             g_CurrentEntity->posY.i.hi++;
         } else {
-            D_8013AECC++;
+            g_AnimationOffset++;
             g_CurrentEntity->posY.i.hi--;
         }
     }
     g_BatScreechDone = screechDone;
 }
 
-void PlayerUnBat(void) {
+void HandlePlayerStopBat(void) {
     byte pad[0x28];
     s32 i;
     s32 else_cycles;
@@ -791,10 +791,10 @@ void PlayerUnBat(void) {
                 continue;
             }
             if (g_Player.unk68 != 0) {
-                if (D_8013AECC >= 12) {
+                if (g_AnimationOffset >= 12) {
                     continue;
                 }
-                D_8013AECC++;
+                g_AnimationOffset++;
             } else {
                 if (g_Player.pl_vram_flag & 0x8000) {
                     PLAYER.posY.i.hi--;
@@ -844,12 +844,12 @@ void PlayerUnBat(void) {
         }
         break;
     }
-    if (func_80111DE8(0) != 0) {
+    if (HandleMistCollision(0) != 0) {
         PLAYER.velocityX = 0;
     }
 }
 
-void PlayerStepStuck(void) {
+void HandlePlayerStuck(void) {
     Collider collider;
     s32 collisionCount;
 
@@ -916,7 +916,7 @@ bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-    if (D_80097448[1] != 0 || g_Player.padTapped & PAD_L1 ||
+    if (g_SwimmingType[1] != 0 || g_Player.padTapped & PAD_L1 ||
         HandleTransformationMP(FORM_MIST, REDUCE) < 0 ||
         (!IsRelicActive(RELIC_POWER_OF_MIST) &&
          (g_MistTimer == 0 || --g_MistTimer == 0))) {
@@ -1094,18 +1094,18 @@ void ControlMistForm(void) {
         FntPrint("error step\n");
         break;
     }
-    if (D_8013AECC != 0) {
-        if (D_8013AECC > 0) {
-            D_8013AECC -= 1;
+    if (g_AnimationOffset != 0) {
+        if (g_AnimationOffset > 0) {
+            g_AnimationOffset -= 1;
             PLAYER.posY.i.hi++;
         } else {
-            D_8013AECC += 1;
+            g_AnimationOffset += 1;
             PLAYER.posY.i.hi--;
         }
     }
 }
 
-void PlayerUnMist(void) {
+void HandlePlayerStopMist(void) {
     byte pad[0x28];
     s32 i;
     s32 else_cycles;
@@ -1135,10 +1135,10 @@ void PlayerUnMist(void) {
             continue;
         }
         if (PLAYER.step_s != 0) {
-            if (D_8013AECC >= 12) {
+            if (g_AnimationOffset >= 12) {
                 continue;
             }
-            D_8013AECC++;
+            g_AnimationOffset++;
         } else {
             if (g_Player.pl_vram_flag & 0x8000) {
                 PLAYER.posY.i.hi--;
@@ -1151,7 +1151,7 @@ void PlayerUnMist(void) {
         PLAYER.velocityX = 0;
     }
     if (else_cycles == 8) {
-        if (func_80111D24()) {
+        if (HandleMistGates()) {
             return;
         }
         PLAYER.animSet = 1;
@@ -1186,24 +1186,24 @@ void PlayerUnMist(void) {
             CreatePlayerEffectEntities();
         }
     }
-    if (func_80111DE8(1) != 0) {
+    if (HandleMistCollision(1) != 0) {
         PLAYER.velocityX = 0;
     }
 }
 
-void PlayerStepSpellDM(void) {
+void HandlePlayerDarkMetamorphosis(void) {
     if (PLAYER.animFrameDuration < 0) {
         ExecuteLanding(0);
     }
 }
 
-void PlayerStepSpellSB(void) {
+void HandlePlayerSwordBrothers(void) {
     if (PLAYER.animFrameDuration < 0) {
         ExecuteCrouch(0, 0);
     }
 }
 
-void PlayerStepSoulSteal(void) {
+void HandlePlayerSoulSteal(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x16), 0);
         PlaySfx(SFX_UI_MP_FULL);
@@ -1214,7 +1214,7 @@ void PlayerStepSoulSteal(void) {
     }
 }
 
-void PlayerStepSwordWarp(void) {
+void HandlePlayerSwordWarp(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;

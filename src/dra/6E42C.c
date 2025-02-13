@@ -33,7 +33,7 @@ void HandlePlayerStuck(void) {
         SetPlayerAnim(0xC7);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
-        SetPlayerStep(Player_AlucardStuck);
+        SetPlayerStep(Player_Stuck);
         CreatePlayerEffectEntities();
         PlaySfx(SFX_VO_ALU_WHAT);
         return;
@@ -109,7 +109,7 @@ void ExecuteWalk(bool forceAnim13) {
         }
     } else {
         SetPlayerAnim(7);
-        // Factory blueprint 1 has child 2, which is func_8011B5A4
+        // Factory blueprint 1 has child 2, which is EntitySmokePuff
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
 
@@ -860,9 +860,9 @@ void PerformDarkMetamorphosis(void) {
     PlaySfx(SFX_UI_MP_FULL);
     g_Player.timers[ALU_T_DARKMETAMORPH] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
-    func_801092E8(1);
+    SetPlayerPalette(1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x11), 0);
-    func_80118C28(0xB);
+    SetBackgroundColorTimer(0xB);
 }
 
 void PerformSoulSteal(void) {
@@ -872,7 +872,7 @@ void PerformSoulSteal(void) {
     DestroyEntityIfFlagSet();
     SetPlayerAnim(0xDA);
     PlaySfx(SFX_VO_ALU_SOUL_STEAL);
-    func_80118C28(0xC);
+    SetBackgroundColorTimer(0xC);
     g_Player.timers[ALU_T_12] = 4;
 }
 

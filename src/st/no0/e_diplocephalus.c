@@ -69,7 +69,7 @@ void func_us_801CF4A8(Entity* self) {
                 newEntity->params = 3;
                 newEntity->zPriority = self->zPriority + 9;
             }
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             DestroyEntity(self);
         }
         break;
@@ -423,7 +423,7 @@ void EntityDiplocephalus(Entity* self) {
         if (entityRef->step == 5 && (entityRef - 1)->step == 5) {
             entityRef->step = 2;
             (entityRef - 1)->step = 2;
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             self->step = 3;
             if (self->ext.diplocephalus.unk9C) {
                 self->step = 6;
@@ -545,7 +545,7 @@ void EntityDiplocephalus(Entity* self) {
         if (self->ext.diplocephalus.entityA0->entityId !=
                 E_DIPLOCEPHALUS_TAIL &&
             UnkCollisionFunc3(D_us_80181D74) & 1) {
-            g_api.func_80102CD8(1);
+            g_api.InitializeBackbufferCoords(1);
             self->step++;
         }
         break;
@@ -573,7 +573,7 @@ void EntityDiplocephalus(Entity* self) {
             }
         }
 
-        g_api.func_80102CD8(1);
+        g_api.InitializeBackbufferCoords(1);
         PlaySfxPositional(SFX_STUTTER_EXPLODE_C);
         self->ext.diplocephalus.unk9C = 0;
         self->ext.diplocephalus.unk9D = 0;

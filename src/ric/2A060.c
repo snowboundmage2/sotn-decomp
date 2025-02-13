@@ -988,7 +988,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
             line = line->next;
         }
         if (self->params == 1) {
-            g_api.func_801027C4(3);
+            g_api.UpdatePrimState(3);
         }
         self->ext.subweapon.timer = 0x160;
         if ((self->params < 32) && !(self->params & 3)) {

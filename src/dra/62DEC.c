@@ -161,77 +161,77 @@ s32 HandleSaveMenu(s32 arg0) {
             }
             if (D_80137E4C == 6) {
 #if defined(VERSION_US)
-                func_800F9D88("Data saved．", 0, 1);
+                US_DrawMenuText("Data saved．", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40("セーブしました　　　", 0, 1);
+                JP_DrawMenuText("セーブしました　　　", 0, 1);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 7) {
 #if defined(VERSION_US)
-                func_800F9D88("Memory Card", 0, 1);
-                func_800F9D88("  not found．", 1, 0);
+                US_DrawMenuText("Memory Card", 0, 1);
+                US_DrawMenuText("  not found．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40("メモリーカードが　　", 0, 1);
-                func_800F9D40("ささっていません　　", 1, 0);
+                JP_DrawMenuText("メモリーカードが　　", 0, 1);
+                JP_DrawMenuText("ささっていません　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 8) {
 #if defined(VERSION_US)
-                func_800F9D88("Memory Card", 0, 1);
-                func_800F9D88("is Defective．", 1, 0);
+                US_DrawMenuText("Memory Card", 0, 1);
+                US_DrawMenuText("is Defective．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40("メモリーカードが　　", 0, 1);
-                func_800F9D40("　壊れています　　　", 1, 0);
+                JP_DrawMenuText("メモリーカードが　　", 0, 1);
+                JP_DrawMenuText("　壊れています　　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 9) {
 #if defined(VERSION_US)
-                func_800F9D88("Memory Card is", 0, 1);
-                func_800F9D88("not formatted．", 1, 0);
+                US_DrawMenuText("Memory Card is", 0, 1);
+                US_DrawMenuText("not formatted．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40("　メモリーカードが　", 0, 1);
-                func_800F9D40("初期化されていません", 1, 0);
+                JP_DrawMenuText("　メモリーカードが　", 0, 1);
+                JP_DrawMenuText("初期化されていません", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 10) {
                 if (D_80137E54 == 2) {
 #if defined(VERSION_US)
-                    func_800F9D88("Cannot", 0, 1);
-                    func_800F9D88("overwrite file．", 1, 0);
+                    US_DrawMenuText("Cannot", 0, 1);
+                    US_DrawMenuText("overwrite file．", 1, 0);
 #elif defined(VERSION_HD)
-                    func_800F9D40("　　上書き　　　　　", 0, 1);
-                    func_800F9D40("　できません　　　　", 1, 0);
+                    JP_DrawMenuText("　　上書き　　　　　", 0, 1);
+                    JP_DrawMenuText("　できません　　　　", 1, 0);
 #endif
                 } else if (D_80137E54 == 3) {
 #if defined(VERSION_US)
-                    func_800F9D88("No game", 0, 1);
-                    func_800F9D88("data found．", 1, 0);
+                    US_DrawMenuText("No game", 0, 1);
+                    US_DrawMenuText("data found．", 1, 0);
 #elif defined(VERSION_HD)
-                    func_800F9D40("データがないため　　", 0, 1);
-                    func_800F9D40("上書きできません　　", 1, 0);
+                    JP_DrawMenuText("データがないため　　", 0, 1);
+                    JP_DrawMenuText("上書きできません　　", 1, 0);
 #endif
                 } else {
 #if defined(VERSION_US)
-                    func_800F9D88("   ０ memory", 0, 1);
-                    func_800F9D88("blocks available．", 1, 0);
+                    US_DrawMenuText("   ０ memory", 0, 1);
+                    US_DrawMenuText("blocks available．", 1, 0);
 #elif defined(VERSION_HD)
-                    func_800F9D40("空きブロックが　　　", 0, 1);
-                    func_800F9D40("　足りません　　　　", 1, 0);
+                    JP_DrawMenuText("空きブロックが　　　", 0, 1);
+                    JP_DrawMenuText("　足りません　　　　", 1, 0);
 #endif
                 }
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 11) {
 #if defined(VERSION_US)
-                func_800F9D88("  Memory card", 0, 1);
-                func_800F9D88("  format error．", 1, 0);
+                US_DrawMenuText("  Memory card", 0, 1);
+                US_DrawMenuText("  format error．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40("　メモリーカードの　", 0, 1);
-                func_800F9D40("初期化に失敗しました　", 1, 0);
+                JP_DrawMenuText("　メモリーカードの　", 0, 1);
+                JP_DrawMenuText("初期化に失敗しました　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -294,13 +294,13 @@ s32 HandleSaveMenu(s32 arg0) {
             PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
 #if defined(VERSION_US)
-            func_800F9D88("  Select the slot．", 0, 1);
-            func_800F9D88(" Slot １", 1, 0);
-            func_800F9D88(" Slot ２", 2, 0);
+            US_DrawMenuText("  Select the slot．", 0, 1);
+            US_DrawMenuText(" Slot １", 1, 0);
+            US_DrawMenuText(" Slot ２", 2, 0);
 #elif defined(VERSION_HD)
-            func_800F9D40("スロットを選んで下さい　", 0, 1);
-            func_800F9D40("スロット１　", 1, 0);
-            func_800F9D40("スロット２　", 2, 0);
+            JP_DrawMenuText("スロットを選んで下さい　", 0, 1);
+            JP_DrawMenuText("スロット１　", 1, 0);
+            JP_DrawMenuText("スロット２　", 2, 0);
 #endif
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->drawMode = DRAW_DEFAULT;
@@ -372,34 +372,34 @@ s32 HandleSaveMenu(s32 arg0) {
             prim2->p1 += 2;
             if (arg0 == 2) {
 #if defined(VERSION_US)
-                func_800F9D88(" Wish to format？", 0, 1);
+                US_DrawMenuText(" Wish to format？", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40("初期化してもいいですか　", 0, 1);
+                JP_DrawMenuText("初期化してもいいですか　", 0, 1);
 #endif
                 D_80137E6C = 1;
             }
             if (arg0 == 3) {
 #if defined(VERSION_US)
-                func_800F9D88(" Overwrite data？", 0, 1);
+                US_DrawMenuText(" Overwrite data？", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40("　　上書きしますか　　　", 0, 1);
+                JP_DrawMenuText("　　上書きしますか　　　", 0, 1);
 #endif
                 D_80137E6C = 0;
             }
             if (arg0 == 4) {
 #if defined(VERSION_US)
-                func_800F9D88("   Wish to save？", 0, 1);
+                US_DrawMenuText("   Wish to save？", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40("　　セーブしますか　　　", 0, 1);
+                JP_DrawMenuText("　　セーブしますか　　　", 0, 1);
 #endif
                 D_80137E6C = 0;
             }
 #if defined(VERSION_US)
-            func_800F9D88("Yes ", 1, 0);
-            func_800F9D88("  No  ", 2, 0);
+            US_DrawMenuText("Yes ", 1, 0);
+            US_DrawMenuText("  No  ", 2, 0);
 #elif defined(VERSION_HD)
-            func_800F9D40("はい　　", 1, 0);
-            func_800F9D40("いいえ　", 2, 0);
+            JP_DrawMenuText("はい　　", 1, 0);
+            JP_DrawMenuText("いいえ　", 2, 0);
 
 #endif
 

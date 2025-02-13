@@ -242,7 +242,7 @@ extern s32 D_801375C0;
 extern s32 D_801375C4;
 extern s32 D_801375C8;
 
-s32 func_800F087C(u32 chunkX, u32 chunkY) {
+s32 CheckBossTeleport(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
 
     for (phi_s1 = &D_800A297C[0]; true; phi_s1++) {
@@ -265,7 +265,7 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
 }
 
 // Performs calculations for background parallax
-void func_800F0940(void) {
+void UpdateBackgroundParallax(void) {
     switch (g_BgLayers[0].scrollKind) {
     case 1:
         g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
@@ -322,7 +322,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     if (g_Player.status & PLAYER_STATUS_DEAD) {
         return 0;
     }
-    res = func_800F087C(x, y);
+    res = CheckBossTeleport(x, y);
     if (res) {
         return res;
     }
@@ -348,7 +348,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
 
 extern s16 D_80072F98;
 
-s32 func_800F0CD8(s32 arg0) {
+s32 HandleRoomTransition(s32 arg0) {
     s32 var_s0;
     s16 temp_a3;
     s32 temp_a0;
@@ -499,7 +499,7 @@ block_25:
     return 0;
 }
 
-void func_800F1424(void) {
+void ToggleTilemapFlags(void) {
     if (g_pads[1].tapped & PAD_R1) {
         g_Tilemap.flags ^= 2;
     }
@@ -511,7 +511,7 @@ void func_800F1424(void) {
     }
 }
 
-void func_800F14CC(void) {
+void InitializeRoom(void) {
     RoomTeleport* temp_a2;
     s32 temp_a1;
     s32 newY;
@@ -572,7 +572,7 @@ void func_800F14CC(void) {
     }
 }
 
-s32 func_800F16D0(void) {
+s32 GetCurrentStageId(void) {
     if (D_8003C730 != 0)
         return g_StageId;
     else if (D_80097C98 == 4)
@@ -960,7 +960,7 @@ void func_800F2404(s32 arg0) {
     if (arg0 == 0) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         g_unkGraphicsStruct.D_800973F8 = 0;
-        g_unkGraphicsStruct.D_800973FC = 0;
+        g_unkGraphicsStruct.g_PauseFlag = 0;
     }
     g_CutsceneHasControl = 0;
 
@@ -982,8 +982,8 @@ void func_800F2404(s32 arg0) {
 
     g_unkGraphicsStruct.unk20 = 0;
     g_unkGraphicsStruct.unk24 = 0;
-    D_80097448[0] = 0;
-    D_80097448[1] = 0;
+    g_SwimmingType[0] = 0;
+    g_SwimmingType[1] = 0;
     D_80097450 = 0;
     SetGPUBuffRGBZero();
 }
@@ -1080,7 +1080,7 @@ void DrawMapCursor(void) {
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0 ||
+        if (g_unkGraphicsStruct.g_PauseFlag != 0 || D_8006BB00 != 0 ||
             D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
@@ -1169,7 +1169,7 @@ void RunMainEngine(void) {
         D_8006BB00 = 0;
         D_801375C8 = 0;
         g_PauseAllowed = true;
-        g_StageId = func_800F16D0();
+        g_StageId = GetCurrentStageId();
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
         ResetDrawEnvironments();
@@ -1184,14 +1184,14 @@ void RunMainEngine(void) {
                 playerInit(0);
             }
         } else {
-            func_80109594();
+            InitializePlayerState();
         }
         if (g_StageId == STAGE_MAD) {
             g_api.o.StageEndCutScene();
         }
         g_backbufferX = 0;
         g_backbufferY = 0;
-        func_800F14CC();
+        InitializeRoom();
         LoadRoomLayer(D_801375BC.def->tileLayoutId);
         if (D_8003C708.flags & FLAG_UNK_20) {
             LoadGfxAsync(ANIMSET_DRA(3));
@@ -1263,18 +1263,18 @@ void RunMainEngine(void) {
         if ((D_80097C98 == 4) || (D_80097C98 == 5) || (D_80097C98 == 6)) {
             SetBackgroundColor(2, 0xFF, 0xFF, 0xFF);
         }
-        func_800F0CD8(0);
-        func_800F0CD8(0);
+        HandleRoomTransition(0);
+        HandleRoomTransition(0);
         g_PrevScrollX = (s32)g_Tilemap.scrollX.i.hi;
         g_PrevScrollY = (s32)g_Tilemap.scrollY.i.hi;
         g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
         g_api.o.Update();
         g_api.o.Update();
-        func_800F0940();
+        UpdateBackgroundParallax();
         InitPrimitives();
         if ((D_80097C98 != 4) && (D_80097C98 != 5) && (D_80097C98 != 6)) {
-            func_801027C4(4);
-            func_801027C4(2);
+            UpdatePrimState(4);
+            UpdatePrimState(2);
         }
         D_80097C98 = 0;
         if (D_8003C730 == 1) {
@@ -1302,7 +1302,7 @@ void RunMainEngine(void) {
     case Engine_Normal:
         g_GameTimer++;
 #if defined(VERSION_HD)
-        func_800F1424();
+        ToggleTilemapFlags();
 #endif
         func_800F2014();
         g_ScrollDeltaX = g_Tilemap.scrollX.i.hi - g_PrevScrollX;
@@ -1391,9 +1391,9 @@ void RunMainEngine(void) {
                 g_GameEngineStep = Engine_5;
                 return;
             }
-            i = func_800F0CD8(1);
+            i = HandleRoomTransition(1);
             if (i != 0) {
-                func_801027A4();
+                HidePrimColorIntensity();
                 if (i >= 2) {
                     D_8006C374 = i - 2;
                     g_GameStep = Play_PrepareNextStage;
@@ -1414,7 +1414,7 @@ void RunMainEngine(void) {
             D_801375A8 = D_801375A0 - PLAYER.posY.val;
             D_801375A4 -= D_80097488.x.val;
             D_801375A8 -= D_80097488.y.val;
-            func_800F0940();
+            UpdateBackgroundParallax();
 
             for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
                 ent_unk68 = ent->unk68;
@@ -1479,8 +1479,8 @@ void RunMainEngine(void) {
                     }
                 }
             }
-            func_80102D70();
-            func_801028AC(0);
+            UpdateBackbuffer();
+            UpdatePrimitiveDrawModes(0);
             DrawHudSubweapon();
             func_800E414C();
             if (D_80137598) {
@@ -1490,7 +1490,7 @@ void RunMainEngine(void) {
                 g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
-            if (g_unkGraphicsStruct.D_800973FC != 0) {
+            if (g_unkGraphicsStruct.g_PauseFlag != 0) {
                 if (D_8006BB00 == 0) {
                     D_8006BB00 = 1;
                     MuteCd();
@@ -1516,7 +1516,7 @@ void RunMainEngine(void) {
             }
             if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
                 if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed) {
-                    func_801027A4();
+                    HidePrimColorIntensity();
                     if ((g_StageId == STAGE_ST0) ||
                         (g_PlayableCharacter != PLAYER_ALUCARD)) {
                         if (UpdatePlayerHud(0) == 0) {
@@ -1537,12 +1537,12 @@ void RunMainEngine(void) {
                     PlaySfx(SET_RELEASE_RATE_LOW_22_23);
                     PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                     PlaySfx(SET_PAUSE_SFX_SCRIPTS);
-                    func_801027C4(1);
+                    UpdatePrimState(1);
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
                            (g_StageId != STAGE_ST0) && g_PauseAllowed) {
-                    func_801027C4(6);
+                    UpdatePrimState(6);
                     D_800974A4 = 1;
                     g_GameEngineStep = Engine_Map;
                 }
@@ -1565,24 +1565,24 @@ void RunMainEngine(void) {
 #endif
                 }
             }
-            func_801028AC(1);
+            UpdatePrimitiveDrawModes(1);
             break;
         case Engine_Menu:
             MenuHandle();
-            func_801028AC(1);
+            UpdatePrimitiveDrawModes(1);
             break;
         case Engine_Map:
             if (g_canRevealMap) {
                 DrawMapCursor();
             }
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
-                func_801027C4(7);
+                UpdatePrimState(7);
                 D_800974A4 = 0;
                 g_GameEngineStep = Engine_Normal;
             }
             g_api.o.UpdateStageEntities();
-            func_80102D70();
-            func_801028AC(1);
+            UpdateBackbuffer();
+            UpdatePrimitiveDrawModes(1);
             break;
         case Engine_3:
             switch (g_MenuStep) {
@@ -1591,7 +1591,7 @@ void RunMainEngine(void) {
                     SetBackgroundColor(0xFF, 0xFF, 0xFF, 0xFF);
                     g_MenuStep = MENU_STEP_EXIT_BEGIN;
                 } else {
-                    func_801027C4(1);
+                    UpdatePrimState(1);
                 case 2:
                     g_MenuStep++;
                 }
@@ -1609,7 +1609,7 @@ void RunMainEngine(void) {
                     break;
                 } else if (D_80097928 != 0) {
                     D_80097910 = g_StagesLba[g_StageId].unk18;
-                    if (g_unkGraphicsStruct.D_800973FC != 1) {
+                    if (g_unkGraphicsStruct.g_PauseFlag != 1) {
                         PlaySfx(SET_STOP_MUSIC);
                         if (IsSoundPlaying() == false) {
                             PlaySfx(D_80097910);
@@ -1683,13 +1683,13 @@ void RunMainEngine(void) {
                 g_Tilemap.scrollY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
                 g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
-                func_8011A9D8();
+                UpdateEntityFlags();
                 PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
-                func_800F0CD8(0);
+                HandleRoomTransition(0);
                 HandlePlayerCollision();
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
                 g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
-                func_800F0CD8(0);
+                HandleRoomTransition(0);
                 if (g_StageId == STAGE_RTOP) {
                     DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
@@ -1699,8 +1699,8 @@ void RunMainEngine(void) {
                     g_PrevScrollY = (s32)g_Tilemap.scrollY.i.hi;
                     g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
-                    func_800F0CD8(0);
-                    func_800F0CD8(0);
+                    HandleRoomTransition(0);
+                    HandleRoomTransition(0);
                     DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
                         g_unkGraphicsStruct.D_80097428[i] = 0;
@@ -1752,8 +1752,8 @@ void RunMainEngine(void) {
                     g_PrevScrollY = g_Tilemap.scrollY.i.hi;
                     g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
-                    func_800F0CD8(0);
-                    func_800F0CD8(0);
+                    HandleRoomTransition(0);
+                    HandleRoomTransition(0);
                     DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
                         g_unkGraphicsStruct.D_80097428[i] = 0;
@@ -1770,21 +1770,21 @@ void RunMainEngine(void) {
                 g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                 g_api.o.Update();
                 g_api.o.Update();
-                func_800F0940();
+                UpdateBackgroundParallax();
                 func_800E414C();
                 func_800F24F4();
                 if (D_80097C98 == 3) {
                     g_GameEngineStep = Engine_Normal;
                 }
 #if defined(VERSION_US)
-                func_8011A9D8();
+                UpdateEntityFlags();
 #endif
                 g_MenuStep++;
 
                 break;
             case 4:
                 if (IsGfxLoadPending() == 0) {
-                    func_801027C4(2);
+                    UpdatePrimState(2);
                     g_MenuStep++;
                 }
                 break;
@@ -1794,8 +1794,8 @@ void RunMainEngine(void) {
                 }
                 break;
             }
-            func_801028AC(1);
-            func_801028AC(1);
+            UpdatePrimitiveDrawModes(1);
+            UpdatePrimitiveDrawModes(1);
             break;
         case 0x5:
             if (g_unkGraphicsStruct.unk20 != 0) {
@@ -1803,7 +1803,7 @@ void RunMainEngine(void) {
                     if (g_PlayableCharacter == PLAYER_ALUCARD) {
                         if (g_unkGraphicsStruct.unk20 == 0xFFF) {
                             EntityAlucard();
-                            func_8011A870();
+                            UpdateServantEntities();
                             g_api.o.UpdateStageEntities();
                             if (g_pads[1].pressed & PAD_DOWN) {
                                 g_unkGraphicsStruct.unk20 = 0;
@@ -1814,11 +1814,11 @@ void RunMainEngine(void) {
                                 UpdatePlayerEntities();
                             }
                             g_api.o.UpdateStageEntities();
-                            func_80102D70();
+                            UpdateBackbuffer();
                         }
                     } else {
                         g_api.o.UpdateStageEntities();
-                        func_80102D70();
+                        UpdateBackbuffer();
                     }
                 } else {
                     D_8013759C = PLAYER.posX.i.hi;
@@ -1869,7 +1869,7 @@ void RunMainEngine(void) {
                 SetGPUBuffRGBZero();
                 break;
             }
-            func_801028AC(0);
+            UpdatePrimitiveDrawModes(0);
             break;
         }
     }

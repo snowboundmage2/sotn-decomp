@@ -769,7 +769,7 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 90) {
             if (SearchForEntityInRange(1, 0x29)) {
-                g_unkGraphicsStruct.D_800973FC = 0;
+                g_unkGraphicsStruct.g_PauseFlag = 0;
             }
 
             for (i = 8; i < 0x40; i++) {
@@ -871,7 +871,7 @@ void UpdateServantUseHammer(Entity* self) {
                 self, FACTORY(0x37, paramOffset), 0);
             CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 1);
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-            g_api.func_80102CD8(4);
+            g_api.InitializeBackbufferCoords(4);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1326,7 +1326,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
         SelectAnimationFrame(arg0);
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             s_RoomSpecialState == 1 || g_CutsceneHasControl ||
-            g_unkGraphicsStruct.D_800973FC) {
+            g_unkGraphicsStruct.g_PauseFlag) {
             SetAnimationFrame(arg0, 0xE);
             arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             arg0->step = 0;

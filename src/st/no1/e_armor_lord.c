@@ -893,7 +893,7 @@ void EntityArmorLord(Entity* self) {
         if (!self->animFrameDuration && self->animCurFrame == 0x14) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(0x751);
-            g_api.func_80102CD8(4);
+            g_api.InitializeBackbufferCoords(4);
         }
         if (!self->animFrameDuration && self->animFrameIdx == 5) {
             if (self->facingLeft) {

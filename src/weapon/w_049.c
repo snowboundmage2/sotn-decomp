@@ -158,7 +158,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->stunFrames = self->ext.weapon.parent->stunFrames;
         self->hitEffect = self->ext.weapon.parent->hitEffect;
         self->entityRoomIndex = self->ext.weapon.parent->entityRoomIndex;
-        g_api.func_80118894(self);
+        g_api.AssignEntityEnemyId(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         self->ext.weapon.unk7E = 0x40;

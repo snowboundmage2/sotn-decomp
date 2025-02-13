@@ -1315,7 +1315,7 @@ void UpdateSubentitySwitch(Entity* self) {
             self->hitEffect = 7;
             self->entityRoomIndex = 0;
 
-            g_api.func_80118894(self);
+            g_api.AssignEntityEnemyId(self);
 
             self->step++;
         }
@@ -1403,7 +1403,7 @@ void UpdateServantAdditionalInit(Entity* self) {
         }
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             D_us_801786D0 == 1 || g_CutsceneHasControl ||
-            g_unkGraphicsStruct.D_800973FC) {
+            g_unkGraphicsStruct.g_PauseFlag) {
             SetAnimationFrame(self, 0);
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;

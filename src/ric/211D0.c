@@ -169,7 +169,7 @@ bool RicDoCrash(void) {
         return 0;
     }
 #if defined(VERSION_US)
-    if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.D_800973FC) {
+    if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.g_PauseFlag) {
         return 0;
     }
 #endif
@@ -331,7 +331,7 @@ bool RicCheckInput(s32 checks) {
             velYChange = FIX(28.0 / 128);
         }
     }
-    if (*D_80097448 >= 0x29) {
+    if (*g_SwimmingType >= 0x29) {
         velYChange /= 4;
     }
     PLAYER.velocityY += velYChange;
@@ -1211,7 +1211,7 @@ s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
     return -1;
 }
 
-// Corresponding DRA function is func_80119E78
+// Corresponding DRA function is UpdatePrimitiveUVCoordinates
 u8 uv_anim_801548F4[6][8] = {
     {0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60},
     {0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60},
@@ -1262,7 +1262,7 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     return ret;
 }
 
-// Corresponding DRA function is func_80119F70
+// Corresponding DRA function is EntityHitByHoly
 static Point16 D_80174FBC[16];
 void RicEntityHitByHoly(Entity* entity) {
     Primitive* prim;

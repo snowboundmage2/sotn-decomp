@@ -167,7 +167,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->animFrameDuration = self->animFrameIdx = 0;
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
-                g_api.func_80118C28(7);
+                g_api.SetBackgroundColorTimer(7);
                 g_api.PlaySfx(SFX_THUNDER_B);
                 SetWeaponProperties(self, 0);
                 self->step = 4;
@@ -185,7 +185,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->flags &= ~(FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000);
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
-                g_api.func_80118C28(8);
+                g_api.SetBackgroundColorTimer(8);
                 g_api.PlaySfx(SFX_TRANSFORM_3X);
                 prim = &g_PrimBuf[self->primIndex];
                 prim->r0 = prim->g0 = prim->b0 = 0x5F;
@@ -258,7 +258,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->stunFrames = 4;
                 self->hitEffect = 2;
                 self->entityRoomIndex = 0;
-                g_api.func_80118894(self);
+                g_api.AssignEntityEnemyId(self);
                 self->step = 5;
             }
         }

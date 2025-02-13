@@ -127,7 +127,7 @@ s32 D_8007F208 = 0;
 PlayerDraw g_PlayerDraw[0x10];
 DR_ENV D_800974AC[16];
 u32 D_8003C744 = 0;
-s32 D_80097448[2];
+s32 g_SwimmingType[2];
 s32 D_80097450;
 Pos D_80097488;
 

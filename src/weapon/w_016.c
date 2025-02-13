@@ -361,7 +361,7 @@ static s32 func_ptr_80170014(Entity* self) {
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_UNK_0002) {
             g_api.PlaySfx(SFX_EXPLODE_B);
-            g_api.func_80102CD8(4);
+            g_api.InitializeBackbufferCoords(4);
             if (xShift < 0) {
                 self->posX.i.hi += collider.unkC;
             } else {
@@ -375,7 +375,7 @@ static s32 func_ptr_80170014(Entity* self) {
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(SFX_EXPLODE_B);
-            g_api.func_80102CD8(4);
+            g_api.InitializeBackbufferCoords(4);
             self->posY.i.hi += collider.unk20 + 1;
             self->velocityX /= 2;
             self->velocityY = FIX(1);
@@ -385,7 +385,7 @@ static s32 func_ptr_80170014(Entity* self) {
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(SFX_EXPLODE_B);
-            g_api.func_80102CD8(4);
+            g_api.InitializeBackbufferCoords(4);
             self->posY.i.hi += collider.unk18;
             if (self->ext.weapon.lifetime != 0) {
                 self->step++;
@@ -394,7 +394,7 @@ static s32 func_ptr_80170014(Entity* self) {
             self->velocityX /= 2;
             self->ext.weapon.lifetime++;
             // Create factory with blueprint 31. Blueprint 31 has child entity
-            // 2, which is func_8011B5A4.
+            // 2, which is EntitySmokePuff.
             g_api.CreateEntFactoryFromEntity(self, FACTORY(31, 9), 0);
         }
         return;
@@ -471,7 +471,7 @@ static s32 func_ptr_80170014(Entity* self) {
                 if (collider.effects & EFFECT_UNK_0002) {
                     if (self->velocityX != 0) {
                         g_api.PlaySfx(SFX_EXPLODE_B);
-                        g_api.func_80102CD8(1);
+                        g_api.InitializeBackbufferCoords(1);
                     }
                     if (xShift < 0) {
                         self->posX.i.hi += collider.unkC;

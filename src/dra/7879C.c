@@ -33,7 +33,7 @@ Entity* GetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
-void func_80118894(Entity* self) {
+void AssignEntityEnemyId(Entity* self) {
     s32 i;
     s32 search_value;
 
@@ -82,7 +82,7 @@ void func_80118894(Entity* self) {
 }
 
 extern s32 D_80138038; // BSS
-Entity* func_80118970(void) {
+Entity* FindActiveEntity(void) {
     s32 big_arr[128];
     Entity* ent;
     s32 i;
@@ -128,7 +128,7 @@ Entity* func_80118970(void) {
     return NULL;
 }
 
-s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
+s16 CalculateEntityAngle(Entity* ent1, Entity* ent2, s16 facingLeft) {
     s16 var_a1;
     s16 posY;
     s16 posX;
@@ -181,7 +181,7 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
     return temp - var_a1;
 }
 
-void func_80118C28(s32 arg0) {
+void SetBackgroundColorTimer(s32 arg0) {
     D_8013803C = D_800ACFB4[arg0][0];
     D_80138040 = D_800ACFB4[arg0][1];
     D_80138044 = D_800ACFB4[arg0][2];
@@ -783,7 +783,7 @@ void EntitySmallRisingHeart(Entity* self) {
 }
 
 // Corresponding RIC function is func_8015FDB0
-s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
+s32 UpdatePrimitiveUVCoordinates(Primitive* prim, s32 xCenter, s32 yCenter) {
     s16 left;
     s16 top;
     s16 right;
@@ -829,7 +829,7 @@ s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
 // No calls to FACTORY with 119 exist yet.
 // Corresponding RIC function is RicEntityHitByHoly
 extern Point16 D_8013804C[16]; // BSS
-void func_80119F70(Entity* entity) {
+void EntityHitByHoly(Entity* entity) {
     Primitive* prim;
     s16 temp_xRand;
     s32 temp_yRand;
@@ -893,7 +893,7 @@ void func_80119F70(Entity* entity) {
         case 1:
             hitboxX = D_8013804C[i].y;
             hitboxY = D_8013804C[i].x;
-            temp = func_80119E78(prim, hitboxY, hitboxX);
+            temp = UpdatePrimitiveUVCoordinates(prim, hitboxY, hitboxX);
             D_8013804C[i].y--;
             if (temp < 0) {
                 prim->drawMode |= DRAW_HIDE;
@@ -908,7 +908,7 @@ void func_80119F70(Entity* entity) {
     return;
 }
 
-void func_8011A290(Entity* entity) {
+void SetEntitySubweaponProperties(Entity* entity) {
     SubweaponDef subwpn;
 
     GetSubweaponProperties(&subwpn, entity->ext.subweapon.subweaponId, 0);
@@ -920,10 +920,10 @@ void func_8011A290(Entity* entity) {
     entity->hitEffect = subwpn.hitEffect;
     entity->entityRoomIndex = subwpn.entityRoomIndex;
     entity->ext.subweapon.unkB2 = subwpn.crashId;
-    func_80118894(entity);
+    AssignEntityEnemyId(entity);
 }
 
-void func_8011A328(Entity* entity, s32 arg1) {
+void SetEntitySpellProperties(Entity* entity, s32 arg1) {
     SpellDef spell;
 
     GetSpellDef(&spell, arg1);
@@ -934,7 +934,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     entity->stunFrames = spell.stunFrames;
     entity->hitEffect = spell.hitEffect;
     entity->entityRoomIndex = spell.entityRoomIndex;
-    func_80118894(entity);
+    AssignEntityEnemyId(entity);
 }
 
 /// @brief Fetches current FamiliarStats and
@@ -957,7 +957,7 @@ void GetServantStats(
         servant->hitEffect = spell.hitEffect;
         servant->entityRoomIndex = spell.entityRoomIndex;
         servant->attack = spell.attack * ((out->level * 4 / 95) + 1);
-        func_80118894(servant);
+        AssignEntityEnemyId(servant);
     }
 }
 
@@ -966,7 +966,7 @@ void func_8011A4C8(Entity* entity) {}
 PfnEntityUpdate g_DraEntityTbl[] = {
     func_8011A4C8,
     EntityEntFactory,
-    func_8011B5A4,
+    EntitySmokePuff,
     EntityGravityBootBeam,
     EntitySubwpnThrownDagger,
     EntityExplosionEffect,
@@ -974,8 +974,8 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityGiantSpinningCross,
     EntitySubwpnCrashCross,
     EntitySubwpnCrashCrossParticles,
-    EntitySubwpnThrownAxe,
-    EntityPlayerBlinkWhite,
+    EntitySubwpnThrownAxe, //child10
+    EntityPlayerBlinkColor,
     EntitySubwpnThrownVibhuti,
     func_8011E0E4,
     func_8011EDA0,
@@ -984,47 +984,47 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntitySubwpnAgunea,
     EntityAguneaHitEnemy,
     EntityNumberMovesToHpMeter,
-    EntitySubwpnReboundStone,
+    EntitySubwpnReboundStone, //child20
     EntityPlayerLevelUpAnimation,
     EntityHolyWater,
     EntityHolyWaterFlame,
-    EntityUnkId24,
+    EntityFallingDebris,
     EntityHellfireHandler,
     EntityHellfireNormalFireball,
     EntityHellfireBigFireball,
     EntityExpandingCircle,
     EntityHellfireBeam,
-    EntityPlayerHitByLightning,
+    EntityPlayerHitByLightning, //child30
     EntityPlayerOutline,
     EntityPlayerDissolves,
     EntityPlayerHitByIce,
     EntityPlayerMist,
     EntityWingSmashTrail,
-    func_8011B480,
+    EntityGravityBootsBeam,
     EntityGuardText,
     EntityTransparentWhiteCircle,
     EntityPlayerPinkEffect,
-    EntityHolyWaterBreakGlass,
+    EntityHolyWaterBreakGlass, //child40
     EntityStopWatch,
     EntityStopWatchExpandingCircle,
     EntitySubwpnBible,
     EntitySubwpnBibleTrail,
     EntityBatFireball,
     EntityPlayerFalling,
-    func_80119F70,
+    EntityHitByHoly,
     UpdateEntityPlayerMistHitbox,
     InitializeEntityPlayerMistHitbox,
-    UpdateEntityAxeArmorHitbox,
+    UpdateEntityAxeArmorHitbox, //child50
     EntitySmallRisingHeart,
     EntityBatEcho,
-    func_8011B530,
+    EntityPlayerSpell,
     EntityPlayerHitByDark,
     UpdateEntityWolfRotation,
     UpdateWolfEntity,
     UpdateEntityWolfRotationPart2,
     UpdateEntityWolfHitbox,
     UpdateWolfRotationHelper,
-    EntityWolfForm,
+    EntityWolfForm, //child60
     EntitySummonedSpirit,
     func_8011A4C8,
     EntitySummonSpirit,
@@ -1136,7 +1136,7 @@ void UpdatePlayerEntities(void) {
     }
 }
 
-void func_8011A870(void) {
+void UpdateServantEntities(void) {
     Entity* entity;
     s32 i;
 
@@ -1174,7 +1174,7 @@ void func_8011A870(void) {
     }
 }
 
-void func_8011A9D8(void) {
+void UpdateEntityFlags(void) {
     Entity* entity;
     s32 i;
 
@@ -1431,7 +1431,7 @@ void EntityUnarmedAttack(Entity* entity) {
         entity->stunFrames = equip.stunFrames;
         entity->hitEffect = equip.hitEffect;
         entity->entityRoomIndex = equip.criticalRate;
-        func_80118894(entity);
+        AssignEntityEnemyId(entity);
         entity->step++;
     }
     entity->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
@@ -1468,7 +1468,7 @@ void EntityDiveKickAttack(Entity* self) {
         self->stunFrames = equip.stunFrames;
         self->hitEffect = equip.hitEffect;
         self->entityRoomIndex = equip.criticalRate;
-        func_80118894(self);
+        AssignEntityEnemyId(self);
         self->hitboxOffX = 9;
         self->hitboxOffY = 21;
         self->hitboxWidth = 4;
@@ -1479,7 +1479,7 @@ void EntityDiveKickAttack(Entity* self) {
     }
 }
 
-void func_8011B480(Entity* entity) {
+void EntityGravityBootsBeam(Entity* entity) {
     if (PLAYER.step != 5 || PLAYER.step_s != 3) {
         DestroyEntity(entity);
     } else {
@@ -1488,7 +1488,7 @@ void func_8011B480(Entity* entity) {
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->posX.i.hi = PLAYER.posX.i.hi;
         if (entity->step == 0) {
-            func_8011A328(entity, 6);
+            SetEntitySpellProperties(entity, 6);
             entity->hitboxOffX = 4;
             entity->hitboxOffY = 0;
             entity->hitboxWidth = 12;
@@ -1498,18 +1498,18 @@ void func_8011B480(Entity* entity) {
     }
 }
 
-void func_8011B530(Entity* entity) {
+void EntityPlayerSpell(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
         entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        func_8011A328(entity, 5);
+        SetEntitySpellProperties(entity, 5);
         entity->step++;
     }
 }
 
 // Entity #2. Many blueprints. Matches RIC RicEntitySmokePuff
-void func_8011B5A4(Entity* self) {
+void EntitySmokePuff(Entity* self) {
     byte stackpad[40];
     s16 posX;
     s32 i;
@@ -1644,7 +1644,7 @@ void func_8011B5A4(Entity* self) {
     }
 }
 
-void EntityUnkId24(Entity* self) {
+void EntityFallingDebris(Entity* self) {
     u16 upperparams = self->params >> 8;
     if (self->step == 0) {
         self->animSet = 2;
@@ -1678,7 +1678,7 @@ void EntityUnkId24(Entity* self) {
 }
 
 // same as RIC/func_80162E9C
-bool func_8011BD48(Entity* entity) {
+bool IsDuplicateEntity(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->entityId;
     s16 params = entity->params;
@@ -1694,7 +1694,7 @@ bool func_8011BD48(Entity* entity) {
 }
 
 // player turns white for some sort of status effect
-void EntityPlayerBlinkWhite(Entity* self) {
+void EntityPlayerBlinkColor(Entity* self) {
     Primitive* prim;
     u8 var_s7;
     u8 var_s6;
@@ -1762,12 +1762,12 @@ void EntityPlayerBlinkWhite(Entity* self) {
         sp5c = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
     }
     if (PLAYER.animSet == 0xD) {
-        sp5c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+        sp5c = g_AnimationData[PLAYER.animCurFrame & 0x7FFF];
     }
     if (PLAYER.animSet == 0xF) {
         if (sp48 != 0) {
             if (D_801396E0 == 0xD) {
-                sp5c = D_800CFE48[D_801396EC & 0x7FFF];
+                sp5c = g_AnimationData[D_801396EC & 0x7FFF];
 #ifdef VER_PSP
                 if (sp5c) {
 #endif
@@ -1855,7 +1855,7 @@ block_748:
     sp4c = D_800AD670[sp70 & 0x3F];
     switch (self->step) {
     case 0:
-        if (func_8011BD48(self) != 0) {
+        if (IsDuplicateEntity(self) != 0) {
             goto block_231;
         }
         self->primIndex = AllocPrimRecursively(PRIM_GT4, 8);
@@ -1956,7 +1956,7 @@ block_748:
                 }
                 break;
             case 0x7004:
-                if (D_80097448[1] == 0 ||
+                if (g_SwimmingType[1] == 0 ||
                     IsRelicActive(RELIC_HOLY_SYMBOL) != 0) {
                     self->step += 1;
                 }

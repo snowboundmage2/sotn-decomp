@@ -165,7 +165,7 @@ void EntityWarpRoom(Entity* self) {
         moveX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 0x10;
+            g_Player.InputLockTimer = 0x10;
             g_PauseAllowed = false;
             self->step = 5;
             D_80180648 = 1;
@@ -176,7 +176,7 @@ void EntityWarpRoom(Entity* self) {
         if (self->hitFlags && g_pads[0].pressed & PAD_UP &&
             !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 0x80;
+            g_Player.InputLockTimer = 0x80;
             g_PauseAllowed = false;
 #ifdef VERSION_US
             PLAYER.velocityX = 0;
@@ -188,7 +188,7 @@ void EntityWarpRoom(Entity* self) {
     case 2:
         // Move Alucard in the background and fade him to white
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 0x80;
+        g_Player.InputLockTimer = 0x80;
         g_PauseAllowed = false;
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
@@ -204,7 +204,7 @@ void EntityWarpRoom(Entity* self) {
     case 3:
         // Fade the entire room into white
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 0x80;
+        g_Player.InputLockTimer = 0x80;
         g_PauseAllowed = false;
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
@@ -249,7 +249,7 @@ void EntityWarpRoom(Entity* self) {
         break;
     case 5:
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 0x10;
+        g_Player.InputLockTimer = 0x10;
         g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;
@@ -265,7 +265,7 @@ void EntityWarpRoom(Entity* self) {
     case 6:
         // Finalize warp by fading in from white
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 0x10;
+        g_Player.InputLockTimer = 0x10;
         g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim = prim->next;

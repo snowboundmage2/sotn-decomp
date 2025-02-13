@@ -361,7 +361,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 3:
-        result = g_api.func_80118B18(
+        result = g_api.CalculateEntityAngle(
             self, self->ext.weapon.some_ent, self->ext.weapon.unk7E);
         if (result >= 0) {
             angle = self->ext.weapon.unk80 & 0xFFF;

@@ -456,7 +456,7 @@ extern s16* D_800D684C[];
 s16** D_800A3B70[] = {
     NULL,       D_800CF324, D_800CFF10, D_800D0F68, D_800D2BF4, D_800D2CF8,
     D_800D2FFC, D_800D3428, D_800D34B8, D_800D372C, D_800D3B88, D_800D5628,
-    D_800D327C, D_800CFE48, D_800D56AC, D_800D5868, D_800D5868, D_800D684C,
+    D_800D327C, g_AnimationData, D_800D56AC, D_800D5868, D_800D5868, D_800D684C,
 };
 
 u_long* D_800A3BB8[] = {
@@ -981,7 +981,7 @@ void UpdateSaveMenuPrimitives(s32 arg0, s32 arg1) {
 
 void SimulatePadUp(void) {
     g_Player.padSim = PAD_UP;
-    g_Player.D_80072EFC = 1;
+    g_Player.InputLockTimer = 1;
 }
 
 void UpdateSaveMenuState(void) {
@@ -1060,10 +1060,10 @@ void UpdateSaveMenuState(void) {
         }
         if (PLAYER.posX.i.hi < 0x7F) {
             g_Player.padSim = PAD_RIGHT;
-            g_Player.D_80072EFC = 1;
+            g_Player.InputLockTimer = 1;
         } else if (PLAYER.posX.i.hi > 0x80) {
             g_Player.padSim = PAD_LEFT;
-            g_Player.D_80072EFC = 1;
+            g_Player.InputLockTimer = 1;
         } else if (D_801379B8 ==
                    (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) {
             SimulatePadUp();
@@ -1141,7 +1141,7 @@ void UpdateSaveMenuState(void) {
         UpdateSaveMenuGraphics(0, D_80137EE4, 0);
         if (g_pads[0].pressed & PAD_MASK) {
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 1;
+            g_Player.InputLockTimer = 1;
             D_80097924 = D_80137EF0;
             D_8006C378 = D_80137EF4;
 
@@ -1247,7 +1247,7 @@ void UpdateSaveMenuState(void) {
     case 0x6:
         SimulatePadUp();
         if (D_80137EE0 != 0) {
-            func_801027C4(5);
+            UpdatePrimState(5);
             D_801379BC = 0x300;
 
         } else if (D_80137E4C >= 6 && HandleSaveMenu(0) != 0) {
@@ -1409,9 +1409,9 @@ void UpdateSaveMenuState(void) {
         }
         UpdateSaveMenuGraphics(3, D_80137EE4, D_80137EEC);
         D_80137EEC -= 2;
-        if ((g_Player.D_80072EFC == 0) && (g_pads[0].pressed & PAD_MASK)) {
+        if ((g_Player.InputLockTimer == 0) && (g_pads[0].pressed & PAD_MASK)) {
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 1;
+            g_Player.InputLockTimer = 1;
             if (D_80137EEC <= 0) {
                 D_80137EEC = 0;
             }

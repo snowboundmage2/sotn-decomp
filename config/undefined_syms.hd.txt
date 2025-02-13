@@ -20,7 +20,7 @@ g_Pix               = 0x8007EFE4;
 g_Pix_2             = 0x80082FE4;
 
 g_unkGraphicsStruct = 0x800973F8;
-D_80097448          = 0x80097448;
+g_SwimmingType          = 0x80097448;
 D_80097488          = 0x80097488;
 g_pads              = 0x80097490;
 g_Status            = 0x80097964;

@@ -71,8 +71,8 @@ void EntityWeaponAttack(Entity* self) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->ext.weapon.lifetime = 71;
-            g_api.func_80118C28(5);
-            g_api.func_80102CD8(3);
+            g_api.SetBackgroundColorTimer(5);
+            g_api.InitializeBackbufferCoords(3);
             g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             self->step++;
         }
@@ -82,7 +82,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->ext.weapon.lifetime % 8 == 0 &&
             self->ext.weapon.lifetime >= 9 &&
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0)) {
-            g_api.func_80118C28(6);
+            g_api.SetBackgroundColorTimer(6);
             SetWeaponProperties(self, 0);
         }
 

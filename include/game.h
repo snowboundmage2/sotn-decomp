@@ -297,7 +297,7 @@ typedef enum {
     FLAG_UNK_4000 = 0x4000,
     FLAG_UNK_8000 = 0x8000,
     FLAG_UNK_10000 = 0x10000,
-    FLAG_UNK_20000 = 0x20000, // func_8011A9D8 will destroy if not set
+    FLAG_UNK_20000 = 0x20000, // UpdateEntityFlags will destroy if not set
     FLAG_POS_PLAYER_LOCKED = 0x40000,
     FLAG_UNK_80000 = 0x80000,
     FLAG_UNK_100000 = 0x100000,
@@ -341,7 +341,7 @@ typedef enum {
     PLAYER_STATUS_UNK20000 = 0x20000,
     PLAYER_STATUS_DEAD = 0x40000, // possibly just "dead"
     PLAYER_STATUS_UNK80000 = 0x80000,
-    PLAYER_STATUS_UNK100000 = 0x100000,
+    PLAYER_STATUS_UNK100000 = 0x100000, // PLAYER_STATUS_MP_FULL?
     PLAYER_STATUS_UNK200000 = 0x200000,
     PLAYER_STATUS_UNK400000 = 0x400000,
     PLAYER_STATUS_UNK800000 = 0x800000,
@@ -832,7 +832,7 @@ typedef struct Entity {
     /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
-    /* 0x5A */ u16 unk5A;
+    /* 0x5A */ u16 unk5A; //animFrameCounter?
     /* 0x5C */ struct Entity* unk5C;
     /* 0x60 */ struct Entity* unk60;
     /* 0x64 */ s32 primIndex;
@@ -1530,7 +1530,7 @@ typedef struct {
     /* 8003C7E0 */ s16 (*AllocatePrimitives)(s32, s32);
     /* 8003C7E4 */ void (*ResetClutAnimation)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-    /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
+    /* 8003C7EC */ void (*UpdatePrimState)(u32 arg0);
     /* 8003C7F0 */ void (*TransformPolygon)(
         s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
@@ -1538,16 +1538,16 @@ typedef struct {
     /* 8003C7F8 */ bool (*IsSoundPlaying)(void);
     /* 8003C7FC */ DR_ENV* (*AllocateDrawEnvironment)(POLY_GT4* poly);
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
-    /* 8003C804 */ void (*func_80118894)(Entity*);
+    /* 8003C804 */ void (*AssignEntityEnemyId)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
-    /* 8003C80C */ Entity* (*func_80118970)(void);
+    /* 8003C80C */ Entity* (*FindActiveEntity)(void);
     // Note type of facingLeft is different from in the C for this function.
     // Needs s16 to match the code for this, but callers treat it as s32.
-    /* 8003C810 */ s16 (*func_80118B18)(
+    /* 8003C810 */ s16 (*CalculateEntityAngle)(
         Entity* ent1, Entity* ent2, s32 facingLeft);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*PlayAnimation)(s8*, AnimationFrame** frames);
-    /* 8003C81C */ void (*func_80118C28)(s32 arg0);
+    /* 8003C81C */ void (*SetBackgroundColorTimer)(s32 arg0);
     /* 8003C820 */ void (*SetPlayerBlinkTimer)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*ResetAfterImage)(s32 arg0, s32 arg1);
     /* 8003C828 */ u16 (*DealDamage)(
@@ -1772,7 +1772,7 @@ typedef struct {
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8; //playerAttackButton?
-    /* 80072EFC */ s32 D_80072EFC; // stun timer? could also be freeze player input for time
+    /* 80072EFC */ s32 InputLockTimer; // stun timer? could also be freeze player input for time
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 
     // 0x01: touching the ground
@@ -1790,11 +1790,11 @@ typedef struct {
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ PlayerStateStatus status;
     /* 80072F30 */ s32 unk10;
-    /* 80072F34 */ u32 unk14;
+    /* 80072F34 */ u32 unk14; // attackCooldown?
     // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 unk1C;
-    /* 80072F40 */ s32 unk20;
+    /* 80072F40 */ s32 unk20; //specialMoveCooldown?
     /* 80072F44 */ s32 unk24;
     /* 80072F48 */ s32 unk28;
     /* 80072F4C */ s32 unk2C;
@@ -1802,35 +1802,37 @@ typedef struct {
     /* 80072F54 */ s32 unk34;
     /* 80072F58 */ s32 unk38;
     /* 80072F5C */ s32 unk3C;
+    //paletteBackup?
     /* 80072F60 */ u16 unk40;
     /* 80072F62 */ u16 pl_high_jump_timer;
+    //invincibilityFlags?
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46; // playerAttackState?
     /* 80072F68 */ u16 unk48; // playerWeaponState?
     /* 80072F6A */ s16 unk4A; // playerSpecialState?
-    /* 80072F6C */ u16 unk4C;
+    /* 80072F6C */ u16 unk4C; // drawFlagsBackup?
     /* 80072F6E */ u16 unk4E;
     /* 80072F70 */ u16 prev_step;
     /* 80072F72 */ u16 prev_step_s;
     /* 80072F74 */ u16 unk54;
-    /* 80072F76 */ u16 unk56;
-    /* 80072F78 */ u16 unk58;
+    /* 80072F76 */ u16 unk56; // hpAbsorbCounter?
+    /* 80072F78 */ u16 unk58; // hpAbsorbAmount?
     /* 80072F7A */ u16 damageTaken;
     /* 80072F7C */ u16 unk5C; // ALU: hellfire spell state, RIC: isPrologue
     /* 80072F7E */ u16 unk5E; // status ailment timer
-    /* 80072F80 */ u16 unk60;
+    /* 80072F80 */ u16 unk60; // grabState?
     /* 80072F82 */ u16 unk62;
     /* 80072F84 */ u16 unk64;
-    /* 80072F86 */ u16 unk66;
+    /* 80072F86 */ u16 unk66; // batStep?
     /* 80072F88 */ u16 unk68;
     /* 80072F8A */ u16 unk6A;
     /* 80072F8C */ u16 unk6C;
     /* 80072F8E */ u16 unk6E;
-    /* 80072F90 */ u16 unk70;
-    /* 80072F92 */ u16 unk72;
+    /* 80072F90 */ u16 unk70; // drawState?
+    /* 80072F92 */ u16 unk72; // collisionStatus?
     /* 80072F94 */ u32 unk74;
     /* 80072F98 */ u16 unk78;
-    /* 80072F9A */ u16 unk7A;
+    /* 80072F9A */ u16 unk7A; // invincibilityTimer?
     /* 80072F9C */ u16 unk7C;
     /* 80072F9E */ u16 unk7E;
 } PlayerState;
@@ -1987,7 +1989,7 @@ extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
-extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
+extern s32 g_SwimmingType[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
 extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];

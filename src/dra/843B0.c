@@ -208,7 +208,7 @@ void EntityTeleport(Entity* self) {
                 }
                 break;
             case 1:
-                result = func_80119E78(prim, D_8013839C[i].x, D_8013839C[i].y);
+                result = UpdatePrimitiveUVCoordinates(prim, D_8013839C[i].x, D_8013839C[i].y);
                 D_8013839C[i].y -= 16;
                 if (result < 0) {
                     prim->drawMode |= DRAW_HIDE;
@@ -229,7 +229,7 @@ void EntityTeleport(Entity* self) {
     }
 }
 
-// Entity #66. Made by final blueprint, #122. Created in PlayerStepStand.
+// Entity #66. Made by final blueprint, #122. Created in HandlePlayerStand.
 void EntityPlayerSleepZ(Entity* self) {
     if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_ChairSit) {
         DestroyEntity(self);

@@ -1227,7 +1227,7 @@ void KeyOn12_19(
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
-void func_8013572C(s16 arg0, u16 volume, s16 distance) {
+void PlaySoundEffectWithDistance(s16 arg0, u16 volume, s16 distance) {
     s32 i;
 
     if (arg0 == 0) {
@@ -1374,7 +1374,7 @@ void ExecSfx(void) {
             }
         }
         if (isFound == 0) {
-            func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
+            PlaySoundEffectWithDistance(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
                           g_SfxRingBuffer[g_SfxRingBufferReadPos].sndPan);
         }
 
@@ -1382,7 +1382,7 @@ void ExecSfx(void) {
     }
 }
 
-void func_80135D8C(void) {
+void UpdateSfxScript(void) {
     s32 i;
     s8* temp_t2;
     s8** temp_t2_2;
@@ -1532,7 +1532,7 @@ void func_801361F8(void) {
     if (g_SoundInitialized != 0) {
         func_80136010();
         ExecSfx();
-        func_80135D8C();
+        UpdateSfxScript();
         ExecSoundCommands();
         UpdateCdSoundCommand();
         ExecCdSoundCommands();

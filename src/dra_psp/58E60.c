@@ -5,7 +5,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/58E60", func_psp_091357E0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/58E60", EntityTeleport);
 
-// Entity #66. Made by final blueprint, #122. Created in PlayerStepStand.
+// Entity #66. Made by final blueprint, #122. Created in HandlePlayerStand.
 void EntityPlayerSleepZ(Entity* self) {
     if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_ChairSit) {
         DestroyEntity(self);

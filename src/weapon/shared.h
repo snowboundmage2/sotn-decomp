@@ -129,7 +129,7 @@ static void SetWeaponProperties(Entity* self, s32 kind) {
         self->stunFrames = equip.stunFrames;
         self->hitEffect = equip.hitEffect;
         self->entityRoomIndex = equip.criticalRate;
-        g_api.func_80118894(self);
+        g_api.AssignEntityEnemyId(self);
         break;
     case 2:
         self->attack = equip.attack;

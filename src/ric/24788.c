@@ -272,7 +272,7 @@ void func_80160F0C(Entity* self) {
 
 // Entity ID #2. Created by 6 blueprints:
 // 0, 1, 24, 74, 75, 76.
-// Matches DRA func_8011B5A4
+// Matches DRA EntitySmokePuff
 static u16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
 static s32 velocity_x_80154C5C[] = {
     -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000};
@@ -670,8 +670,8 @@ void RicEntityHitByCutBlood(Entity* self) {
                         (tilePrim->posY.val + tilePrim->velocityY.val);
                     tilePrim->posX.val =
                         (tilePrim->posX.val + tilePrim->velocityX.val);
-                    if ((*D_80097448 == 0) ||
-                        (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
+                    if ((*g_SwimmingType == 0) ||
+                        (((PLAYER.posY.i.hi - *g_SwimmingType) + 0x19) >=
                          tilePrim->posY.i.hi)) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }

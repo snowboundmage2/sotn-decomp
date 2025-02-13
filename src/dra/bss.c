@@ -180,10 +180,10 @@ s32 D_80137FAC;
 s32 D_80137FB0;
 
 // 692E8.c
-s32 D_80137FB4;
-s32 D_80137FB8;
+s32 g_MpFullState;
+s32 g_PauseState;
 #if defined(VERSION_US)
-s32 D_80137FBC;
+s32 g_PadSimFlag;
 #endif
 
 // 6D59C.c, 704D0.c
@@ -412,7 +412,7 @@ s32 D_8013AE9C;
 s16 g_SfxScriptUnk6[NUM_CH];
 padding u16 D_8013AEA8[10];
 s32 D_8013AEBC[4];
-s32 D_8013AECC;
+s32 g_AnimationOffset;
 bool g_canRevealMap;
 s16 D_8013AED4[NUM_CH_2];
 u8 D_8013AEDC;

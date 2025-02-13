@@ -319,7 +319,7 @@ static s32 func_ptr_80170010(Entity* self) {
             PLAYER.velocityY = 0;
             D_13F000_8017B3B8 = 0x30;
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
-            // Blueprint 0 makes child 2, func_8011B5A4
+            // Blueprint 0 makes child 2, EntitySmokePuff
             g_api.CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             return;
         }

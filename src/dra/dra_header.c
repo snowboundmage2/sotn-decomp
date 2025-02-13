@@ -12,7 +12,7 @@ void MainGame(void);
 void FreePrimitives(s32 primitiveIndex);
 s32 AllocPrimRecursively(u8 primType, s32 count);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
-void func_80102CD8(s32 start);
+void InitializeBackbufferCoords(s32 start);
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
@@ -23,19 +23,19 @@ void PlaySfx(s16 sfxId);
 s32 AllocatePrimitives(u8 primType, s32 count);
 void ResetClutAnimation(s32 arg0);
 void SetBackgroundColor(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-void func_801027C4(u32 arg0);
+void UpdatePrimState(u32 arg0);
 void TransformPolygon(
     s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
 Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s16 arg2);
 bool IsSoundPlaying(void);
 DR_ENV* AllocateDrawEnvironment(POLY_GT4* poly);
 u16* func_80106A28(u32 arg0, u16 kind);
-void func_80118894(Entity* self);
-Entity* func_80118970(void);
-s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
+void AssignEntityEnemyId(Entity* self);
+Entity* FindActiveEntity(void);
+s16 CalculateEntityAngle(Entity* ent1, Entity* ent2, s16 facingLeft);
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s32*, AnimationFrame** frames);
-void func_80118C28(s32 arg0);
+void SetBackgroundColorTimer(s32 arg0);
 void SetPlayerBlinkTimer(s32 arg0, s16 arg1);
 void ResetAfterImage(s32 resetAnims, s32 arg1);
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity);
@@ -72,7 +72,7 @@ GameApi g_ApiInit = {
     FreePrimitives,
     AllocPrimRecursively,
     CheckCollision,
-    func_80102CD8,
+    InitializeBackbufferCoords,
     UpdateAnim,
     SetSpeedX,
     GetFreeEntity,
@@ -83,19 +83,19 @@ GameApi g_ApiInit = {
     AllocatePrimitives,
     ResetClutAnimation,
     SetBackgroundColor,
-    func_801027C4,
+    UpdatePrimState,
     TransformPolygon,
     CreateEntFactoryFromEntity,
     IsSoundPlaying,
     AllocateDrawEnvironment,
     func_80106A28,
-    func_80118894,
+    AssignEntityEnemyId,
     g_EnemyDefs,
-    func_80118970,
-    func_80118B18,
+    FindActiveEntity,
+    CalculateEntityAngle,
     UpdateUnarmedAnim,
     PlayAnimation,
-    func_80118C28,
+    SetBackgroundColorTimer,
     SetPlayerBlinkTimer,
     ResetAfterImage,
     DealDamage,

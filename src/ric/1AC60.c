@@ -91,7 +91,7 @@ static s16 func_80156DE4(void) {
 
 static void RicDebugOff();
 
-// Duplicate of DRA func_80109594
+// Duplicate of DRA InitializePlayerState
 void RicInit(s16 initParam) {
     Entity* e;
     s32 radius;
@@ -467,8 +467,8 @@ void RicMain(void) {
         }
     }
     g_Player.padHeld = g_Player.padPressed;
-    if (g_Player.D_80072EFC) {
-        g_Player.D_80072EFC--;
+    if (g_Player.InputLockTimer) {
+        g_Player.InputLockTimer--;
         g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;
@@ -669,7 +669,7 @@ void RicMain(void) {
     if (g_Player.timers[PL_T_12]) {
         newStatus |= PLAYER_STATUS_UNK1000;
     }
-    if (*D_80097448 != 0) {
+    if (*g_SwimmingType != 0) {
         newStatus |= PLAYER_STATUS_UNK20000;
     }
     newStatus |= PLAYER_STATUS_UNK10000000;
@@ -720,7 +720,7 @@ void RicMain(void) {
         return;
     }
     RicUpdateAfterImage();
-    if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
+    if ((*g_SwimmingType >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
@@ -742,7 +742,7 @@ void RicMain(void) {
         CheckStageCollision(1);
     }
     g_Player.unk04 = temp_s0;
-    if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
+    if ((*g_SwimmingType >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
         PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }
@@ -770,7 +770,7 @@ static void RicDebugExit(void) {
 static bool RicDebug(void) {
     if (!g_IsRicDebugEnter) {
         if (g_Player.padTapped & PAD_L2) {
-            if (g_Player.D_80072EFC == 0) {
+            if (g_Player.InputLockTimer == 0) {
                 RicDebugEnter();
                 return true;
             }
@@ -778,7 +778,7 @@ static bool RicDebug(void) {
         return false;
     }
 
-    if (g_Player.D_80072EFC || g_Player.padTapped & PAD_L2) {
+    if (g_Player.InputLockTimer || g_Player.padTapped & PAD_L2) {
         RicDebugExit();
         return false;
     }

@@ -5,13 +5,13 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", GetFreeEntity);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091248D0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118894);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", AssignEntityEnemyId);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118970);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", FindActiveEntity);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118B18);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", CalculateEntityAngle);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118C28);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", SetBackgroundColorTimer);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09124FB8);
 
@@ -23,13 +23,13 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityGuardText);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntitySmallRisingHeart);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119E78);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", UpdatePrimitiveUVCoordinates);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119F70);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityHitByHoly);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A290);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", SetEntitySubweaponProperties);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A328);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", SetEntitySpellProperties);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127348);
 
@@ -49,17 +49,17 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnarmedAttack);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityDiveKickAttack);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B480);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityGravityBootsBeam);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B530);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerSpell);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B5A4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntitySmokePuff);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnkId24);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityFallingDebris);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091295F0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerBlinkWhite);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerBlinkColor);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerOutline);
 

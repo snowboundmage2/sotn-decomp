@@ -5,7 +5,7 @@ typedef enum {
     Player_Fall,
     Player_Jump,
     Player_MorphBat,
-    Player_AlucardStuck,
+    Player_Stuck,
     Player_MorphMist,
     Player_HighJump,
     Player_UnmorphBat,

@@ -570,7 +570,7 @@ u32 D_800CFEF8[];
 u32 D_800CFF00[];
 u32 D_800CFF08[];
 
-s16* D_800CFE48[] = {
+s16* g_AnimationData[] = {
     NULL,
     (s16*)D_800CFE90,
     (s16*)D_800CFE98,

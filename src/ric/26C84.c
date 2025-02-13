@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
-// same as DRA/func_8011BD48
+// same as DRA/IsDuplicateEntity
 bool func_80162E9C(Entity* entity) {
     s32 i = 16;
     s16 objId = entity->entityId;
@@ -17,7 +17,7 @@ bool func_80162E9C(Entity* entity) {
     return false;
 }
 
-// EntityPlayerBlinkWhite (Richter's version).
+// EntityPlayerBlinkColor (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
 static s32 D_80154F7C[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static s16 D_80154FBC[][10] = {

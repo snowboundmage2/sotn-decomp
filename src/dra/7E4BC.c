@@ -479,8 +479,8 @@ void EntityExplosionEffect(Entity* self) {
                     tilePrim->b0 -= 1;
                     tilePrim->posY.val += tilePrim->velocityY.val;
                     tilePrim->posX.val += tilePrim->velocityX.val;
-                    if ((*D_80097448 == 0) ||
-                        (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
+                    if ((*g_SwimmingType == 0) ||
+                        (((PLAYER.posY.i.hi - *g_SwimmingType) + 0x19) >=
                          tilePrim->posY.i.hi)) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
@@ -1192,7 +1192,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                        // fairy using Hammer.
                 if (PLAYER.step == Player_StatusStone) {
                     g_Player.unk5E = 1;
-                    D_800ACE44 = 0x40;
+                    g_PlayerHitCooldown = 0x40;
                 }
                 break;
             case 0x80:
@@ -1787,7 +1787,7 @@ void EntityPlayerMist(Entity* self) {
         // Weird that we set FLAG_DEAD here.
         self->params = FLAG_UNK_4000 | FLAG_UNK_1000 | FLAG_UNK_800 |
                        FLAG_UNK_400 | FLAG_DEAD;
-        EntityPlayerBlinkWhite(self);
+        EntityPlayerBlinkColor(self);
         if (self->primIndex == -1) {
             goto block_147;
         }
@@ -1966,7 +1966,7 @@ void EntityPlayerMist(Entity* self) {
         yVar = self->ext.mist.yCurrent;
         self->params = FLAG_UNK_4000 | FLAG_UNK_1000 | FLAG_UNK_800 |
                        FLAG_UNK_400 | FLAG_DEAD;
-        EntityPlayerBlinkWhite(self);
+        EntityPlayerBlinkColor(self);
         if (self->primIndex == -1) {
             self->flags = 0;
             DestroyEntity(self);
@@ -2178,7 +2178,7 @@ void UpdateEntityPlayerMistHitbox(Entity* self) {
         self->hitboxState = 2;
     }
     if (self->step == 0) {
-        func_8011A328(self, 0xC);
+        SetEntitySpellProperties(self, 0xC);
         self->enemyId = 4;
         self->hitboxHeight = 8;
         self->hitboxWidth = 8;
@@ -2239,7 +2239,7 @@ void UpdateEntityAxeArmorHitbox(Entity* entity) {
     entity->posX.i.hi = player->posX.i.hi;
     entity->posY.i.hi = player->posY.i.hi;
     if (entity->step == 0) {
-        func_8011A328(entity, 0xB);
+        SetEntitySpellProperties(entity, 0xB);
         entity->flags =
             FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->step++;
@@ -2279,7 +2279,7 @@ void EntityPlayerFalling(Entity* self) {
         self->palette = PAL_OVL(0x10D);
         self->unk5A = 0xC;
         self->params = 0x2600;
-        EntityPlayerBlinkWhite(self);
+        EntityPlayerBlinkColor(self);
         self->params = params;
 
         PLAYER = copy;
@@ -2307,7 +2307,7 @@ void EntityPlayerFalling(Entity* self) {
         self->animSet = PLAYER.animSet = 1;
         self->animCurFrame = PLAYER.animCurFrame = 0x9F;
         self->params = 0x2600;
-        EntityPlayerBlinkWhite(self);
+        EntityPlayerBlinkColor(self);
         self->params = params;
 
         PLAYER = copy;
@@ -2361,7 +2361,7 @@ void EntityPlayerFalling(Entity* self) {
 void EntityPlayerColorBlend(Entity* entity) {
     PlayerDraw* plDraw = &g_PlayerDraw[13];
 
-    if (g_unkGraphicsStruct.D_800973FC == 0) {
+    if (g_unkGraphicsStruct.g_PauseFlag == 0) {
         plDraw->enableColorBlend = 0;
         DestroyEntity(entity);
         return;

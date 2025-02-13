@@ -315,7 +315,7 @@ void EntitySlogra(Entity* self) {
             }
 
             if (UnkCollisionFunc3(&D_801812D0) & 1) {
-                g_api.func_80102CD8(1);
+                g_api.InitializeBackbufferCoords(1);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
             }

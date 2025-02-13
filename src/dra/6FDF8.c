@@ -33,7 +33,7 @@ bool HandlePlayerMovement(s32 branchFlags) {
         }
     }
 
-    if (D_80097448[0] > 40) {
+    if (g_SwimmingType[0] > 40) {
         YAccel = YAccel / 4;
     }
 

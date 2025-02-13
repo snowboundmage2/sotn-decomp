@@ -3,7 +3,7 @@
 #include "dra_bss.h"
 #include "sfx.h"
 
-void PlayerStepJump(void) {
+void HandlePlayerJump(void) {
     s32 walkResult;
     s16 stepSlot;
 
@@ -179,7 +179,7 @@ void PlayerStepJump(void) {
     }
 }
 
-void PlayerStepFall(void) {
+void HandlePlayerFall(void) {
     if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
         ExecuteJump(1);
     } else if (HandlePlayerMovement(0x9029) == 0) {
@@ -190,7 +190,7 @@ void PlayerStepFall(void) {
     }
 }
 
-void PlayerStepCrouch(void) {
+void HandlePlayerCrouch(void) {
     s32 i;
     s32 x_offset;
     u16 local_flags;
@@ -234,7 +234,7 @@ void PlayerStepCrouch(void) {
     case 0x0:
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] >= 0x19) {
+        } else if (g_SwimmingType[0] >= 0x19) {
             if (g_Player.unk48 == 0) {
                 x_offset = 0xC;
                 if (PLAYER.facingLeft) {
@@ -462,7 +462,7 @@ void HandlePlayerWallCollision(s32 arg0) {
     PLAYER.posX.i.hi = PLAYER.posX.i.hi - move;
 
     if (arg0 & 1) {
-        func_80102CD8(3);
+        InitializeBackbufferCoords(3);
         PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
@@ -470,7 +470,7 @@ void HandlePlayerWallCollision(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
-void PlayerStepHighJump(void) {
+void HandlePlayerHighJump(void) {
     s32 var_s1 = 0;
     s32 temp;
 
@@ -553,7 +553,7 @@ void PlayerStepHighJump(void) {
     }
 }
 
-s32 PlayerHandleDamageAbsorb(s16 damageAmount) {
+s32 HandlePlayerDamageAbsorb(s16 damageAmount) {
     DamageParam damage;
     s32 sfx;
     s32 temp_s0;
@@ -577,7 +577,7 @@ s32 PlayerHandleDamageAbsorb(s16 damageAmount) {
     damage.effects = EFFECT_NONE;
     damage.damageKind = DAMAGEKIND_0;
     SetPlayerStep(Player_Kill);
-    PlayerStepKill(&damage, step, temp_s1);
+    HandlePlayerKill(&damage, step, temp_s1);
     return -1;
 }
 
@@ -645,7 +645,7 @@ block_13:
     PLAYER.entityRoomIndex = 1;
 }
 
-void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
+void HandlePlayerDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     s32 randbit;
     u8 unkAC_offset;
     s32 i;
@@ -894,7 +894,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             g_Player.timers[8] = 24;
             PLAYER.step_s = 5;
             if (g_Player.prev_step_s == 0xF &&
-                (PlayerHandleDamageAbsorb(g_Player.damageTaken) != 0)) {
+                (HandlePlayerDamageAbsorb(g_Player.damageTaken) != 0)) {
                 return;
             }
             break;
@@ -931,10 +931,10 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PLAYER.posY.i.hi -= 0x15;
                 PLAYER.posX.i.hi -= i;
                 PlaySfx(SFX_WALL_DEBRIS_B);
-                func_80102CD8(2);
+                InitializeBackbufferCoords(2);
                 PLAYER.step_s = 1;
                 if (g_Player.prev_step_s == 0xF &&
-                    (PlayerHandleDamageAbsorb(g_Player.damageTaken) != 0)) {
+                    (HandlePlayerDamageAbsorb(g_Player.damageTaken) != 0)) {
                     return;
                 }
                 break;
@@ -946,10 +946,10 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             SetPlayerAnim(0x3F);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
-            func_80102CD8(2);
+            InitializeBackbufferCoords(2);
             PLAYER.step_s = 3;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 8), 0);
-            if (PlayerHandleDamageAbsorb(g_Player.damageTaken) != 0) {
+            if (HandlePlayerDamageAbsorb(g_Player.damageTaken) != 0) {
                 return;
             }
             break;
@@ -1032,7 +1032,7 @@ void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     }
 }
 
-void PlayerStepPetrified(s32 arg0) {
+void HandlePlayerPetrified(s32 arg0) {
     s16 animVariant;
     s32 newlyPetrified;
     s32 yShift;
@@ -1066,7 +1066,7 @@ void PlayerStepPetrified(s32 arg0) {
             PLAYER.step = Player_StatusStone;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
-            func_80102CD8(1);
+            InitializeBackbufferCoords(1);
             PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, 39, 0);
 
@@ -1089,7 +1089,7 @@ void PlayerStepPetrified(s32 arg0) {
         }
         break;
     case 2:
-        if (D_80097448[0] >= 0x29) {
+        if (g_SwimmingType[0] >= 0x29) {
             yShift = FIX(11.0 / 256);
         } else {
             yShift = FIX(44.0 / 256);
@@ -1109,7 +1109,7 @@ void PlayerStepPetrified(s32 arg0) {
         }
 
         if (!(g_Player.unk04 & 1)) {
-            func_80102CD8(1);
+            InitializeBackbufferCoords(1);
             PlaySfx(SFX_WALL_DEBRIS_B);
         }
 
@@ -1125,7 +1125,7 @@ void PlayerStepPetrified(s32 arg0) {
         }
         // Handles wiggling out of being petrified.
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT) ||
-            arg0 != 0 || D_800ACE44 != 0) {
+            arg0 != 0 || g_PlayerHitCooldown != 0) {
             PLAYER.animFrameDuration = 0x10;
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
             // Counter for how many wiggles left until we're out
@@ -1184,7 +1184,7 @@ void PlayerStepPetrified(s32 arg0) {
 }
 
 // Somewhat weird args, worth more study. arg2 is unused.
-void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
+void HandlePlayerKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     s32 i;
     s32 j;
     Entity* ent;
@@ -1229,31 +1229,31 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
 
         PLAYER.rotPivotX = PLAYER.rotPivotY = 0;
         if (damage->effects & ELEMENT_FIRE) {
-            func_80118C28(3);
-            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            SetBackgroundColorTimer(3);
+            // Blueprint 44 has child 11, EntityPlayerBlinkColor
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(44, 0x4F),
                 0); // Blueprint 51 has child 16, EntityPlayerHitByExplosion
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(51, 2), 0);
             D_80137FEC = 1;
         } else if (damage->effects & ELEMENT_THUNDER) {
-            func_80118C28(9);
-            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            SetBackgroundColorTimer(9);
+            // Blueprint 44 has child 11, EntityPlayerBlinkColor
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x59), 0);
             // Blueprint 45 has child 30, EntityPlayerHitByLightning
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(45, 1), 0);
             D_80137FEC = 2;
         } else if (damage->effects & ELEMENT_ICE) {
-            func_80118C28(10);
-            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            SetBackgroundColorTimer(10);
+            // Blueprint 44 has child 11, EntityPlayerBlinkColor
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5A), 0);
             // Blueprint 46 has child 33, EntityPlayerHitByIce
             CreateEntFactoryFromEntity(g_CurrentEntity, 46, 0);
             D_80137FEC = 3;
             PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
-            func_80118C28(1);
-            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            SetBackgroundColorTimer(1);
+            // Blueprint 44 has child 11, EntityPlayerBlinkColor
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x53), 0);
             // Blueprint 49 has child 5, EntityExplosionEffect
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(49, 5), 0);
@@ -1344,7 +1344,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             D_800AFC50[1] |= PLAYER.animCurFrame;
             PLAYER.palette = 0x810D;
             SetPlayerAnim(0x3E);
-            // Blueprint 16 has child 2, func_8011B5A4
+            // Blueprint 16 has child 2, EntitySmokePuff
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
             PLAYER.step_s++;
         }
@@ -1373,7 +1373,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     }
 }
 
-void PlayerStepUnk17(void) {
+void HandlePlayerUnk17(void) {
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
@@ -1415,11 +1415,11 @@ void UpdatePlayerPositionInTopStage(void) {
 }
 
 // Corresponding RIC function is func_8015BCD0
-void PlayerStepTeleport(void) {
+void HandlePlayerTeleport(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     g_Player.padSim = 0;
-    g_Player.D_80072EFC = 4;
+    g_Player.InputLockTimer = 4;
 
     switch (PLAYER.step_s) {
     case 0:

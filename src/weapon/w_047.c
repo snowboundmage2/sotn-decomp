@@ -151,7 +151,7 @@ void EntityWeaponAttack(Entity* self) {
         if (--self->ext.weapon_047.unk7C == 0) {
             self->ext.weapon_047.unk7C = 0x28;
             if (self->flags & FLAG_HAS_PRIMS) {
-                g_api.func_80102CD8(6);
+                g_api.InitializeBackbufferCoords(6);
                 self->step++;
 
                 prim = &g_PrimBuf[self->primIndex];
@@ -200,7 +200,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->hitboxWidth = 4;
                 self->hitboxHeight = 4;
                 SetWeaponProperties(self, 0);
-                g_api.func_80118894(self);
+                g_api.AssignEntityEnemyId(self);
                 return;
             }
             self->step = 4;

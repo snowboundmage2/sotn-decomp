@@ -8,16 +8,16 @@
 extern s32 D_80137FDC;
 #endif
 
-void func_80111928(void) { D_801396EA = 0; }
+void ResetDebugMode(void) { D_801396EA = 0; }
 
-void func_80111938(void) {
+void EnableDebugMode(void) {
     D_801396EA = 1;
     D_801396E4 = PLAYER.animCurFrame;
     D_801396E6 = PLAYER.drawFlags;
     D_801396E8 = PLAYER.palette;
 }
 
-void func_8011197C(void) {
+void DisableDebugMode(void) {
     D_801396EA = 0;
     PLAYER.hitParams = 0;
     PLAYER.animCurFrame = D_801396E4;
@@ -25,19 +25,19 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-bool func_801119C4(void) {
+bool HandleDebugInput(void) {
     if (D_801396EA == 0) {
         if (g_Player.padTapped & PAD_L2) {
-            if (g_Player.D_80072EFC == 0) {
-                func_80111938();
+            if (g_Player.InputLockTimer == 0) {
+                EnableDebugMode();
                 return true;
             }
         }
 
         return false;
     }
-    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & PAD_L2)) {
-        func_8011197C();
+    if ((g_Player.InputLockTimer != 0) || (g_Player.padTapped & PAD_L2)) {
+        DisableDebugMode();
         return false;
     }
     if (g_Player.padPressed & PAD_CROSS) {
@@ -103,7 +103,7 @@ void CreatePlayerEffectEntities(void) {
     }
 }
 
-bool func_80111D24(void) {
+bool HandleMistGates(void) {
     Collider collider;
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.i.hi;
@@ -129,7 +129,7 @@ bool func_80111D24(void) {
     return false;
 }
 
-bool func_80111DE8(bool mistReset) {
+bool HandleMistCollision(bool mistReset) {
     Collider collider1;
     Collider collider2;
     s32 yOffset;
@@ -203,8 +203,8 @@ bool func_80111DE8(bool mistReset) {
     return 0;
 }
 
-bool func_8011203C(void) {
-    s32 collision = func_80111D24();
+bool HandleWeaponCollision(void) {
+    s32 collision = HandleMistGates();
 
     if (g_Entities[E_WEAPON].step == 5) {
         if (collision == false) {
@@ -221,7 +221,7 @@ bool func_8011203C(void) {
     return false;
 }
 
-void PlayerStepStand(void) {
+void HandlePlayerStand(void) {
     s32 x_offset;
     u16 local_flags = 3;
     s32 atLedge;
@@ -247,7 +247,7 @@ void PlayerStepStand(void) {
     if ((PLAYER.step < 0x40) && (g_Player.unk48 == 0)) {
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] >= 0x31) {
+        } else if (g_SwimmingType[0] >= 0x31) {
             x_offset = 4;
             if (PLAYER.facingLeft != 0) {
                 x_offset = -4;
@@ -531,7 +531,7 @@ void PlayerStepStand(void) {
     }
 }
 
-void PlayerStepWalk(void) {
+void HandlePlayerWalk(void) {
     if (HandlePlayerMovement(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {

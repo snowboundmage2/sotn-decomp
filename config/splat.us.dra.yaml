@@ -167,7 +167,7 @@ segments:
       - [0x3C490, .rodata, demo] # func_800F0334
       # - [0x3C4C0, .rodata, demo] # func_800F04A4
       # - [0x3C4C8, .rodata, demo] # func_800F0608
-      - [0x3C514, .rodata, 5087C] # func_800F0940
+      - [0x3C514, .rodata, 5087C] # UpdateBackgroundParallax
       # - [0x3C534, .rodata, 5087C] # func_800F2860
       # - [0x3C55C, .rodata, 5087C] # RunMainEngine
       - [0x3C5D4, .rodata, menu] # func_800F7F64
@@ -179,9 +179,9 @@ segments:
       # - [0x3CBC4, .rodata, 5D5BC] # func_800FD7C0
       # - [0x3CBDC, .rodata, 5D5BC] # GetStatusAilmentTimer
       - [0x3CBF4, .rodata, 5F60C] # g_CheatCodes
-      - [0x3CC0C, .rodata, 624DC] # func_801027C4
-      - [0x3CC2C, .rodata, 628AC] # func_801028AC
-      # - [0x3CC54, .rodata, 628AC] # func_80102D70
+      - [0x3CC0C, .rodata, 624DC] # UpdatePrimState
+      - [0x3CC2C, .rodata, 628AC] # UpdatePrimitiveDrawModes
+      # - [0x3CC54, .rodata, 628AC] # UpdateBackbuffer
       - [0x3CC70, .rodata, 62DEC] # HandleSaveMenu
       - [0x3CDC0, .rodata, 63ED4] # HandleSaveMenuState
       - [0x3CDDC, .rodata, lba_stage]
@@ -197,14 +197,14 @@ segments:
       # - [0x41380, .rodata, 704D0] # func_801112AC
       # - [0x413A0, .rodata, 704D0] # func_8011151C
       - [0x413C0, .rodata, 71830] # func_80111830
-      # - [0x41400, .rodata, 71830] # func_801119C4
-      - [0x41410, .rodata, 71830] # PlayerStepStand
-      - [0x41588, .rodata, 72BB0] # PlayerStepJump
-      # - [0x41750, .rodata, 72BB0] # PlayerStepCrouch
-      # - [0x418E0, .rodata, 72BB0] # PlayerStepHighJump
-      # - [0x418F4, .rodata, 72BB0] # PlayerHandleDamage
-      # - [0x419D0, .rodata, 72BB0] # PlayerStepTeleport
-      - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
+      # - [0x41400, .rodata, 71830] # HandleDebugInput
+      - [0x41410, .rodata, 71830] # HandlePlayerStand
+      - [0x41588, .rodata, 72BB0] # HandlePlayerJump
+      # - [0x41750, .rodata, 72BB0] # HandlePlayerCrouch
+      # - [0x418E0, .rodata, 72BB0] # HandlePlayerHighJump
+      # - [0x418F4, .rodata, 72BB0] # HandlePlayerDamage
+      # - [0x419D0, .rodata, 72BB0] # HandlePlayerTeleport
+      - [0x419E8, .rodata, 75F54] # HandlePlayerHellFire
       # - [0x41A00, .rodata, 75F54] # func_80116994
       # - [0x41A20, .rodata, 75F54] # func_80116B0C
       # - [0x41A38, .rodata, 75F54] # func_80117DEC
@@ -212,7 +212,7 @@ segments:
       # - [0x41A74, .rodata, 7879C] # EntityGuardText
       # - [0x41AA4, .rodata, 7879C] # func_8011A4D0
       # - [0x41AB4, .rodata, 7879C] # EntityEntFactory
-      # - [0x41AF4, .rodata, 7879C] # EntityPlayerBlinkWhite
+      # - [0x41AF4, .rodata, 7879C] # EntityPlayerBlinkColor
       # - [0x41B94, .rodata, 7879C] # EntityMpReplenished
       - [0x41CB4, .rodata, 7E4BC] # EntityExplosionEffect
       # - [0x41D84, .rodata, 7E4BC] # EntityPlayerPinkEffect

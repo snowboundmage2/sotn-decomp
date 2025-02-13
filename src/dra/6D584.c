@@ -389,7 +389,7 @@ void CreateAfterImageEntities(s32 arg0) {
 void SetPlayerBlinkTimer(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
-        // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
+        // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkColor
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x15), 0);
         if (g_Player.timers[13] <= arg1) {
             g_Player.timers[13] = arg1;

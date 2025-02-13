@@ -131,7 +131,7 @@ typedef struct {
 
 typedef struct {
     /* 0x800973F8 */ s32 D_800973F8;
-    /* 0x800973FC */ s32 D_800973FC;
+    /* 0x800973FC */ s32 g_PauseFlag;
     /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
     /* 0x80097404 */ s32 unk4;
     /* 0x80097408 */ s32 g_zEntityCenter;
@@ -139,7 +139,7 @@ typedef struct {
     /* 0x80097410 */ s32 BottomCornerTextTimer;
     /* 0x80097414 */ s32 BottomCornerTextPrims;
     /* 0x80097418 */ s32 unk18;
-    /* 0x8009741C */ s32 unk1C;
+    /* 0x8009741C */ s32 unk1C; //pauseFlags?
     /* 0x80097420 */ s32 unk20;
     /* 0x80097424 */ s32 unk24;
 

@@ -294,7 +294,7 @@ static void func_ptr_80170004(Entity* self) {
             self->stunFrames = 4;
             self->hitEffect = 1;
             self->entityRoomIndex = 0;
-            g_api.func_80118894(self);
+            g_api.AssignEntityEnemyId(self);
             g_api.PlaySfx(SFX_UI_ALERT_TINK);
             self->step++;
             return;

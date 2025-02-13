@@ -273,14 +273,14 @@ void EntityAlucardWaterEffect(Entity* arg0) {
         if (arg0->ext.aluwater.unk7E) {
             arg0->ext.aluwater.unk7E--;
         }
-        *D_80097448 = var_s3;
+        *g_SwimmingType = var_s3;
         if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
             if (status & PLAYER_STATUS_CROUCH) {
                 if (status & PLAYER_STATUS_WOLF_FORM) {
                     if (var_s3 > 4) {
-                        D_80097448[1] = var_s3 - 4;
+                        g_SwimmingType[1] = var_s3 - 4;
                     } else {
-                        D_80097448[1] = 0;
+                        g_SwimmingType[1] = 0;
                     }
                     if (var_s3 > 12) {
                         D_80097450 = var_s3 - 12;
@@ -289,9 +289,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                     }
                 } else {
                     if (var_s3 > 8) {
-                        D_80097448[1] = var_s3 - 8;
+                        g_SwimmingType[1] = var_s3 - 8;
                     } else {
-                        D_80097448[1] = 0;
+                        g_SwimmingType[1] = 0;
                     }
                     if (var_s3 > 0x18) {
                         D_80097450 = var_s3 - 0x18;
@@ -302,9 +302,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             } else if (
                 status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
                 if (var_s3 > 6) {
-                    D_80097448[1] = var_s3 - 6;
+                    g_SwimmingType[1] = var_s3 - 6;
                 } else {
-                    D_80097448[1] = 0;
+                    g_SwimmingType[1] = 0;
                 }
                 if (var_s3 > 0x10) {
                     D_80097450 = var_s3 - 0x10;
@@ -313,9 +313,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                 }
             } else if (status & PLAYER_STATUS_WOLF_FORM) {
                 if (var_s3 > 8) {
-                    D_80097448[1] = var_s3 - 8;
+                    g_SwimmingType[1] = var_s3 - 8;
                 } else {
-                    D_80097448[1] = 0;
+                    g_SwimmingType[1] = 0;
                 }
                 if (var_s3 > 0x18) {
                     D_80097450 = var_s3 - 0x18;
@@ -325,9 +325,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             }
         } else {
             if (var_s3 > 0x10) {
-                D_80097448[1] = var_s3 - 0x10;
+                g_SwimmingType[1] = var_s3 - 0x10;
             } else {
-                D_80097448[1] = 0;
+                g_SwimmingType[1] = 0;
             }
             if (var_s3 > 0x30) {
                 D_80097450 = var_s3 - 0x30;
