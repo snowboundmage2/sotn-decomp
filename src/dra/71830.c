@@ -233,12 +233,12 @@ void HandlePlayerStand(void) {
 
     if (((PLAYER.step_s == 0x57) || (PLAYER.step_s == 0x5B)) &&
         PLAYER.animFrameIdx < 5) {
-        if (HandlePlayerMovement(0x43018) != 0) {
+        if (HandlePlayerYVelocity(0x43018) != 0) {
             return;
         }
         DecelerateX(0x1000);
     } else {
-        if (HandlePlayerMovement(0x4301C) != 0) {
+        if (HandlePlayerYVelocity(0x4301C) != 0) {
             return;
         }
         DecelerateX(0x2000);
@@ -532,7 +532,7 @@ void HandlePlayerStand(void) {
 }
 
 void HandlePlayerWalk(void) {
-    if (HandlePlayerMovement(0x4301C) == 0) {
+    if (HandlePlayerYVelocity(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {
             ExecuteLanding(0);

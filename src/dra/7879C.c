@@ -965,7 +965,7 @@ void GetServantStats(
 void func_8011A4C8(Entity* entity) {}
 
 PfnEntityUpdate g_DraEntityTbl[] = {
-    func_8011A4C8,
+    func_8011A4C8, // dummy
     EntityEntFactory,
     EntitySmokePuff,
     EntityGravityBootBeam,
@@ -978,8 +978,8 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntitySubwpnThrownAxe, // child10
     EntityPlayerBlinkColor,
     EntitySubwpnThrownVibhuti,
-    func_8011E0E4,
-    func_8011EDA0,
+    func_8011E0E4, // dummy
+    func_8011EDA0, // dummy
     EntityUnarmedAttack,
     EntityPlayerHitByExplosion,
     EntitySubwpnAgunea,

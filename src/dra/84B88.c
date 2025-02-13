@@ -464,7 +464,7 @@ s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
     return 0;
 }
 
-// HandleEntityCollision, but what entity?
+// HandleEntityCollision, probably Holy water?
 s32 HandleEntityCollision(s16 arg0, s16 arg1) {
     Collider collider;
     s16 xShift;
