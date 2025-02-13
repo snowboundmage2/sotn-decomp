@@ -919,5 +919,5 @@ void PerformBackDash(void) {
     PlaySfx(SFX_SCRAPE_C);
 }
 
-// Next func in PSP is SetPlayerStep; next in US is HandlePlayerMovement. File
+// Next func in PSP is SetPlayerStep; next in US is HandlePlayerYAxis. File
 // split.

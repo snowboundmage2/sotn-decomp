@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-bool HandlePlayerMovement(s32 branchFlags) {
+bool HandlePlayerYAxis(s32 branchFlags) {
     u8 stackpad[0x28];
     s32 SFX_arg;
     s32 YAccel;

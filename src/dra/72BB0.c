@@ -19,7 +19,7 @@ void HandlePlayerJump(void) {
                 g_Player.unk44 |= 0x20;
             }
         }
-        if (HandlePlayerMovement(0x11029)) {
+        if (HandlePlayerYAxis(0x11029)) {
             return;
         }
     }
@@ -182,7 +182,7 @@ void HandlePlayerJump(void) {
 void HandlePlayerFall(void) {
     if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
         ExecuteJump(1);
-    } else if (HandlePlayerMovement(0x9029) == 0) {
+    } else if (HandlePlayerYAxis(0x9029) == 0) {
         DecelerateX(0x1000);
         if (CheckMoveDirection() != 0) {
             SetSpeedX(0xC000);
@@ -217,7 +217,7 @@ void HandlePlayerCrouch(void) {
             return;
         }
     }
-    if (HandlePlayerMovement(0x100C) != 0) {
+    if (HandlePlayerYAxis(0x100C) != 0) {
         return;
     }
     DecelerateX(0x2000);
@@ -232,8 +232,8 @@ void HandlePlayerCrouch(void) {
     }
     switch (PLAYER.step_s) {
     case 0x0:
-        if (D_800ACF74 != 0) {
-            D_800ACF74--;
+        if (PlayerLedgeTimer != 0) {
+            PlayerLedgeTimer--;
         } else if (g_SwimmingType[0] >= 0x19) {
             if (g_Player.unk48 == 0) {
                 x_offset = 0xC;
@@ -243,7 +243,7 @@ void HandlePlayerCrouch(void) {
                 PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
                 PLAYER.posY.i.hi += 2;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 13), 0);
-                D_800ACF74 = 0x60;
+                PlayerLedgeTimer = 0x60;
                 PLAYER.posY.i.hi -= 2;
                 PLAYER.posX.i.hi -= x_offset;
             }
@@ -475,7 +475,7 @@ void HandlePlayerHighJump(void) {
     s32 temp;
 
     g_Player.unk4A++;
-    if (HandlePlayerMovement(2) != 0) {
+    if (HandlePlayerYAxis(2) != 0) {
         return;
     }
 
@@ -868,7 +868,7 @@ void HandlePlayerDamage(DamageParam* damage, s16 arg1, s16 arg2) {
 
         break;
     case 1:
-        if (HandlePlayerMovement(0x20280) != 0) {
+        if (HandlePlayerYAxis(0x20280) != 0) {
             return;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -969,7 +969,7 @@ void HandlePlayerDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 3:
         if (!g_Player.timers[8]) {
             SetSpeedX(FIX(0.75));
-            if (HandlePlayerMovement(0x20280) != 0) {
+            if (HandlePlayerYAxis(0x20280) != 0) {
                 return;
             }
         }
@@ -1062,7 +1062,7 @@ void HandlePlayerPetrified(s32 arg0) {
     case 1:
         SetPlayerBlinkTimer(1, 4);
         PLAYER.palette = 0x8161;
-        if (HandlePlayerMovement(0x20280) != 0) {
+        if (HandlePlayerYAxis(0x20280) != 0) {
             PLAYER.step = Player_StatusStone;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;

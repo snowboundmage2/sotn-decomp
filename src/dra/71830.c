@@ -233,20 +233,20 @@ void HandlePlayerStand(void) {
 
     if (((PLAYER.step_s == 0x57) || (PLAYER.step_s == 0x5B)) &&
         PLAYER.animFrameIdx < 5) {
-        if (HandlePlayerMovement(0x43018) != 0) {
+        if (HandlePlayerYAxis(0x43018) != 0) {
             return;
         }
         DecelerateX(0x1000);
     } else {
-        if (HandlePlayerMovement(0x4301C) != 0) {
+        if (HandlePlayerYAxis(0x4301C) != 0) {
             return;
         }
         DecelerateX(0x2000);
     }
 
     if ((PLAYER.step < 0x40) && (g_Player.unk48 == 0)) {
-        if (D_800ACF74 != 0) {
-            D_800ACF74--;
+        if (PlayerLedgeTimer != 0) {
+            PlayerLedgeTimer--;
         } else if (g_SwimmingType[0] >= 0x31) {
             x_offset = 4;
             if (PLAYER.facingLeft != 0) {
@@ -255,7 +255,7 @@ void HandlePlayerStand(void) {
             PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
             PLAYER.posY.i.hi -= 0x10;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 13), 0);
-            D_800ACF74 = 0x60;
+            PlayerLedgeTimer = 0x60;
             PLAYER.posY.i.hi += 0x10;
             PLAYER.posX.i.hi -= x_offset;
         }
@@ -532,7 +532,7 @@ void HandlePlayerStand(void) {
 }
 
 void HandlePlayerWalk(void) {
-    if (HandlePlayerMovement(0x4301C) == 0) {
+    if (HandlePlayerYAxis(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {
             ExecuteLanding(0);
