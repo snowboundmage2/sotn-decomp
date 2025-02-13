@@ -769,7 +769,7 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 90) {
             if (SearchForEntityInRange(1, 0x29)) {
-                g_unkGraphicsStruct.g_PauseFlag = 0;
+                g_unkGraphicsStruct.g_TimeFreezeFlag = 0;
             }
 
             for (i = 8; i < 0x40; i++) {
@@ -1326,7 +1326,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
         SelectAnimationFrame(arg0);
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             s_RoomSpecialState == 1 || g_CutsceneHasControl ||
-            g_unkGraphicsStruct.g_PauseFlag) {
+            g_unkGraphicsStruct.g_TimeFreezeFlag) {
             SetAnimationFrame(arg0, 0xE);
             arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             arg0->step = 0;

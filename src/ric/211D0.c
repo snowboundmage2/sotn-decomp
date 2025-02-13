@@ -169,7 +169,7 @@ bool RicDoCrash(void) {
         return 0;
     }
 #if defined(VERSION_US)
-    if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.g_PauseFlag) {
+    if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.g_TimeFreezeFlag) {
         return 0;
     }
 #endif

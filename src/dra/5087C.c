@@ -960,7 +960,7 @@ void func_800F2404(s32 arg0) {
     if (arg0 == 0) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         g_unkGraphicsStruct.D_800973F8 = 0;
-        g_unkGraphicsStruct.g_PauseFlag = 0;
+        g_unkGraphicsStruct.g_TimeFreezeFlag = 0;
     }
     g_CutsceneHasControl = 0;
 
@@ -1080,7 +1080,7 @@ void DrawMapCursor(void) {
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (g_unkGraphicsStruct.g_PauseFlag != 0 || D_8006BB00 != 0 ||
+        if (g_unkGraphicsStruct.g_TimeFreezeFlag != 0 || D_8006BB00 != 0 ||
             D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
@@ -1490,7 +1490,7 @@ void RunMainEngine(void) {
                 g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
-            if (g_unkGraphicsStruct.g_PauseFlag != 0) {
+            if (g_unkGraphicsStruct.g_TimeFreezeFlag != 0) {
                 if (D_8006BB00 == 0) {
                     D_8006BB00 = 1;
                     MuteCd();
@@ -1609,7 +1609,7 @@ void RunMainEngine(void) {
                     break;
                 } else if (D_80097928 != 0) {
                     D_80097910 = g_StagesLba[g_StageId].unk18;
-                    if (g_unkGraphicsStruct.g_PauseFlag != 1) {
+                    if (g_unkGraphicsStruct.g_TimeFreezeFlag != 1) {
                         PlaySfx(SET_STOP_MUSIC);
                         if (IsSoundPlaying() == false) {
                             PlaySfx(D_80097910);
