@@ -627,7 +627,7 @@ void InitializeSaveMenu(s32 arg0) {
 
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
-    D_80137E48 = AllocPrimRecursively(PRIM_TILE, PrimCount);
+    D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
     prim = &g_PrimBuf[D_80137E48];
     i = 0;
 
@@ -672,7 +672,7 @@ void InitializeSaveMenu(s32 arg0) {
     }
 
     SetGeomScreen(0x100);
-    D_80137E40 = AllocPrimRecursively(5U, 0x18);
+    D_80137E40 = AllocPrimitives(5U, 0x18);
     prim = &g_PrimBuf[D_80137E40];
     if (prim != NULL) {
         do {
@@ -688,7 +688,7 @@ void InitializeSaveMenu(s32 arg0) {
             prim = prim->next;
         } while (prim != NULL);
     }
-    D_80137E44 = AllocPrimRecursively(2U, 0x12);
+    D_80137E44 = AllocPrimitives(2U, 0x12);
     prim = &g_PrimBuf[D_80137E44];
     if (prim != NULL) {
         do {

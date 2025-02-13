@@ -379,7 +379,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     var_s8 = 0;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 23);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 23);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -720,7 +720,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, NUM_UNK);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_UNK);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

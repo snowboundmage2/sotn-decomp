@@ -1017,7 +1017,7 @@ void UpdateWolfEntity(Entity* self) {
         D_800B0920 = D_800B0924[PLAYER.animFrameIdx];
     }
     if (self->step == 0) {
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 6);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             return;
         }

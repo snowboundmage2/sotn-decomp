@@ -61,7 +61,7 @@ u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 
 // list of exposed API
 void FreePrimitives(s32 index);
-s32 AllocPrimRecursively(u8 primType, s32 count);
+s32 AllocPrimitives(u8 primType, s32 count);
 void InitializeBackbufferCoords(s32 start);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
@@ -156,7 +156,7 @@ bool InitGame(struct InitGameParams* params) {
     // These two are necessary to make HandleTitle working
     GameApi api;
     api.FreePrimitives = FreePrimitives;
-    api.AllocPrimRecursively = AllocPrimRecursively;
+    api.AllocPrimitives = AllocPrimitives;
     api.CheckCollision = CheckCollision;
     api.InitializeBackbufferCoords = InitializeBackbufferCoords;
     api.UpdateAnim = UpdateAnim;

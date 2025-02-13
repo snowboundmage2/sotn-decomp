@@ -221,7 +221,7 @@ void InitializePlayerState() {
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
-    primIndex = AllocPrimRecursively(PRIM_TILE, 8);
+    primIndex = AllocPrimitives(PRIM_TILE, 8);
     prim = &g_PrimBuf[primIndex];
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= FLAG_HAS_PRIMS;

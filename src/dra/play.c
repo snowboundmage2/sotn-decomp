@@ -239,7 +239,7 @@ void HandlePlay(void) {
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
         g_GpuBuffers[1].draw.isbg = 1;
         g_GpuBuffers[0].draw.isbg = 1;
-        D_8013640C = AllocPrimRecursively(PRIM_GT4, 16);
+        D_8013640C = AllocPrimitives(PRIM_GT4, 16);
         D_80136410 = 0;
         prim = &g_PrimBuf[D_8013640C];
         for (i = 0; prim != NULL; i++) {
@@ -427,7 +427,7 @@ void HandleGameOver(void) {
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
-            D_8013640C = AllocPrimRecursively(PRIM_GT4, 259);
+            D_8013640C = AllocPrimitives(PRIM_GT4, 259);
             prim = &g_PrimBuf[D_8013640C];
 
             SetTexturedPrimRect(prim, 0, 96, 0xFF, 0x20, 0, 0);

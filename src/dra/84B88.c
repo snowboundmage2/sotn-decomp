@@ -28,7 +28,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
 
     switch (self->step) {
     case DAGGER_INIT:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 2);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 2);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -237,7 +237,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
 
     switch (self->step) {
     case AXE_INIT:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 5);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -578,7 +578,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 16);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -686,7 +686,7 @@ void EntityHolyWaterFlame(Entity* self) {
         randR = (rand() & 0x1F) + 0x40;
         randG = (rand() & 0x1F) + 0x80;
         randB = (rand() & 0x1F) + 0x60;
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 4);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -790,7 +790,7 @@ void EntitySubwpnCrashCross(Entity* self) {
     ResetAfterImage(1, 1);
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -897,7 +897,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
 
     if (self->step == 0) {
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 64);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 64);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -994,7 +994,7 @@ void EntityHellfireHandler(Entity* self) {
     switch (self->step) {
     case HFH_INIT:
         g_Player.unk5C = 0;
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk5C = -1;
@@ -1293,7 +1293,7 @@ void EntityExpandingCircle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1364,7 +1364,7 @@ void EntityHellfireBeam(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_G4, 1);
+        self->primIndex = AllocPrimitives(PRIM_G4, 1);
 
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -1449,7 +1449,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_LINE_G2, 16);
+        self->primIndex = AllocPrimitives(PRIM_LINE_G2, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1894,7 +1894,7 @@ void EntitySubwpnAgunea(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2057,7 +2057,7 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 0x28);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 0x28);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             break;
@@ -2252,7 +2252,7 @@ void EntitySummonedSpirit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 0x10);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 0x10);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2502,7 +2502,7 @@ void EntitySummonSpirit(Entity* self) {
         if (--self->ext.summonspirit.spawnTimer) {
             return;
         }
-        self->primIndex = AllocPrimRecursively(4, 9);
+        self->primIndex = AllocPrimitives(4, 9);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

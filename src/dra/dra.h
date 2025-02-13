@@ -488,7 +488,7 @@ void HideAllBackgroundLayers(void);
 void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
 s32 ResetDrawEnvironments(void);
-s32 AllocPrimRecursively(u8 type, s32 count);
+s32 AllocPrimitives(u8 type, s32 count);
 s32 AllocatePrimitiveChain(u8 primitives, s32 count);
 void DemoGameInit(s32 arg0);
 void FreePrimitives(s32 index);

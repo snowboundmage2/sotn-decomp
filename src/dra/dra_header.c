@@ -10,7 +10,7 @@ extern RelicDesc g_RelicDefs[];
 
 void MainGame(void);
 void FreePrimitives(s32 primitiveIndex);
-s32 AllocPrimRecursively(u8 primType, s32 count);
+s32 AllocPrimitives(u8 primType, s32 count);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void InitializeBackbufferCoords(s32 start);
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
@@ -70,7 +70,7 @@ Entrypoint g_MainGame = MainGame;
 GameApi g_ApiInit = {
     {},
     FreePrimitives,
-    AllocPrimRecursively,
+    AllocPrimitives,
     CheckCollision,
     InitializeBackbufferCoords,
     UpdateAnim,

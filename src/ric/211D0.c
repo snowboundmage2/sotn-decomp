@@ -1276,7 +1276,7 @@ void RicEntityHitByHoly(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->primIndex =
-            (s16)g_api.AllocPrimRecursively(PRIM_GT4, LEN(D_80174FBC));
+            (s16)g_api.AllocPrimitives(PRIM_GT4, LEN(D_80174FBC));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;

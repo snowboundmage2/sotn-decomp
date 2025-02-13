@@ -1859,7 +1859,7 @@ void UpdateSubEntityUseLifeApple(Entity* arg0) {
 
     switch (arg0->step) {
     case 0:
-        arg0->primIndex = g_api.AllocPrimRecursively(PRIM_G4, 10);
+        arg0->primIndex = g_api.AllocPrimitives(PRIM_G4, 10);
         if (arg0->primIndex == -1) {
             DestroyEntity(arg0);
             return;

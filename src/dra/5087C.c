@@ -1286,7 +1286,7 @@ void RunMainEngine(void) {
             D_8003C730 = 0;
         }
         func_800F24F4();
-        g_unkGraphicsStruct.D_800973F8 = AllocPrimRecursively(PRIM_GT4, 16);
+        g_unkGraphicsStruct.D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
         if (g_unkGraphicsStruct.D_800973F8 != 0) {
             prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
             while (prim != NULL) {

@@ -18,7 +18,7 @@ void EntityBackgroundBookcase(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -109,7 +109,7 @@ void EntityBackgroundFurniture(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

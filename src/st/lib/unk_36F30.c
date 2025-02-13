@@ -27,7 +27,7 @@ void func_us_801B6324(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -348,7 +348,7 @@ void func_us_801B6F30(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -903,7 +903,7 @@ void func_us_801B8A00(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimRecursively(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;

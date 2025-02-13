@@ -303,7 +303,7 @@ typedef enum {
     FLAG_UNK_100000 = 0x100000,
     FLAG_UNK_00200000 = 0x00200000,
     FLAG_UNK_400000 = 0x400000,
-    // When an entity used AllocPrimRecursively and their primIndex set.
+    // When an entity used AllocPrimitives and their primIndex set.
     // At their destruction they need to free the prims with FreePrimitives.
     FLAG_HAS_PRIMS = 0x800000,
     FLAG_NOT_AN_ENEMY = 0x01000000,
@@ -1515,7 +1515,7 @@ typedef struct {
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
-    /* 8003C7B8 */ s16 (*AllocPrimRecursively)(PrimitiveType type, s32 count);
+    /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*InitializeBackbufferCoords)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(

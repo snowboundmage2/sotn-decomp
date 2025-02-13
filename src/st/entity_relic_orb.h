@@ -116,7 +116,7 @@ void EntityRelicOrb(Entity* self) {
             return;
         }
 
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, PrimCount);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
             self->step = 0;
             return;

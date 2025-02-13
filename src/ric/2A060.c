@@ -24,7 +24,7 @@ void RicEntityTeleport(Entity* self) {
     switch (self->step) {
     case 0:
         self->primIndex =
-            g_api.AllocPrimRecursively(PRIM_GT4, 4 + LEN(D_80175000));
+            g_api.AllocPrimitives(PRIM_GT4, 4 + LEN(D_80175000));
         if (self->primIndex == -1) {
             return;
         }
@@ -450,7 +450,7 @@ void RicEntityWhip(Entity* self) {
         self->ext.whip.unk80.val = self->posY.val;
         self->ext.whip.unk98 = self->ext.whip.unk7C.val;
         self->ext.whip.unk9C = self->ext.whip.unk80.val;
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_LINE_G2, 1);
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (self->primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[self->primIndex];
@@ -838,7 +838,7 @@ void func_80167A70(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 16);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -945,7 +945,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_LINE_G2, primcount);
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, primcount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

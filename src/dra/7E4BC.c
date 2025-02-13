@@ -645,7 +645,7 @@ void EntityPlayerHitByLightning(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 6);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -786,7 +786,7 @@ void EntityPlayerHitByIce(Entity* self) {
     sp18 = (g_Player.status & PLAYER_STATUS_UNK10000) == sp18;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT3, 24);
+        self->primIndex = AllocPrimitives(PRIM_GT3, 24);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -968,7 +968,7 @@ void EntityTransparentWhiteCircle(Entity* self) {
     ResetAfterImage(1, 1);
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 32);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 32);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1310,7 +1310,7 @@ void EntityPlayerDissolves(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, PrimCount);
+        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             return;
         }
@@ -1500,7 +1500,7 @@ void EntityPlayerLevelUpAnimation(Entity* self) {
     unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimRecursively(4U, 0xE);
+        self->primIndex = AllocPrimitives(4U, 0xE);
         if (self->primIndex == -1) {
             return;
         }
@@ -1800,7 +1800,7 @@ void EntityPlayerMist(Entity* self) {
         }
         FreePrimitives(self->primIndex);
         self->step = 0;
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 80);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             goto block_147;
         }
@@ -1984,7 +1984,7 @@ void EntityPlayerMist(Entity* self) {
         self->ext.mist.yCurrent = yVar;
         self->ext.mist.timer = 0;
         self->step = 4;
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 80);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             DestroyEntity(self);
         } else {

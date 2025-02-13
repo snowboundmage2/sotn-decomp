@@ -22,7 +22,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
     switch (self->step) {
     case 0:
         self->primIndex =
-            AllocPrimRecursively(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+            AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
         if (self->primIndex == -1) {
             return;
         }
@@ -517,7 +517,7 @@ void HandleVideoPlayback(void) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
-                D_8013640C = AllocPrimRecursively(PRIM_GT4, 2);
+                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 ResetPolyColorIntensity(prim);

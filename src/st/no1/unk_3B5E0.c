@@ -124,7 +124,7 @@ void func_us_801BB984(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180A1C);
         self->animCurFrame = 0x1F;
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

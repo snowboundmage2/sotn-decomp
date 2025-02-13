@@ -38,13 +38,13 @@ void InitializeSaveMenuPrimitives(void) {
     Primitive *poly1, *poly2, *poly3;
     s32 i;
 
-    D_80137E58 = AllocPrimRecursively(PRIM_GT4, 3);
+    D_80137E58 = AllocPrimitives(PRIM_GT4, 3);
     poly1 = &g_PrimBuf[D_80137E58];
 
-    D_80137E5C = AllocPrimRecursively(PRIM_G4, 3);
+    D_80137E5C = AllocPrimitives(PRIM_G4, 3);
     poly2 = &g_PrimBuf[D_80137E5C];
 
-    D_80137E60 = AllocPrimRecursively(PRIM_LINE_G2, 12);
+    D_80137E60 = AllocPrimitives(PRIM_LINE_G2, 12);
     poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {

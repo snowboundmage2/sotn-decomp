@@ -199,7 +199,7 @@ void func_us_801BCB34(Entity* self) {
         self->ext.et_801BCB34.unk86 = 0;
         self->ext.et_801BCB34.unk87 = 0;
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 0x10;
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 0x28);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

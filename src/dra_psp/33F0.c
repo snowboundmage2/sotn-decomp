@@ -190,7 +190,7 @@ DR_ENV* AllocateDrawEnvironment(Primitive* prim) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocatePrimitives);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocPrimRecursively);
+INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocPrimitives);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocatePrimitiveChain);
 

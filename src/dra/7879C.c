@@ -231,7 +231,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     case 0:
         temp_s0 = self->ext.hpNumMove.number;
         self->primIndex =
-            AllocPrimRecursively(PRIM_GT4, PrimCountA + PrimCountB);
+            AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -259,7 +259,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             }
         }
 
-        // iterate through all 0x14 prims created by AllocPrimRecursively in two
+        // iterate through all 0x14 prims created by AllocPrimitives in two
         // batches
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
@@ -449,7 +449,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.unk84);
     a0 = self->posY.i.hi - 0x10;
 
-    // iterate through all 0x14 prims created by AllocPrimRecursively in two
+    // iterate through all 0x14 prims created by AllocPrimitives in two
     // batches
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCountA; i++) {
@@ -551,7 +551,7 @@ void EntityGuardText(Entity* self) {
             self->ext.guardText.str_x += FIX(32);
             self->ext.guardText.unk98 = FIX(0xB0);
         }
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 18);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 18);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -842,7 +842,7 @@ void EntityHitByHoly(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->primIndex = AllocPrimRecursively(PRIM_GT4, LEN(D_8013804C));
+        entity->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013804C));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -1860,7 +1860,7 @@ block_748:
         if (IsDuplicateEntity(self) != 0) {
             goto block_231;
         }
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 8);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
 #ifdef VERSION_HD
             DestroyEntity(self);
@@ -2396,7 +2396,7 @@ void EntityPlayerOutline(Entity* self) {
     primData = D_800AD9B8[upperparams];
     switch (self->step) {
     case 0: // Initialization
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, 1);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

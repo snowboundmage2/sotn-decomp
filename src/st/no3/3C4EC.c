@@ -294,7 +294,7 @@ void EntityBackgroundPineTrees(Entity* self) {
         InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = selfUnk68;
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 32);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == 0) {
             DestroyEntity(self);
             return;
@@ -529,7 +529,7 @@ void EntityCastleBridge(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSpawner);
 
-        primIndex = g_api.AllocPrimRecursively(PRIM_GT4, primCount);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, primCount);
 
         if (primIndex == 0) {
             DestroyEntity(self);
@@ -728,7 +728,7 @@ void EntityDistantBackgroundTrees(Entity* self) {
         switch (self->step) {
         case 0:
             InitializeEntity(g_EInitSpawner);
-            primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 9);
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
             if (primIndex == 0) {
                 DestroyEntity(self);
                 return;

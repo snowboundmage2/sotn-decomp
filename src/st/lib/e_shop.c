@@ -345,7 +345,7 @@ void func_us_801B2BE4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimRecursively(PRIM_G4, 0xD);
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 0xD);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
