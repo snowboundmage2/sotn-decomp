@@ -271,7 +271,8 @@ void func_us_801B6490(Entity* self) {
         for (i = 0; i < 0xE; i++) {
             D_us_801D6340[i] = (i << 0xC) / 7;
         }
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, animParams->count);
+        self->primIndex =
+            g_api.AllocPrimRecursively(PRIM_GT4, animParams->count);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

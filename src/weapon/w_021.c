@@ -277,7 +277,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->step = 4;
                 self->animCurFrame = 0;
                 g_Player.padSim = PAD_DOWN; // Note: different in steps 1 and 2
-                g_Player.InputLockTimer = 20;   // stun player for 20 frames
+                g_Player.InputLockTimer = 20; // stun player for 20 frames
                 return;
             }
             if (g_Player.unk56 == 0) {

@@ -193,11 +193,13 @@ void EntityTeleport(Entity* self) {
     }
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar - selfUnk7C;
-    UpdatePolyColor(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
+    UpdatePolyColor(
+        prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar + selfUnk7C;
-    UpdatePolyColor(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
+    UpdatePolyColor(
+        prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     if (wasCase3) {
         for (i = 0; i < LEN(D_8013839C); i++) {
@@ -208,7 +210,8 @@ void EntityTeleport(Entity* self) {
                 }
                 break;
             case 1:
-                result = UpdatePrimitiveUVCoordinates(prim, D_8013839C[i].x, D_8013839C[i].y);
+                result = UpdatePrimitiveUVCoordinates(
+                    prim, D_8013839C[i].x, D_8013839C[i].y);
                 D_8013839C[i].y -= 16;
                 if (result < 0) {
                     prim->drawMode |= DRAW_HIDE;

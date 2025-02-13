@@ -259,15 +259,18 @@ void InitializePlayerState() {
     }
     ResetDebugMode();
     if (D_80097C98 == 6) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 1), 0); //EntityTeleport
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(121, 1), 0); // EntityTeleport
         ExecuteTeleport(1);
     }
     if (D_80097C98 == 4) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 3), 0); //EntityTeleport
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(121, 3), 0); // EntityTeleport
         ExecuteTeleport(3);
     }
     if (D_80097C98 == 5) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 5), 0); //EntityTeleport
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(121, 5), 0); // EntityTeleport
         ExecuteTeleport(5);
     }
 
@@ -292,7 +295,8 @@ void CheckAndRestoreMP(void) {
     if (g_MpFullState == 0) {
         if (g_Status.mp == g_Status.mpMax &&
             !(g_Player.status & PLAYER_STATUS_UNK100000)) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, 40, 0); //EntityPlayerOutline?
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, 40, 0); // EntityPlayerOutline?
             PlaySfx(SFX_UI_MP_FULL);
             g_MpFullState++;
         }
@@ -576,7 +580,7 @@ void EntityAlucard(void) {
         g_PlayerHitCooldown--;
     }
     if (g_unkGraphicsStruct.g_PauseFlag != 0 && g_PauseState == 0) {
-        //EntityPlayerColorBlend?
+        // EntityPlayerColorBlend?
         CreateEntFactoryFromEntity(g_Entities, 0x78, 0);
     }
     var_fp = 0;
@@ -603,17 +607,17 @@ void EntityAlucard(void) {
                     PlaySfx(SFX_HEALTH_PICKUP);
                     if (!(g_Player.status & PLAYER_STATUS_STONE)) {
                         CreateEntFactoryFromEntity(
-                            //EntityPlayerBlinkColor
+                            // EntityPlayerBlinkColor
                             g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
                         CreateEntFactoryFromEntity(
-                            //EntityPlayerBlinkColor
+                            // EntityPlayerBlinkColor
                             g_CurrentEntity, FACTORY(0x2C, 0x44), 0);
                     }
                 }
                 if ((g_Player.unk56 == 2) &&
                     !(g_Player.status & PLAYER_STATUS_STONE)) {
                     CreateEntFactoryFromEntity(
-                        //EntityPlayerBlinkColor
+                        // EntityPlayerBlinkColor
                         g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
                 }
                 if (g_Status.hpMax < g_Status.hp) {
@@ -624,7 +628,7 @@ void EntityAlucard(void) {
             newStatus = CheckAndDoLevelUp();
             if (newStatus != 0) {
                 CreateEntFactoryFromEntity(
-                    //EntityPlayerLevelUpAnimation
+                    // EntityPlayerLevelUpAnimation
                     g_CurrentEntity, FACTORY(0x19, newStatus - 1), 0);
             }
             for (newStatus = 0; newStatus < 16; newStatus++) {
@@ -812,13 +816,13 @@ void EntityAlucard(void) {
                             switch (newStatus) {
                             case 0:
                                 CreateEntFactoryFromEntity(
-                                    //EntityGuardText
+                                    // EntityGuardText
                                     g_CurrentEntity, FACTORY(0x2F, 0), 0);
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerBlinkColor
+                                    // EntityPlayerBlinkColor
                                     g_CurrentEntity, FACTORY(0x2C, 0x43), 0);
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerBlinkColor
+                                    // EntityPlayerBlinkColor
                                     g_CurrentEntity, FACTORY(0x2C, 0x51), 0);
                                 CreateHPNumMove(0, 0);
                                 SetPlayerBlinkTimer(1, 0xC);
@@ -834,10 +838,10 @@ void EntityAlucard(void) {
                             case 2:
                                 g_Player.unk18 = damage.effects;
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerFalling
+                                    // EntityPlayerFalling
                                     g_CurrentEntity, FACTORY(0x73, 0), 0);
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerBlinkColor
+                                    // EntityPlayerBlinkColor
                                     g_CurrentEntity, FACTORY(0x2C, 0x58), 0);
                                 g_Player.pl_high_jump_timer = 0x8166;
                                 SetPlayerBlinkTimer(1, 0xC);
@@ -854,10 +858,10 @@ void EntityAlucard(void) {
                                 break;
                             case 5:
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerBlinkColor
+                                    // EntityPlayerBlinkColor
                                     g_CurrentEntity, FACTORY(0x2C, 0x44), 0);
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerBlinkColor
+                                    // EntityPlayerBlinkColor
                                     g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
                                 CreateHPNumMove(damage.unkC, 1);
                                 SetPlayerBlinkTimer(1, 0xC);
@@ -877,7 +881,7 @@ void EntityAlucard(void) {
                                 break;
                             case 9:
                                 CreateEntFactoryFromEntity(
-                                    //EntityPlayerBlinkColor
+                                    // EntityPlayerBlinkColor
                                     g_CurrentEntity, FACTORY(0x2C, 0x4E), 0);
                                 if (g_WaterDamageCooldown == 0) {
                                     PlaySfx(SFX_VO_ALU_PAIN_E);

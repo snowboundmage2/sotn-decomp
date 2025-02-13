@@ -464,7 +464,7 @@ s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
     return 0;
 }
 
-//HandleEntityCollision, but what entity?
+// HandleEntityCollision, but what entity?
 s32 HandleEntityCollision(s16 arg0, s16 arg1) {
     Collider collider;
     s16 xShift;
@@ -1053,7 +1053,8 @@ void EntityHellfireHandler(Entity* self) {
     case HFH_PLAYER_DISAPPEAR:
         PLAYER.palette = 0x810D;
         if (self->ext.hellfireHandler.timer == 0x10) {
-            // Red flickering beam. Blueprint 38 has child 29 or EntityHellfireBeam
+            // Red flickering beam. Blueprint 38 has child 29 or
+            // EntityHellfireBeam
             CreateEntFactoryFromEntity(self, FACTORY(38, 0), 0);
         }
         if (--self->ext.hellfireHandler.timer == 0) {

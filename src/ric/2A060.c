@@ -23,7 +23,8 @@ void RicEntityTeleport(Entity* self) {
     FntPrint("pl_warp_flag:%02x\n", g_Player.unk1C);
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimRecursively(PRIM_GT4, 4 + LEN(D_80175000));
+        self->primIndex =
+            g_api.AllocPrimRecursively(PRIM_GT4, 4 + LEN(D_80175000));
         if (self->primIndex == -1) {
             return;
         }

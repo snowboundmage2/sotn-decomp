@@ -139,7 +139,7 @@ typedef struct {
     /* 0x80097410 */ s32 BottomCornerTextTimer;
     /* 0x80097414 */ s32 BottomCornerTextPrims;
     /* 0x80097418 */ s32 unk18;
-    /* 0x8009741C */ s32 unk1C; //pauseFlags?
+    /* 0x8009741C */ s32 unk1C; // pauseFlags?
     /* 0x80097420 */ s32 unk20;
     /* 0x80097424 */ s32 unk24;
 

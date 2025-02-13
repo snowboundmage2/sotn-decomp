@@ -671,7 +671,7 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result);
 void SoundWait(void);
 void MuteSound(void);
 void PlaySoundEffect(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
-                   s16 volume, s16 distance);
+                     s16 volume, s16 distance);
 void StopSeq(void);
 bool CdSoundCommandQueueEmpty(void);
 bool func_80133950(void);

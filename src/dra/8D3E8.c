@@ -6,8 +6,9 @@
 
 /*
 Most of this is alucard wolf form.
-Move(: ←/→), Dash(: ←←/→→ with Power of Wolf), Jump([JUMP]]), HighJump( ↑ + [Jump]), Bite(), DashWithDamage(requires Power of Wolf), 
-WolfCharge(↓↘→ + [Attack]), Wolf Swim(special button when in water), 
+Move(: ←/→), Dash(: ←←/→→ with Power of Wolf), Jump([JUMP]]), HighJump( ↑ +
+[Jump]), Bite(), DashWithDamage(requires Power of Wolf), WolfCharge(↓↘→ +
+[Attack]), Wolf Swim(special button when in water),
 */
 
 static s32 D_800B0924[] = {14, 6, 4, 4, 6, 14};
@@ -62,7 +63,8 @@ void HandleWolfRunState(void) {
                 HandleWolfRun();
                 if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
                     // Evil! This function takes no arguments! This is
-                    // why HandleWolfJumpState1 had to be commented out of dra.h.
+                    // why HandleWolfJumpState1 had to be commented out of
+                    // dra.h.
                     HandleWolfJumpState1(0);
                     return;
                 }
@@ -1130,8 +1132,8 @@ void UpdateWolfEntity(Entity* self) {
                     hitboxX, (hitboxY + collider1.unk18) - 1, &collider2, 0);
                 if (!(collider2.effects & EFFECT_SOLID)) {
                     hitboxY += collider1.unk18;
-                    if (IsDistanceGreaterThan(playerX, playerY, hitboxX, hitboxY,
-                                      D_800B0920) != 0) {
+                    if (IsDistanceGreaterThan(playerX, playerY, hitboxX,
+                                              hitboxY, D_800B0920) != 0) {
                         animControl = 1;
                         if (collider1.effects & EFFECT_UNK_8000) {
                             animControl = 3;

@@ -496,7 +496,7 @@ void EntityExplosionEffect(Entity* self) {
         break;
     }
 }
-//dummy function?
+// dummy function?
 void func_8011EDA0(Entity* entity) {}
 
 // RIC function is func_80161C2C
@@ -1632,7 +1632,8 @@ void UpdateMistPosition(s32 arg0, s32 arg1) {
     }
 }
 
-Primitive* UpdatePrimitiveCoordinates(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
+Primitive* UpdatePrimitiveCoordinates(
+    bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     Primitive* prim;
     s16 temp_s4;
     s16 temp_s5;

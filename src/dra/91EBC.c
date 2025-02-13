@@ -355,7 +355,7 @@ struct SeqData g_SeqInfo[] = {
 // clang-format on
 
 void PlaySoundEffect(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
-                   s16 volume, s16 distance) {
+                     s16 volume, s16 distance) {
     if (distance == 0) {
         g_VolL = volume;
         g_VolR = volume;

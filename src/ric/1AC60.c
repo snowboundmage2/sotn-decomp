@@ -720,7 +720,8 @@ void RicMain(void) {
         return;
     }
     RicUpdateAfterImage();
-    if ((*g_SwimmingType >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
+    if ((*g_SwimmingType >= 0x29) &&
+        (g_CurrentEntity->nFramesInvincibility == 0)) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
@@ -742,7 +743,8 @@ void RicMain(void) {
         CheckStageCollision(1);
     }
     g_Player.unk04 = temp_s0;
-    if ((*g_SwimmingType >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
+    if ((*g_SwimmingType >= 0x29) &&
+        (g_CurrentEntity->nFramesInvincibility == 0)) {
         PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }

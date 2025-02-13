@@ -230,7 +230,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     switch (self->step) {
     case 0:
         temp_s0 = self->ext.hpNumMove.number;
-        self->primIndex = AllocPrimRecursively(PRIM_GT4, PrimCountA + PrimCountB);
+        self->primIndex =
+            AllocPrimRecursively(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -448,7 +449,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.unk84);
     a0 = self->posY.i.hi - 0x10;
 
-    // iterate through all 0x14 prims created by AllocPrimRecursively in two batches
+    // iterate through all 0x14 prims created by AllocPrimRecursively in two
+    // batches
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCountA; i++) {
         prim->x0 = s5 - offset_x;
@@ -974,7 +976,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityGiantSpinningCross,
     EntitySubwpnCrashCross,
     EntitySubwpnCrashCrossParticles,
-    EntitySubwpnThrownAxe, //child10
+    EntitySubwpnThrownAxe, // child10
     EntityPlayerBlinkColor,
     EntitySubwpnThrownVibhuti,
     func_8011E0E4,
@@ -984,7 +986,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntitySubwpnAgunea,
     EntityAguneaHitEnemy,
     EntityNumberMovesToHpMeter,
-    EntitySubwpnReboundStone, //child20
+    EntitySubwpnReboundStone, // child20
     EntityPlayerLevelUpAnimation,
     EntityHolyWater,
     EntityHolyWaterFlame,
@@ -994,7 +996,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityHellfireBigFireball,
     EntityExpandingCircle,
     EntityHellfireBeam,
-    EntityPlayerHitByLightning, //child30
+    EntityPlayerHitByLightning, // child30
     EntityPlayerOutline,
     EntityPlayerDissolves,
     EntityPlayerHitByIce,
@@ -1004,7 +1006,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityGuardText,
     EntityTransparentWhiteCircle,
     EntityPlayerPinkEffect,
-    EntityHolyWaterBreakGlass, //child40
+    EntityHolyWaterBreakGlass, // child40
     EntityStopWatch,
     EntityStopWatchExpandingCircle,
     EntitySubwpnBible,
@@ -1014,7 +1016,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityHitByHoly,
     UpdateEntityPlayerMistHitbox,
     InitializeEntityPlayerMistHitbox,
-    UpdateEntityAxeArmorHitbox, //child50
+    UpdateEntityAxeArmorHitbox, // child50
     EntitySmallRisingHeart,
     EntityBatEcho,
     EntityPlayerSpell,
@@ -1024,7 +1026,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     UpdateEntityWolfRotationPart2,
     UpdateEntityWolfHitbox,
     UpdateWolfRotationHelper,
-    EntityWolfForm, //child60
+    EntityWolfForm, // child60
     EntitySummonedSpirit,
     func_8011A4C8,
     EntitySummonSpirit,

@@ -308,7 +308,7 @@ void HandleWolfSwim(void) {
     SetPlayerAnim(0xEC);
     PLAYER.velocityY = 0;
 }
-//most likely falling
+// most likely falling
 void HandleWolfJumpState1(void) {
     u8 anim;
 

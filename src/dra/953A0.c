@@ -1374,8 +1374,9 @@ void ExecSfx(void) {
             }
         }
         if (isFound == 0) {
-            PlaySoundEffectWithDistance(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
-                          g_SfxRingBuffer[g_SfxRingBufferReadPos].sndPan);
+            PlaySoundEffectWithDistance(
+                sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
+                g_SfxRingBuffer[g_SfxRingBufferReadPos].sndPan);
         }
 
         g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);

@@ -832,7 +832,7 @@ typedef struct Entity {
     /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
-    /* 0x5A */ u16 unk5A; //animFrameCounter?
+    /* 0x5A */ u16 unk5A; // animFrameCounter?
     /* 0x5C */ struct Entity* unk5C;
     /* 0x60 */ struct Entity* unk60;
     /* 0x64 */ s32 primIndex;
@@ -1770,10 +1770,11 @@ typedef struct {
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
-    /* 80072EF4 */ u32 padSim; // simulate input to force player actions
-    /* 80072EF8 */ s32 D_80072EF8; //playerAttackButton?
-    /* 80072EFC */ s32 InputLockTimer; // stun timer? could also be freeze player input for time
-    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
+    /* 80072EF4 */ u32 padSim;         // simulate input to force player actions
+    /* 80072EF8 */ s32 D_80072EF8;     // playerAttackButton?
+    /* 80072EFC */ s32 InputLockTimer; // stun timer? could also be freeze
+                                       // player input for time
+    /* 80072F00 */ s16 timers[16];     /// Indexed with AluTimers
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
@@ -1794,7 +1795,7 @@ typedef struct {
     // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 unk1C;
-    /* 80072F40 */ s32 unk20; //specialMoveCooldown?
+    /* 80072F40 */ s32 unk20; // specialMoveCooldown?
     /* 80072F44 */ s32 unk24;
     /* 80072F48 */ s32 unk28;
     /* 80072F4C */ s32 unk2C;
@@ -1802,10 +1803,10 @@ typedef struct {
     /* 80072F54 */ s32 unk34;
     /* 80072F58 */ s32 unk38;
     /* 80072F5C */ s32 unk3C;
-    //paletteBackup?
+    // paletteBackup?
     /* 80072F60 */ u16 unk40;
     /* 80072F62 */ u16 pl_high_jump_timer;
-    //invincibilityFlags?
+    // invincibilityFlags?
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46; // playerAttackState?
     /* 80072F68 */ u16 unk48; // playerWeaponState?
@@ -1989,7 +1990,8 @@ extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
-extern s32 g_SwimmingType[]; // underwater physics. 7448 and 744C. Could be struct.
+extern s32
+    g_SwimmingType[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
 extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];
