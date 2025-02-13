@@ -230,8 +230,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     switch (self->step) {
     case 0:
         temp_s0 = self->ext.hpNumMove.number;
-        self->primIndex =
-            AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
+        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

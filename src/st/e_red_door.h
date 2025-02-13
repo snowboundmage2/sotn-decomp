@@ -78,8 +78,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             self->ext.redDoor.unk86 = 4;
         }
         self->posX.i.hi += self->ext.redDoor.unk86;
-        self->primIndex =
-            g_api.AllocPrimitives(PRIM_GT4, LEN(g_eRedDoorUV));
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, LEN(g_eRedDoorUV));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

@@ -659,7 +659,7 @@ void HandlePlayerStopWolf(void) {
 #if defined(VERSION_US)
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #endif
-            //func_8010E4D0
+            // func_8010E4D0
             PerformPlayerStuck();
         }
     }

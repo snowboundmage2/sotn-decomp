@@ -296,8 +296,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x30;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] =
-        g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[11][0]];
     SetTexturedPrimRect(prim, 104, 88, 176, 80, 0, 0);
     func_801B1D88(prim);
