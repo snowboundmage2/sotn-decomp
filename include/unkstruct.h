@@ -131,7 +131,7 @@ typedef struct {
 
 typedef struct {
     /* 0x800973F8 */ s32 D_800973F8;
-    /* 0x800973FC */ s32 D_800973FC;
+    /* 0x800973FC */ s32 g_WatchTimeStopFlag;
     /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
     /* 0x80097404 */ s32 unk4;
     /* 0x80097408 */ s32 g_zEntityCenter;

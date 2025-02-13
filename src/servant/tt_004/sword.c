@@ -1116,7 +1116,7 @@ void func_us_80176674(Entity* self) {
     case 1:
         if ((IsMovementAllowed(1)) || (CheckAllEntitiesValid()) ||
             (D_us_80178B80 == 1) || (g_CutsceneHasControl) ||
-            (g_unkGraphicsStruct.D_800973FC != 0)) {
+            (g_unkGraphicsStruct.g_WatchTimeStopFlag != 0)) {
             self->entityId = SWORD_DEFAULT;
             self->step = 0;
             if (g_CastleFlags[SWORD_FAMILIAR] == 3) {

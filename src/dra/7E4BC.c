@@ -2362,7 +2362,7 @@ void EntityPlayerFalling(Entity* self) {
 void EntityPlayerColorBlend(Entity* entity) {
     PlayerDraw* plDraw = &g_PlayerDraw[13];
 
-    if (g_unkGraphicsStruct.D_800973FC == 0) {
+    if (g_unkGraphicsStruct.g_WatchTimeStopFlag == 0) {
         plDraw->enableColorBlend = 0;
         DestroyEntity(entity);
         return;
