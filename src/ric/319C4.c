@@ -1564,7 +1564,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     s32 temp_t0;
     s32 temp_v1_11;
     if (g_unkGraphicsStruct.pauseEnemies) {
-        g_unkGraphicsStruct.g_WatchTimeStopFlag = 0;
+        g_unkGraphicsStruct.WatchTimeStopFlag = 0;
         if ((self->step > 0) && (self->step < 4)) {
             self->step = 4;
         }
@@ -1625,7 +1625,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         RicSetSubweaponParams(self);
         g_api.PlaySfx(SFX_UI_ALERT_TINK);
         if (self->ext.ricStopWatch.crashIndex < 2) {
-            g_unkGraphicsStruct.g_WatchTimeStopFlag = 1;
+            g_unkGraphicsStruct.WatchTimeStopFlag = 1;
         }
         self->step++;
         break;
@@ -1723,7 +1723,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     case 7:
         if ((self->ext.ricStopWatch.crashIndex == 0) ||
             (self->ext.ricStopWatch.crashIndex == D_801758D0)) {
-            g_unkGraphicsStruct.g_WatchTimeStopFlag = 0;
+            g_unkGraphicsStruct.WatchTimeStopFlag = 0;
         }
         if (self->ext.ricStopWatch.crashIndex != 0) {
             D_801758D4[self->ext.ricStopWatch.crashIndex - 1] = 0;

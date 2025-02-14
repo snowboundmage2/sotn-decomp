@@ -43,7 +43,7 @@ typedef enum Statues {
 } Statues;
 
 extern u16 g_EInitCommon[];
-extern s32 g_WatchTimeStopFlag; // g_WatchSubweaponTimeStopFlag
+extern s32 WatchTimeStopFlag; // D_800973FC
 extern u16 g_Statues[];
 extern u16 g_EInitMaria[];
 

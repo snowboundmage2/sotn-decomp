@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// this might also be HandlePlayerFalling/HandlePlayerJumping
 bool HandlePlayerYVelocity(s32 branchFlags) {
     u8 stackpad[0x28];
     s32 SFX_arg;

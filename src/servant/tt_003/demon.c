@@ -1403,7 +1403,7 @@ void UpdateServantAdditionalInit(Entity* self) {
         }
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             D_us_801786D0 == 1 || g_CutsceneHasControl ||
-            g_unkGraphicsStruct.g_WatchTimeStopFlag) {
+            g_unkGraphicsStruct.WatchTimeStopFlag) {
             SetAnimationFrame(self, 0);
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;

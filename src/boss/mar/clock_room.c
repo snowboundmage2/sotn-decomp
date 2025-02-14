@@ -31,7 +31,7 @@ void EntityClockRoomController(Entity* self) {
     }
 
     // Controls the statues
-    if (g_WatchTimeStopFlag == 0) {
+    if (WatchTimeStopFlag == 0) {
         if (PLAYER.posY.i.hi > 128) {
             g_Statues[RIGHT_STATUE] = false;
         }
@@ -39,7 +39,7 @@ void EntityClockRoomController(Entity* self) {
         g_Statues[RIGHT_STATUE] = true;
     }
 
-    self->ext.clockRoom.unk8A = g_WatchTimeStopFlag;
+    self->ext.clockRoom.unk8A = WatchTimeStopFlag;
     if (self->step != 0) {
         if ((status->timerFrames == 0) && (status->timerSeconds == 0)) {
             if (status->timerMinutes & 1) {

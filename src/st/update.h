@@ -73,7 +73,7 @@ void Update(void) {
                  e->posY.i.hi >= -64 && e->posY.i.hi <= 288)) {
                 if (!e->stunFrames ||
                     (e->stunFrames--, flags & FLAG_UNK_100000)) {
-                    if (!g_unkGraphicsStruct.g_WatchTimeStopFlag ||
+                    if (!g_unkGraphicsStruct.WatchTimeStopFlag ||
                         flags & (FLAG_UNK_2000 | FLAG_DEAD) ||
                         (flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
                     process_entity:
