@@ -1051,7 +1051,7 @@ void func_us_801B15C0(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            if (g_api.IsSoundPlaying()) {
+            if (g_api.func_80131F68()) {
                 g_api.PlaySfx(SET_STOP_MUSIC);
                 self->step_s++;
             } else {
@@ -1060,7 +1060,7 @@ void func_us_801B15C0(Entity* self) {
             break;
 
         case 1:
-            if (!g_api.IsSoundPlaying()) {
+            if (!g_api.func_80131F68()) {
                 if (self->ext.et_801B15C0.unk80 != 4) {
                     g_api.PlaySfx(NA_VO_AL_INTERESTED);
                 }
@@ -1089,7 +1089,7 @@ void func_us_801B15C0(Entity* self) {
 #else
             D_us_80183F64 = 0;
 #endif
-            if (g_api.IsSoundPlaying()) {
+            if (g_api.func_80131F68()) {
                 g_api.PlaySfx(SET_STOP_MUSIC);
                 self->step_s++;
             } else {
@@ -1098,7 +1098,7 @@ void func_us_801B15C0(Entity* self) {
             break;
 
         case 1:
-            if (!g_api.IsSoundPlaying()) {
+            if (!g_api.func_80131F68()) {
                 g_api.PlaySfx(NA_VO_ML_FAREWELL);
                 self->ext.et_801B15C0.unk7C = 0x20;
                 self->step_s++;

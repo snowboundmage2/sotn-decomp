@@ -238,7 +238,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 if (g_SkipCutscene) {
                     continue;
                 }
-                if (g_api.IsSoundPlaying() != false) {
+                if (g_api.func_80131F68() != false) {
                     continue;
                 }
                 *g_Dialogue.scriptCur--;
@@ -247,7 +247,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 if (g_SkipCutscene) {
                     continue;
                 }
-                if (g_api.IsSoundPlaying() != true) {
+                if (g_api.func_80131F68() != true) {
                     continue;
                 }
                 *g_Dialogue.scriptCur--;

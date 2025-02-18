@@ -1070,7 +1070,7 @@ void func_800E414C(void) {
         D_8003C708.unk2++;
         return;
     case 1:
-        if (!IsSoundPlaying()) {
+        if (!func_80131F68()) {
             if (g_UseDisk != 0) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr | 0x8000;

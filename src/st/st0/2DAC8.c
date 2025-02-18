@@ -677,7 +677,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 2:
-            if (g_api.IsSoundPlaying() == true) {
+            if (g_api.func_80131F68() == true) {
                 if (--D_80181148 == 0) {
                     D_80181148 = 0x800;
                     g_api.PlaySfx(0x80);
@@ -689,7 +689,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 3:
-            if (g_api.IsSoundPlaying() == false) {
+            if (g_api.func_80131F68() == false) {
                 // Fake reuse of the i variable
                 i = g_Timer - D_8018114C;
                 if (i >= 0x301) {

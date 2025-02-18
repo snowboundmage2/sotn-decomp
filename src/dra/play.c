@@ -468,7 +468,7 @@ void HandleGameOver(void) {
         if (!func_80133950()) {
             break;
         }
-        if (IsSoundPlaying()) {
+        if (func_80131F68()) {
             break;
         }
         PlaySfx(SET_UNK_12);
@@ -632,7 +632,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_9:
         func_800E5358();
-        if (IsSoundPlaying()) {
+        if (func_80131F68()) {
             break;
         }
         prim = &g_PrimBuf[D_8013640C];

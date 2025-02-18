@@ -31,7 +31,7 @@ u16 GetSeqPlayingId(void) {
     return g_SeqPlayingId | 0x200;
 }
 
-bool IsSoundPlaying(void) {
+bool func_80131F68(void) {
     bool ret;
     if (D_8013B61C) {
         ret = 1;

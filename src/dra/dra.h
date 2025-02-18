@@ -659,7 +659,7 @@ void MuteCd(void);
 void UnMuteCd(void);
 s32 GetSoundStatus(void);
 u16 GetSeqPlayingId(void);
-bool IsSoundPlaying(void);
+bool func_80131F68(void);
 s16 func_80131F94(void);
 void SetMaxVolume(void);
 void InitSoundVars3(void);
