@@ -31,6 +31,7 @@ u16 GetSeqPlayingId(void) {
     return g_SeqPlayingId | 0x200;
 }
 
+//could also be isMusicPlaying
 bool isSoundPlaying(void) {
     bool ret;
     if (D_8013B61C) {

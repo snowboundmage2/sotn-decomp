@@ -2,6 +2,7 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
+//could also be isMusicPlaying
 bool isSoundPlaying(void) {
     bool ret;
     if (D_8013B61C) {
