@@ -2,7 +2,7 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-bool func_80131F68(void) {
+bool isSoundPlaying(void) {
     bool ret;
     if (D_8013B61C) {
         ret = 1;

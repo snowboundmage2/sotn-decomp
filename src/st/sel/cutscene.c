@@ -302,13 +302,13 @@ void SEL_EntityCutscene(Entity* entity) {
                 g_api.PlaySfx(g_Dialogue.scriptCur++[0] | (nextChar << 4));
                 continue;
             case 10:
-                if (g_SkipCutscene != 0 || g_api.func_80131F68() != false) {
+                if (g_SkipCutscene != 0 || g_api.isSoundPlaying() != false) {
                     continue;
                 }
                 --g_Dialogue.scriptCur;
                 return;
             case 11:
-                if (g_SkipCutscene != 0 || g_api.func_80131F68() != true) {
+                if (g_SkipCutscene != 0 || g_api.isSoundPlaying() != true) {
                     continue;
                 }
                 --g_Dialogue.scriptCur;

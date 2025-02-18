@@ -231,7 +231,7 @@ void EntityBackgroundLightning(Entity* self) {
             D_80097910 = SE_INTRO_WIND_QUIET;
             break;
         case 1:
-            if (g_api.func_80131F68() == false) {
+            if (g_api.isSoundPlaying() == false) {
                 D_80097928 = 0;
                 g_api.PlaySfx(D_80097910);
                 self->ext.backgroundLightning.unk84++;
@@ -248,7 +248,7 @@ void EntityBackgroundLightning(Entity* self) {
             }
             break;
         case 3:
-            if (g_api.func_80131F68() == false) {
+            if (g_api.isSoundPlaying() == false) {
                 D_80097928 = 0;
                 g_api.PlaySfx(D_80097910);
                 self->ext.backgroundLightning.unk84++;

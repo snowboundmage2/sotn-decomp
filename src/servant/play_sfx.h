@@ -25,13 +25,13 @@ void ProcessSfxState(Entity* entity) {
         break;
 
     case 3:
-        if (g_api.func_80131F68() != 0) {
+        if (g_api.isSoundPlaying() != 0) {
             entity->step++;
         }
         break;
 
     case 4:
-        if (g_api.func_80131F68() == 0) {
+        if (g_api.isSoundPlaying() == 0) {
             entity->step++;
         }
         break;

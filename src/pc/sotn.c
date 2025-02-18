@@ -74,7 +74,7 @@ void SetBackgroundColor(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 void UpdatePrimState(u32 arg0);
 void TransformPolygon(
     s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
-bool func_80131F68(void);
+bool isSoundPlaying(void);
 DR_ENV* AllocateDrawEnvironment(Primitive* prim);
 u16* func_80106A28(u32 arg0, u16 kind);
 void AssignEntityEnemyId(Entity* self);
@@ -172,7 +172,7 @@ bool InitGame(struct InitGameParams* params) {
     api.UpdatePrimState = UpdatePrimState;
     api.TransformPolygon = TransformPolygon;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
-    api.func_80131F68 = func_80131F68;
+    api.isSoundPlaying = isSoundPlaying;
     api.AllocateDrawEnvironment = AllocateDrawEnvironment;
     api.func_80106A28 = func_80106A28;
     api.AssignEntityEnemyId = AssignEntityEnemyId;

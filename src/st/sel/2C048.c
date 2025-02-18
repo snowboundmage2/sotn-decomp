@@ -508,7 +508,7 @@ s32 func_801ACEC0(void) {
     prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
     SetPrimGrey(prim, var_s0);
 
-    if (g_api.func_80131F68()) {
+    if (g_api.isSoundPlaying()) {
         return 0;
     } else {
         return var_s0 == 255;

@@ -609,7 +609,7 @@ void HandlePrologueEnd(void) {
         if ((g_UseDisk && !g_IsUsingCd) ||
             (!g_UseDisk && LoadFileSim(6, SimFileType_System) >= 0 &&
              LoadFileSim(7, SimFileType_System) >= 0)) {
-            if (func_80131F68() != 0) {
+            if (isSoundPlaying() != 0) {
                 PlaySfx(0x80);
             }
             SetGPUBuffRGBZero();

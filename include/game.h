@@ -1535,7 +1535,7 @@ typedef struct {
         s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
         Entity* self, u32 flags, s32 arg2);
-    /* 8003C7F8 */ bool (*func_80131F68)(void);
+    /* 8003C7F8 */ bool (*isSoundPlaying)(void);
     /* 8003C7FC */ DR_ENV* (*AllocateDrawEnvironment)(POLY_GT4* poly);
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
     /* 8003C804 */ void (*AssignEntityEnemyId)(Entity*);
@@ -1625,7 +1625,7 @@ extern void (*g_api_ResetClutAnimation)(s32 arg0);
 extern void (*g_api_g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern Entity* (*g_api_CreateEntFactoryFromEntity)(
     Entity* self, u32 flags, s32 arg2);
-extern bool (*g_api_func_80131F68)(void);
+extern bool (*g_api_isSoundPlaying)(void);
 extern DR_ENV* (*g_api_AllocateDrawEnvironment)(POLY_GT4* poly);
 extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);

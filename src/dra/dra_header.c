@@ -27,7 +27,7 @@ void UpdatePrimState(u32 arg0);
 void TransformPolygon(
     s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
 Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s16 arg2);
-bool func_80131F68(void);
+bool isSoundPlaying(void);
 DR_ENV* AllocateDrawEnvironment(POLY_GT4* poly);
 u16* func_80106A28(u32 arg0, u16 kind);
 void AssignEntityEnemyId(Entity* self);
@@ -86,7 +86,7 @@ GameApi g_ApiInit = {
     UpdatePrimState,
     TransformPolygon,
     CreateEntFactoryFromEntity,
-    func_80131F68,
+    isSoundPlaying,
     AllocateDrawEnvironment,
     func_80106A28,
     AssignEntityEnemyId,

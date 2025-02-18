@@ -769,7 +769,7 @@ void func_us_80192B38(Entity* self) {
         }
         break;
     case 2:
-        if (g_api.func_80131F68() == false) {
+        if (g_api.isSoundPlaying() == false) {
             D_80097928 = 0;
             g_api.PlaySfx(D_80097910);
             self->step++;
@@ -815,7 +815,7 @@ void func_us_80192B38(Entity* self) {
         break;
 
     case 6:
-        if (g_api.func_80131F68() == false) {
+        if (g_api.isSoundPlaying() == false) {
             D_80097928 = 0;
             g_api.PlaySfx(D_80097910);
             self->step++;

@@ -290,7 +290,7 @@ void PrologueScroll(void) {
         }
         break;
     case 4: // 0x801B091C
-        if (!g_api.func_80131F68()) {
+        if (!g_api.isSoundPlaying()) {
             g_api.PlaySfx(MU_MOONLIGHT_NOCTURNE);
             g_GameStep++;
         }
@@ -300,7 +300,7 @@ void PrologueScroll(void) {
 #if defined(VERSION_PSP)
             1
 #else
-            g_api.func_80131F68()
+            g_api.isSoundPlaying()
 #endif
         ) {
             g_GameStep++;
@@ -472,7 +472,7 @@ void PrologueScroll(void) {
         g_GameStep++;
         break;
     case 19:
-        if (!g_api.func_80131F68()) {
+        if (!g_api.isSoundPlaying()) {
             SetStageDisplayBuffer();
             ClearScreen();
             if (g_StageId == STAGE_ST0) {

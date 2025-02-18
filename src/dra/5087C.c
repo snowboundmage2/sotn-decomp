@@ -1106,7 +1106,7 @@ void func_800F2860(void) {
     default:
         return;
     case 2:
-        if (func_80131F68() == false) {
+        if (isSoundPlaying() == false) {
             D_801375C8++;
             break;
         }
@@ -1120,13 +1120,13 @@ void func_800F2860(void) {
         D_801375C8++;
         break;
     case 4:
-        if (func_80131F68() != false) {
+        if (isSoundPlaying() != false) {
             D_801375C8++;
             break;
         }
         break;
     case 5:
-        if (func_80131F68() == false) {
+        if (isSoundPlaying() == false) {
             D_801375C8++;
             break;
         }
@@ -1136,7 +1136,7 @@ void func_800F2860(void) {
         D_801375C8 = 0;
         return;
     case 7:
-        if (func_80131F68() != 0) {
+        if (isSoundPlaying() != 0) {
             return;
         }
         D_801375C8--;
@@ -1611,7 +1611,7 @@ void RunMainEngine(void) {
                     D_80097910 = g_StagesLba[g_StageId].unk18;
                     if (g_unkGraphicsStruct.WatchTimeStopFlag != 1) {
                         PlaySfx(SET_STOP_MUSIC);
-                        if (func_80131F68() == false) {
+                        if (isSoundPlaying() == false) {
                             PlaySfx(D_80097910);
                             D_80097928 = 0;
                         } else {
